@@ -17,8 +17,8 @@ export function FrontendHeader() {
     return (
         <header className="relative">
             <div className="container mx-auto m-2">
-                <div className="bg-gray-100 rounded-xl p-0.5 border border-gray-100">
-                    <nav className="flex w-full items-center justify-between rounded-2xl border border-gray-200 bg-white px-4 md:px-6 py-3 shadow-sm">
+                <div className="bg-gray-100 rounded-lg p-0.5 border border-gray-50/30">
+                    <nav className="flex w-full items-center justify-between rounded-lg  border-rounded-md bg-white px-4 md:px-6 py-3 shadow">
 
                         {/* Logo */}
                         <div className="flex items-center gap-2 z-20">
