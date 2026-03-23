@@ -12,4 +12,24 @@ class FrontendController extends Controller
     {
         return Inertia::render('frontend/home');
     }
+
+    public function shop(): Response
+    {
+        return Inertia::render('frontend/shop');
+    }
+
+    public function contact(): Response
+    {
+        return Inertia::render('frontend/contact');
+    }
+
+    public function productsDetails(): Response
+    {
+        return Inertia::render('frontend/products-details');
+    }
+
+    public function stayConnected(): Response
+    {
+        return Inertia::render('frontend/stay-connected');
+    }
 }
