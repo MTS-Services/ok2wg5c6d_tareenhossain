@@ -1,33 +1,101 @@
-import AppLogo from '@/components/app-logo';
-import { Link } from '@inertiajs/react';
+import { Facebook, Instagram, Linkedin } from 'lucide-react';
+
+const socialLinks = [
+    { label: 'Facebook', href: '#', Icon: Facebook },
+    { label: 'Instagram', href: '#', Icon: Instagram },
+    { label: 'LinkedIn', href: '#', Icon: Linkedin },
+] as const;
 
 export function FrontendFooter() {
     return (
-        <footer className="border-t bg-primary-600 text-white">
-            <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 py-4 sm:flex-row">
-                <Link href="#" className="flex items-center gap-2">
-                    <AppLogo className="h-10 w-auto" />
-                    <span className="text-sm font-semibold tracking-wide uppercase">
-                        Horizon Wills
-                    </span>
-                </Link>
 
-                <nav className="flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm">
-                    <Link href="#" className="text-white/80 hover:text-white">
-                        Home
-                    </Link>
-                    <Link href="#" className="text-white/80 hover:text-white">
-                        About
-                    </Link>
-                    <Link href="#" className="text-white/80 hover:text-white">
-                        Contact
-                    </Link>
-                </nav>
+        <footer className="w-full border-t border-gray-200 mt-6 container mx-auto">
+            {/* Main Footer Content */}
+            <div className="container mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
-                <p className="text-[11px] text-white/70 text-center sm:text-right">
-                    &copy; 2026 Horizon Wills Ltd. All rights reserved.
-                </p>
+                {/* Brand Column */}
+                <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-2">
+                        <img src="/assets/images/Home/Container.png" alt="" />
+                        <span className="text-sm font-bold tracking-widest text-gray-900 uppercase font-inter">
+                            Nexus
+                        </span>
+                    </div>
+                    <p className="text-sm leading-relaxed text-gray-500">
+                        Redefining the digital shopping experience through minimal
+                        aesthetics and high-performance product curation.
+                    </p>
+                </div>
+
+                {/* Shop Column */}
+                <div className="flex flex-col gap-4">
+                    <h4 className="text-sm font-bold tracking-widest text-gray-900 uppercase font-inter">
+                        Shop
+                    </h4>
+                    <ul className="flex flex-col gap-3">
+                        {["Electronics", "Home Decor", "Apparel", "Office"].map((item) => (
+                            <li key={item}>
+                                <a href="#" className="text-sm text-gray-500 hover:text-gray-900">
+                                    {item}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Support Column */}
+                <div className="flex flex-col gap-4">
+                    <h4 className="text-sm font-bold tracking-widest text-gray-900 uppercase font-inter">
+                        Support
+                    </h4>
+                    <ul className="flex flex-col gap-3">
+                        {["Shipping", "Returns", "Contact", "FAQ"].map((item) => (
+                            <li key={item}>
+                                <a href="#" className="text-sm text-gray-500 hover:text-gray-900">
+                                    {item}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Social Column */}
+                <div className="flex flex-col gap-4">
+                    <h4 className="text-sm font-bold tracking-widest text-gray-900 uppercase font-inter">
+                        Social
+                    </h4>
+                    <div className="flex items-center gap-3">
+                        {socialLinks.map(({ label, href, Icon }) => (
+                            <a
+                                key={label}
+                                href={href}
+                                aria-label={label}
+                                className="text-gray-900 transition-colors hover:text-gray-900"
+                            >
+                                <Icon className="h-5 w-5" strokeWidth={1.5} />
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Bottom Bar */}
+            <div className="border-t border-gray-200">
+                <div className="container mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p className="text-xs text-gray-400 text-center sm:text-left">
+                        © 2026 Nexus Storefront Inc. All rights reserved.
+                    </p>
+                    <div className="flex items-center gap-4">
+                        <a href="#" className="text-xs text-gray-500 hover:text-gray-900">
+                            Privacy Policy
+                        </a>
+                        <a href="#" className="text-xs text-gray-500 hover:text-gray-900">
+                            Terms of Service
+                        </a>
+                    </div>
+                </div>
             </div>
         </footer>
+
     );
 }
