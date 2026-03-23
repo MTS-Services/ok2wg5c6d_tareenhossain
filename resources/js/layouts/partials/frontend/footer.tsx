@@ -1,25 +1,14 @@
 export function FrontendFooter() {
     return (
-        <div className="flex min-h-screen flex-col justify-end bg-white">
+
             <footer className="w-full border-t border-gray-200">
                 {/* Main Footer Content */}
                 <div className="mx-auto grid max-w-6xl grid-cols-4 gap-10 px-8 py-12">
                     {/* Brand Column */}
                     <div className="flex flex-col gap-4">
                         <div className="flex items-center gap-2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 text-blue-600"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                            </svg>
-                            <span className="text-sm font-bold tracking-widest text-gray-900 uppercase">
+                            <img src="/assets/images/Home/Container.png" alt="" />
+                            <span className="text-sm font-bold tracking-widest text-gray-900 uppercase font-inter">
                                 Nexus
                             </span>
                         </div>
@@ -31,14 +20,14 @@ export function FrontendFooter() {
 
                     {/* Shop Column */}
                     <div className="flex flex-col gap-4">
-                        <h4 className="text-xs font-bold tracking-widest text-gray-900 uppercase">
+                        <h4 className="text-xs font-bold tracking-widest text-gray-900 uppercase font-inter">
                             Shop
                         </h4>
                         <ul className="flex flex-col gap-3">
                             <li>
                                 <a
                                     href="#"
-                                    className="text-sm text-gray-500 transition-colors hover:text-gray-900"
+                                    className="text-sm text-gray-500 transition-colors hover:text-gray-900 "
                                 >
                                     Electronics
                                 </a>
@@ -72,7 +61,7 @@ export function FrontendFooter() {
 
                     {/* Support Column */}
                     <div className="flex flex-col gap-4">
-                        <h4 className="text-xs font-bold tracking-widest text-gray-900 uppercase">
+                        <h4 className="text-xs font-bold tracking-widest text-gray-900 uppercase font-inter">
                             Support
                         </h4>
                         <ul className="flex flex-col gap-3">
@@ -113,14 +102,14 @@ export function FrontendFooter() {
 
                     {/* Social Column */}
                     <div className="flex flex-col gap-4">
-                        <h4 className="text-xs font-bold tracking-widest text-gray-900 uppercase">
+                        <h4 className="text-xs font-bold tracking-widest text-gray-900 uppercase font-inter">
                             Social
                         </h4>
                         <div className="flex items-center gap-2">
                             {/* Globe / Web */}
                             <a
                                 href="#"
-                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition-colors hover:border-gray-400 hover:text-gray-900"
+                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-gray-900 transition-colors hover:border-gray-400 hover:text-gray-900"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +128,7 @@ export function FrontendFooter() {
                             {/* Instagram */}
                             <a
                                 href="#"
-                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition-colors hover:border-gray-400 hover:text-gray-900"
+                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-gray-900 transition-colors hover:border-gray-400 hover:text-gray-900"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +148,7 @@ export function FrontendFooter() {
                             {/* YouTube */}
                             <a
                                 href="#"
-                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition-colors hover:border-gray-400 hover:text-gray-900"
+                                className="flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-gray-900 transition-colors hover:border-gray-400 hover:text-gray-900"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -202,6 +191,6 @@ export function FrontendFooter() {
                     </div>
                 </div>
             </footer>
-        </div>
+
     );
 }
