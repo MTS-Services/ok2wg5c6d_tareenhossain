@@ -10,13 +10,13 @@ export default function Home() {
             <div className="bg-white text-gray-900 container mx-auto">
 
                 <section className=" mb-4 container mx-auto">
-                    <div className=" relative overflow-hidden rounded-3xl bg-bg-background-dark px-4 py-40 text-center text-white">
+                    <div className=" relative overflow-hidden rounded-3xl bg-bg-background-dark px-4 py-40 text-center text-white m-4">
                         <div className="pointer-events-none absolute inset-0 opacity-100">
                             <img src="/assets/images/Home/Frame(1).png" className='w-full h-full ' alt="" />
                         </div>
 
                         <div className="relative z-10">
-                            <h2 className="mb-6 text-5xl font-bold font-inter">Get in Touch</h2>
+                            <h2 className="mb-6 lg:text-5xl text-3xl font-bold font-inter">Get in Touch</h2>
                             <p className="mx-auto mb-10 max-w-lg text-sm text-gray-400">
                                 Have a specific inquiry or just want to say hello? Our team is ready to assist you with your professional needs.
                             </p>
@@ -67,7 +67,7 @@ export default function Home() {
                         {/* Right Side: Directory & Info */}
                         <div className="space-y-8">
                             <div>
-                                <h2 className="text-3xl font-bold text-gray-900 mb-4 font-inter">Business Directory</h2>
+                                <h2 className="lg:text-3xl text-2xl font-bold text-gray-900 mb-4 font-inter ">Business Directory</h2>
                                 <p className="text-gray-500">Direct your inquiry to the right department for a faster response.</p>
                             </div>
 

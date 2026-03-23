@@ -9,28 +9,56 @@ export default function Home() {
 
             <div className="bg-white text-gray-900 container mx-auto">
 
-                <header className="relative mx-4 mt-4 flex items-center overflow-hidden rounded-3xl bg-bg-background-dark text-white">
-                    <div className="container relative z-10 mx-auto grid items-center px-24 px-8 md:grid-cols-2 md:px-16">
-                        <div>
-                            <span className="mb-4 inline-block rounded bg-blue-600 px-2 py-1 text-[10px] tracking-widest uppercase">New Arrival 2026</span>
-                            <h1 className="mb-4 text-4xl leading-tight font-bold md:text-6xl font-inter">The Future of Smart Living.</h1>
-                            <p className="mb-8 max-w-sm text-sm leading-relaxed text-gray-400">
-                                Experience unparalleled design and performance with our latest collection of premium essentials curated for the modern minimalist.
-                            </p>
-                            <div className="flex space-x-4">
-                                <button className="rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">Shop Collection</button>
-                                <button className="rounded-lg border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">Watch Film</button>
-                            </div>
-                        </div>
-                        <div className="hidden justify-center md:flex ">
-                            <img src="/assets/images/Home/Container (2).png" alt="Headphones" className="h-150 w-200 object-contain drop-shadow-2xl" />
+            <header className="relative mx-4 mt-4 overflow-hidden rounded-3xl bg-bg-background-dark text-white">
+                {/* Changes:
+                    1. Removed fixed 'flex items-center' from header to let grid handle it.
+                    2. Adjusted padding: px-6 on mobile, px-16 on desktop.
+                    3. Text alignment: centered on mobile (text-center), left-aligned on md (md:text-left).
+                */}
+                <div className="container relative z-10 mx-auto grid items-center gap-10 px-8 md:grid-cols-2">
+
+                    {/* Content Column */}
+                    <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                        <span className="mb-4 inline-block rounded bg-blue-600 px-2 py-1 text-[10px] tracking-widest uppercase">
+                            New Arrival 2026
+                        </span>
+                        <h1 className="mb-4 text-4xl leading-tight font-bold sm:text-5xl md:text-6xl font-inter">
+                            The Future of <br className="hidden sm:block" /> Smart Living.
+                        </h1>
+                        <p className="mb-8 max-w-sm text-sm leading-relaxed text-gray-400">
+                            Experience unparalleled design and performance with our latest collection of premium essentials curated for the modern minimalist.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                            <button className="rounded-lg bg-blue-600 px-8 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95">
+                                Shop Collection
+                            </button>
+                            <button className="rounded-lg border border-white/30 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 active:scale-95">
+                                Watch Film
+                            </button>
                         </div>
                     </div>
-                    <div className="absolute top-0 right-0 h-full w-1/2 bg-gradient-to-l from-blue-500/10 to-transparent"></div>
-                </header>
+
+                    {/* Image Column */}
+                    {/* Changes:
+                        1. Removed 'hidden' so it shows on mobile.
+                        2. Added 'order-first md:order-last' if you want the image above text on mobile.
+                        3. Used max-h to keep it contained on mobile screens.
+                    */}
+                    <div className="flex justify-center md:justify-end ">
+                        <img
+                            src="/assets/images/Home/Container (2).png"
+                            alt="Headphones"
+                            className="w-full max-w-[280px] sm:max-w-[350px] md:max-w-full object-contain drop-shadow-2xl transition-transform duration-700 hover:scale-105 "
+                    />
+                    </div>
+                </div>
+
+                {/* Background Glow - Adjusted for mobile visibility */}
+                <div className="absolute top-0 right-0 h-full w-full md:w-1/2 bg-gradient-to-b md:bg-gradient-to-l from-blue-500/20 md:from-blue-500/10 to-transparent"></div>
+            </header>
 
                 <section className="container mx-auto lg:p-20 p-4">
-                    <h2 className="mb-12 text-center text-5xl font-bold font-inter">Up Coming Products</h2>
+                    <h2 className="mb-12 text-center lg:text-5xl text-3xl font-bold font-inter ">Up Coming Products</h2>
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 py-6">
 
@@ -234,14 +262,14 @@ export default function Home() {
                     <p className="mt-12 text-center text-lg text-gray-400">Showing 12 products</p>
                 </section>
 
-                <section className=" mb-4 container mx-auto">
-                    <div className=" relative overflow-hidden rounded-3xl bg-bg-background-dark px-4 py-40 text-center text-white">
+                <section className=" mb-4 container mx-auto ">
+                    <div className=" relative overflow-hidden rounded-3xl bg-bg-background-dark px-4 py-40 text-center text-white m-4">
                         <div className="pointer-events-none absolute inset-0 opacity-100">
                             <img src="/assets/images/Home/Frame(1).png" className='w-full h-full ' alt="" />
                         </div>
 
                         <div className="relative z-10">
-                            <h2 className="mb-6 text-5xl font-bold">Get in Touch</h2>
+                            <h2 className="mb-6 lg:text-5xl text-2xl font-bold">Get in Touch</h2>
                             <p className="mx-auto mb-10 max-w-lg text-sm text-gray-400">
                                 Have a specific inquiry or just want to say hello? Our team is ready to assist you with your professional needs.
                             </p>
