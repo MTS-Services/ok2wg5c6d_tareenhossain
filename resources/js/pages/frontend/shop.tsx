@@ -92,7 +92,9 @@ export default function Home() {
                 <section className="container mx-auto lg:px-20 p-4">
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 py-6">
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img.png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -105,7 +107,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (1).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -118,7 +122,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (2).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -136,7 +142,9 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (3).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -149,7 +157,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (4).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -162,7 +172,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (5).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -180,7 +192,9 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 py-6">
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (6).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -193,7 +207,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (7).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -206,7 +222,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (8).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -223,7 +241,9 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (9).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -236,7 +256,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (10).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
@@ -249,7 +271,9 @@ export default function Home() {
                     </div>
 
 
-                    <div className="group border rounded-2xl bg-white box-border shadow-md">
+                    <div onClick={() => {
+                            window.location.href = '/products-details';
+                        }} className="group border rounded-2xl bg-white box-border shadow-md">
                             <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
                                 <img src="/assets/images/Home/img (11).png" alt="Wireless Headphones" className="w-120 h-120" />
                             </div>
