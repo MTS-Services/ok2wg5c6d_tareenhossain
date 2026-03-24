@@ -37,4 +37,14 @@ class FrontendController extends Controller
     {
         return Inertia::render('frontend/faq');
     }
+
+    public function shipping(): Response
+    {
+        return Inertia::render('frontend/shipping');
+    }
+
+    public function return(): Response
+    {
+        return Inertia::render('frontend/return');
+    }
 }
