@@ -12,10 +12,10 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - inertiajs/inertia-laravel (INERTIA) - v2
 - laravel/fortify (FORTIFY) - v1
 - laravel/framework (LARAVEL) - v12
+- laravel/mcp (MCP) - v0
 - laravel/prompts (PROMPTS) - v0
 - laravel/wayfinder (WAYFINDER) - v0
 - tightenco/ziggy (ZIGGY) - v2
-- laravel/mcp (MCP) - v0
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
 - pestphp/pest (PEST) - v4
@@ -126,7 +126,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 ## Inertia
 
-- Inertia.js components should be placed in the `resources/js/Pages` directory unless specified differently in the JS bundler (`vite.config.js`).
+- Inertia.js components should be placed in the `resources/js/pages` directory unless specified differently in the JS bundler (`vite.config.js`).
 - Use `Inertia::render()` for server-side routing instead of traditional Blade views.
 - Use the `search-docs` tool for accurate guidance on all things Inertia.
 
@@ -227,6 +227,16 @@ Route::get('/users', function () {
 ### Models
 - Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
 
+=== mcp/core rules ===
+
+## Laravel MCP
+
+- MCP (Model Context Protocol) is very new. You must use the `search-docs` tool to get documentation for how to write and test Laravel MCP servers, tools, resources, and prompts effectively.
+- MCP servers need to be registered with a route or handle in `routes/ai.php`. Typically, they will be registered using `Mcp::web()` to register an HTTP streaming MCP server.
+- Servers are very testable; use the `search-docs` tool to find testing instructions.
+- Do not run `mcp:start`. This command hangs waiting for JSON-RPC MCP requests.
+- Some MCP clients use Node, which has its own certificate store. If a user tries to connect to their web MCP server locally using HTTPS, it could fail due to this reason. They will need to switch to HTTP during local development.
+
 === wayfinder/core rules ===
 
 ## Laravel Wayfinder
@@ -283,8 +293,8 @@ If your application uses the `<Form>` component from Inertia, you can use Wayfin
 
 ## Laravel Pint Code Formatter
 
-- You must run `vendor/bin/pint --dirty` before finalizing changes to ensure your code matches the project's expected style.
-- Do not run `vendor/bin/pint --test`, simply run `vendor/bin/pint` to fix any formatting issues.
+- You must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
+- Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
 
 === pest/core rules ===
 
