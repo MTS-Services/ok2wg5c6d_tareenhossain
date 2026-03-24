@@ -9,9 +9,9 @@ export default function Settings() {
             <div className="flex">
                 <AdminSidebar isCollapsed={false} activeSlug="settings" />
 
-                <div className="flex container mx-auto  bg-white">
+                <div className="flex container mx-auto  bg-white mt-12 lg:mt-0">
 
-                <main className="mx-auto w-full bg-white p-8 font-inter text-gray-900">
+                <main className="mx-auto w-full bg-white py-8 font-inter text-gray-900">
                     <div className="flex justify-between items-center mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 font-inter">Settings</h1>
                     <button className="bg-blue-600 hover:bg-blue-600 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-500/20 transition-all">

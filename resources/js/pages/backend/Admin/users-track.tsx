@@ -66,7 +66,7 @@ const sessions: SessionRow[] = [
             },
         ],
     },
-   
+
 ];
 
 function SessionDetailsSheet({
@@ -195,116 +195,158 @@ export default function UsersTrack() {
             <div className="flex">
                 <AdminSidebar isCollapsed={false} activeSlug="users-track" />
 
-                <div className="container bg-white p-8 font-inter text-gray-900">
+                <div className="container bg-white p-8 font-inter text-gray-900 mt-12 lg:mt-0">
                     <header className="mb-8">
                         <h1 className="font-inter text-3xl font-bold tracking-tight text-gray-900">User Tracking</h1>
                     </header>
                     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-                        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-gray-100 bg-white p-4">
-                            <div className="relative w-full max-w-sm">
-                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                        />
-                                    </svg>
-                                </span>
-                                <input
-                                    type="text"
-                                    placeholder="Search by Visitor ID or Country..."
-                                    className="block w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pr-3 pl-10 text-sm transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
-                                />
+                        {/* Header controls */}
+                        <div className="flex flex-col gap-3 border-b border-gray-100 bg-white p-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+                            <div className="relative w-full sm:max-w-sm">
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </span>
+                            <input
+                                type="text"
+                                placeholder="Search by Visitor ID or Country..."
+                                className="block w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pr-3 pl-10 text-sm transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                            />
                             </div>
                             <div className="flex items-center gap-3">
-                                <select className="cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300">
-                                    <option>All Devices</option>
-                                    <option>Desktop</option>
-                                    <option>Mobile</option>
-                                </select>
-                                <select className="cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300">
-                                    <option>Last 24 Hours</option>
-                                    <option>Last 7 Days</option>
-                                    <option>Last Month</option>
-                                </select>
+                            <select className="flex-1 cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300 sm:flex-none">
+                                <option>All Devices</option>
+                                <option>Desktop</option>
+                                <option>Mobile</option>
+                            </select>
+                            <select className="flex-1 cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300 sm:flex-none">
+                                <option>Last 24 Hours</option>
+                                <option>Last 7 Days</option>
+                                <option>Last Month</option>
+                            </select>
                             </div>
                         </div>
-                        <div className="overflow-x-auto">
+
+                        {/* Mobile card layout */}
+                        <div className="divide-y divide-gray-100 lg:hidden">
+                            {sessions.map((row, index) => (
+                            <div key={`${row.visitorId}-${index}-mobile`} className="p-4">
+                                {/* Card header row */}
+                                <div className="flex items-start justify-between gap-2">
+                                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                                    <span className="cursor-pointer text-sm font-semibold text-blue-600 hover:underline">
+                                    {row.visitorId}
+                                    </span>
+                                    <span className="text-xs text-gray-400">{row.visitTimeLabel}</span>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => openSessionDetails(row)}
+                                    className="shrink-0 text-gray-400 transition-colors hover:text-blue-600"
+                                    aria-label={`Open session details for ${row.visitorId}`}
+                                >
+                                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                                </div>
+
+                                {/* Detail grid */}
+                                <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm sm:grid-cols-3">
+                                <div>
+                                    <dt className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Location</dt>
+                                    <dd className="mt-0.5 text-gray-600">{row.location}</dd>
+                                </div>
+                                <div>
+                                    <dt className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Device</dt>
+                                    <dd className="mt-0.5 text-gray-600">{row.device}</dd>
+                                </div>
+                                <div>
+                                    <dt className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Duration</dt>
+                                    <dd className="mt-0.5 text-gray-600">{row.duration}</dd>
+                                </div>
+                                <div>
+                                    <dt className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Page Visited</dt>
+                                    <dd className="mt-0.5 italic text-gray-500">{row.pageVisited}</dd>
+                                </div>
+                                <div className="col-span-2 sm:col-span-2">
+                                    <dt className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Product Clicked</dt>
+                                    <dd className="mt-0.5 text-gray-600">{row.productClicked}</dd>
+                                </div>
+                                </dl>
+                            </div>
+                            ))}
+                        </div>
+
+                        {/* Desktop table layout */}
+                        <div className="hidden overflow-x-auto lg:block">
                             <table className="w-full border-collapse text-left">
-                                <thead className="border-b border-gray-100 bg-gray-50/50 text-[11px] font-bold tracking-wider text-gray-500 uppercase">
-                                    <tr>
-                                        <th className="px-6 py-4">Visitor ID</th>
-                                        <th className="px-6 py-4">Location</th>
-                                        <th className="px-6 py-4">Device</th>
-                                        <th className="px-6 py-4">Page Visited</th>
-                                        <th className="px-6 py-4">Product Clicked</th>
-                                        <th className="px-6 py-4">Duration</th>
-                                        <th className="px-6 py-4">Visit Time</th>
-                                        <th className="px-6 py-4 text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-100">
-                                    {sessions.map((row, index) => (
-                                        <tr
-                                            key={`${row.visitorId}-${index}`}
-                                            className="group transition-colors hover:bg-slate-50/80"
-                                        >
-                                            <td className="cursor-pointer px-6 py-4 text-sm font-semibold text-blue-600 hover:underline">
-                                                {row.visitorId}
-                                            </td>
-                                            <td className="px-6 py-4 text-sm text-gray-600">{row.location}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-600">{row.device}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-500 italic">{row.pageVisited}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-600">{row.productClicked}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-600">{row.duration}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-400">{row.visitTimeLabel}</td>
-                                            <td className="px-6 py-4 text-center">
-                                                <button
-                                                    type="button"
-                                                    onClick={() => openSessionDetails(row)}
-                                                    className="text-gray-400 transition-colors group-hover:text-blue-600"
-                                                    aria-label={`Open session details for ${row.visitorId}`}
-                                                >
-                                                    <svg
-                                                        className="mx-auto h-5 w-5"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M9 5l7 7-7 7"
-                                                        />
-                                                    </svg>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
+                            <thead className="border-b border-gray-100 bg-gray-50/50 text-[11px] font-bold tracking-wider text-gray-500 uppercase">
+                                <tr>
+                                <th className="px-6 py-4">Visitor ID</th>
+                                <th className="px-6 py-4">Location</th>
+                                <th className="px-6 py-4">Device</th>
+                                <th className="px-6 py-4">Page Visited</th>
+                                <th className="px-6 py-4">Product Clicked</th>
+                                <th className="px-6 py-4">Duration</th>
+                                <th className="px-6 py-4">Visit Time</th>
+                                <th className="px-6 py-4 text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {sessions.map((row, index) => (
+                                <tr
+                                    key={`${row.visitorId}-${index}`}
+                                    className="group transition-colors hover:bg-slate-50/80"
+                                >
+                                    <td className="cursor-pointer px-6 py-4 text-sm font-semibold text-blue-600 hover:underline">
+                                    {row.visitorId}
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600">{row.location}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-600">{row.device}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-500 italic">{row.pageVisited}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-600">{row.productClicked}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-600">{row.duration}</td>
+                                    <td className="px-6 py-4 text-sm text-gray-400">{row.visitTimeLabel}</td>
+                                    <td className="px-6 py-4 text-center">
+                                    <button
+                                        type="button"
+                                        onClick={() => openSessionDetails(row)}
+                                        className="text-gray-400 transition-colors group-hover:text-blue-600"
+                                        aria-label={`Open session details for ${row.visitorId}`}
+                                    >
+                                        <svg className="mx-auto h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+                                    </td>
+                                </tr>
+                                ))}
+                            </tbody>
                             </table>
                         </div>
-                        <div className="flex items-center justify-between border-t border-gray-100 bg-white px-6 py-4">
+
+                        {/* Pagination */}
+                        <div className="flex flex-col items-center gap-3 border-t border-gray-100 bg-white px-4 py-4 sm:flex-row sm:justify-between sm:px-6">
                             <p className="text-sm font-medium text-emerald-600">Showing 1 to 7 of 7 results</p>
                             <div className="flex gap-2">
-                                <button
-                                    type="button"
-                                    className="rounded-lg border border-emerald-600 px-4 py-2 text-sm font-medium text-emerald-600 transition-colors hover:bg-emerald-50"
-                                >
-                                    Previous
-                                </button>
-                                <button
-                                    type="button"
-                                    className="rounded-lg border border-emerald-600 px-4 py-2 text-sm font-medium text-emerald-600 transition-colors hover:bg-emerald-50"
-                                >
-                                    Next
-                                </button>
+                            <button
+                                type="button"
+                                className="rounded-lg border border-emerald-600 px-4 py-2 text-sm font-medium text-emerald-600 transition-colors hover:bg-emerald-50"
+                            >
+                                Previous
+                            </button>
+                            <button
+                                type="button"
+                                className="rounded-lg border border-emerald-600 px-4 py-2 text-sm font-medium text-emerald-600 transition-colors hover:bg-emerald-50"
+                            >
+                                Next
+                            </button>
                             </div>
                         </div>
-                    </div>
+                        </div>
                 </div>
             </div>
 
