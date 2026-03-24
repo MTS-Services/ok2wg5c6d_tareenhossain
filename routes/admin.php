@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AdminLoginController;
-use App\Http\Controllers\UserSelectionController;
 use Illuminate\Support\Facades\Route;
 
 // Admin Authentication Routes
@@ -15,6 +14,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
-        Route::get('/users/list', [UserSelectionController::class, 'getUsers'])->name('users.list');
+        Route::get('/users-track', [AdminDashboardController::class, 'UsersTrack'])->name('users-track');
+        Route::get('/products', [AdminDashboardController::class, 'Products'])->name('products');
+        Route::get('/analytics', [AdminDashboardController::class, 'Analytics'])->name('analytics');
+        Route::get('/settings', [AdminDashboardController::class, 'Settings'])->name('settings');
     });
 });
