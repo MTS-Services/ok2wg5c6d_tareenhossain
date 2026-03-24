@@ -1,86 +1,48 @@
-import { Link, usePage } from '@inertiajs/react';
-import { Users, User, BarChart, Shield, LayoutGrid, Settings } from 'lucide-react';
+import { Link, router, usePage } from '@inertiajs/react';
+import { BarChart3, Boxes, LayoutGrid, Settings, Users } from 'lucide-react';
 import * as React from 'react';
 
-import AppLogo from '@/components/app-logo';
-import { NavItem as NavItemComponent} from '@/components/ui/nav-item';
 import { cn } from '@/lib/utils';
-import { dashboard } from '@/routes';
-import { type NavItem, type SharedData } from '@/types';
-// Navigation configuration
-const adminNavItems: NavItem[] = [
+
+type SidebarItem = {
+    title: string;
+    href: string;
+    icon: React.ComponentType<{ className?: string }>;
+    isCurrent?: (currentRoute: string) => boolean;
+};
+
+const sidebarItems: SidebarItem[] = [
     {
-        title: 'Dashboard',
-        href: dashboard(),
+        title: 'Overview',
+        href: route('admin.dashboard'),
         icon: LayoutGrid,
-        slug: 'dashboard',
+        isCurrent: (currentRoute) => currentRoute.startsWith('/admin/dashboard'),
     },
+
     {
-        title: 'User Management',
-        href: '#',
+        title: 'Products',
+        href: route('admin.products'),
+        icon: Boxes,
+        isCurrent: (currentRoute) => currentRoute.startsWith('/admin/products'),
+    },
+
+    {
+        title: 'User Track',
+        href: route('admin.users-track'),
         icon: Users,
-        badge: 42,
-        children: [
-            {
-                title: 'Admins',
-                href: '#',
-                icon: Shield,
-                permission: 'manage admins',
-                children: [
-                    { title: 'All Admins', href: '#' },
-                    { title: 'Active', href: '#' },
-                    {
-                        title: 'Inactive',
-                        href: '#',
-                        children: [
-                            { title: 'Recently Inactive', href: '#' },
-                            { title: 'Long Inactive', href: '#' },
-                            {
-                                title: 'Archive',
-                                href: '#',
-                                children: [
-                                    { title: 'Over 1 year', href: '#' },
-                                    { title: 'Over 2 years', href: '#' },
-                                ]
-                            }
-                        ]
-                    },
-                ],
-            },
-            {
-                title: 'Users',
-                href: '#',
-                icon: User,
-                children: [
-                    {
-                        title: 'All',
-                        href: route('admin.users.index'),
-                        icon: User,
-                        slug: 'admin-users'
-                    },
-                    { title: 'Active', href: '#' },
-                    { title: 'Premium', href: '#', badge: 15 },
-                ],
-            },
-        ],
+        isCurrent: (currentRoute) => currentRoute.startsWith('/admin/users-track'),
     },
     {
         title: 'Analytics',
-        href: '#',
-        icon: BarChart,
-        permission: 'view analytics',
+        href: route('admin.analytics'),
+        icon: BarChart3,
+        isCurrent: (currentRoute) => currentRoute.startsWith('/admin/analytics'),
     },
     {
         title: 'Settings',
-        href: '#',
+        href: route('admin.settings'),
+        isCurrent: (currentRoute) => currentRoute.startsWith('/admin/settings'),
         icon: Settings,
-        badge: 3,
-    },
-    {
-        title: 'Disabled Item',
-        href: '#',
-        icon: Shield,
-        disabled: true,
     },
 ];
 
@@ -90,68 +52,96 @@ interface AdminSidebarProps {
 }
 
 export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, activeSlug }) => {
-    const { url, props } = usePage();
-    const currentRoute = url;
+    const { url } = usePage();
+    const currentRoute = url ?? '';
 
-    // Extract permissions from auth props
-    const userPermissions = React.useMemo(() => {
-        const auth = props.auth as SharedData['auth'];
-        return auth?.user?.permissions ||
-               auth?.user?.all_permissions ||
-               auth?.permissions ||
-               [];
-    }, [props.auth]);
+    const shouldUseSlugFallback = activeSlug === 'dashboard' || activeSlug === 'admin-users';
+    const isCollapsedView = isCollapsed;
+
+    const isActiveItem = (item: SidebarItem): boolean => {
+        if (shouldUseSlugFallback) {
+            return item.title === 'Overview' ? activeSlug === 'dashboard' : item.title === 'User Track' && activeSlug === 'admin-users';
+        }
+
+        return item.isCurrent?.(currentRoute) ?? false;
+    };
 
     return (
         <aside
             className={cn(
-                'relative hidden h-screen border-r bg-background',
+                'relative hidden h-screen bg-gray-50',
                 'transition-all duration-300 ease-in-out',
                 'md:flex flex-col',
-                isCollapsed ? 'w-16' : 'w-64'
+                isCollapsedView ? 'w-20' : 'w-72'
             )}
         >
-            {/* Logo Section */}
-            <div className={cn(
-                "flex h-16 items-center border-b",
-                isCollapsed ? "justify-center px-2" : "px-6"
-            )}>
-                <Link
-                    href="/"
-                    className="flex items-center gap-2 transition-opacity hover:opacity-80"
-                >
-                    {isCollapsed ? (
-                        <LayoutGrid className="h-6 w-6 text-primary" />
-                    ) : (
-                        <AppLogo />
-                    )}
-                </Link>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex-1 overflow-y-auto px-3 py-4 custom-scrollbar">
-                <nav className="space-y-1">
-                    {adminNavItems.map((item, index) => (
-                        <NavItemComponent
-                            key={`${item.title}-${index}`}
-                            item={item}
-                            isCollapsed={isCollapsed}
-                            currentRoute={currentRoute}
-                            isActive={activeSlug === item.slug}
-                            permissions={userPermissions}
-                        />
-                    ))}
-                </nav>
-            </div>
-
-            {/* Footer Section (Optional) */}
-            {!isCollapsed && (
-                <div className="border-t p-4">
-                    <div className="text-xs text-muted-foreground text-center">
-                        v1.0.0
+            <div
+                className={cn(
+                    'flex h-full flex-col border-r border-gray-200 bg-white p-6 shadow-sm',
+                    isCollapsedView && 'items-center px-3'
+                )}
+            >
+                <div className={cn('mb-10 flex items-center gap-3 px-2', isCollapsedView && 'justify-center px-0')}>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 shadow-lg shadow-blue-200">
+                        <LayoutGrid className="h-6 w-6 text-white" />
                     </div>
+                    {!isCollapsedView && <span className="text-2xl font-bold tracking-tight text-gray-800">NexusFlow</span>}
                 </div>
-            )}
+
+                <nav className="flex-1 space-y-2">
+                    {sidebarItems.map((item) => {
+                        const Icon = item.icon;
+                        const isActive = isActiveItem(item);
+
+                        return (
+                            <Link
+                                key={item.title}
+                                href={item.href}
+                                className={cn(
+                                    'group flex items-center rounded-xl px-4 py-3 transition-all duration-200',
+                                    isCollapsedView ? 'justify-center px-2' : 'gap-4',
+                                    isActive
+                                        ? 'bg-blue-50 text-blue-600'
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                )}
+                                preserveScroll
+                            >
+                                <Icon
+                                    className={cn(
+                                        'h-5 w-5',
+                                        isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
+                                    )}
+                                />
+                                {!isCollapsedView && (
+                                    <span className={cn(isActive ? 'font-semibold' : 'font-medium')}>{item.title}</span>
+                                )}
+                            </Link>
+                        );
+                    })}
+                </nav>
+
+                <div className={cn('mt-auto border-t border-gray-100 pt-6', isCollapsedView && 'w-full')}>
+                    <button
+                        type="button"
+                        className={cn(
+                            'group flex w-full items-center px-4 py-3 text-gray-600 transition-colors hover:text-red-500',
+                            isCollapsedView ? 'justify-center px-2' : 'gap-4'
+                        )}
+                        onClick={() => router.post(route('admin.logout'))}
+                    >
+                        <svg
+                            className="h-5 w-5 rotate-180 transition-transform group-hover:translate-x-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                        >
+                            <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        {!isCollapsedView && <span className="font-medium">Logout</span>}
+                    </button>
+                </div>
+            </div>
         </aside>
     );
 });

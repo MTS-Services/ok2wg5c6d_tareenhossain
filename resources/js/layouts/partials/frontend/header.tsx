@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { cn } from '@/lib/utils';
 import { home, shop, contact } from '@/routes';
@@ -60,7 +60,11 @@ export function FrontendHeader() {
                             </button>
 
                             {/* User Profile */}
-                            <button className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100">
+                            <button
+                                type="button"
+                                onClick={() => router.visit(route('admin.login'))}
+                                className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100"
+                            >
                                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
                                 </svg>
