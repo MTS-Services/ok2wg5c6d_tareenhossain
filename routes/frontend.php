@@ -9,4 +9,5 @@ Route::middleware('guest')->group(function () {
     Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
     Route::get('/products-details', [FrontendController::class, 'productsDetails'])->name('products-details');
     Route::get('/stay-connected', [FrontendController::class, 'stayConnected'])->name('stayconnected');
+    Route::get('/faq', [FrontendController::class, 'faq'])->name('faq');
 });
