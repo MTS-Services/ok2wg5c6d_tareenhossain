@@ -146,131 +146,131 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-  <div className="p-6 border-b border-gray-50">
-    <h2 className="text-lg font-bold font-inter">Top Performing Products</h2>
-    <p className="text-sm text-gray-500">Products with the most engagement</p>
-  </div>
+                        <div className="p-6 border-b border-gray-50">
+                            <h2 className="text-lg font-bold font-inter">Top Performing Products</h2>
+                            <p className="text-sm text-gray-500">Products with the most engagement</p>
+                        </div>
 
-  {/* Mobile card layout */}
-  <div className="md:hidden divide-y divide-gray-50">
-    {[
-      { name: "Echo Dot (5th Gen)", category: "Electronics", clicks: "1,240", bar: "60%" },
-      { name: "Kindle Paperwhite", category: "Electronics", clicks: "850", bar: "40%" },
-      { name: "Kindle Paperwhite", category: "Electronics", clicks: "850", bar: "40%" },
-    ].map((item, i) => (
-      <div key={i} className="p-4 hover:bg-gray-50/50 transition-colors">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden shrink-0">
-              <img
-                src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="min-w-0">
-              <p className="font-semibold text-sm truncate">{item.name}</p>
-              <p className="text-xs text-blue-500 font-medium">{item.category}</p>
-            </div>
-          </div>
-          <a href="#" className="text-xs font-semibold text-blue-500 hover:underline shrink-0">
-            Active ↗
-          </a>
-        </div>
-        <div className="mt-3 flex items-center gap-3 pl-13">
-          <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-            <div className="bg-blue-600 h-full" style={{ width: item.bar }} />
-          </div>
-          <span className="text-sm font-semibold text-gray-700 shrink-0">{item.clicks}</span>
-        </div>
-      </div>
-    ))}
-  </div>
+                        {/* Mobile card layout */}
+                        <div className="md:hidden divide-y divide-gray-50">
+                            {[
+                            { name: "Echo Dot (5th Gen)", category: "Electronics", clicks: "1,240", bar: "60%" },
+                            { name: "Kindle Paperwhite", category: "Electronics", clicks: "850", bar: "40%" },
+                            { name: "Kindle Paperwhite", category: "Electronics", clicks: "850", bar: "40%" },
+                            ].map((item, i) => (
+                            <div key={i} className="p-4 hover:bg-gray-50/50 transition-colors">
+                                <div className="flex items-center justify-between gap-3">
+                                <div className="flex items-center gap-3 min-w-0">
+                                    <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden shrink-0">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    </div>
+                                    <div className="min-w-0">
+                                    <p className="font-semibold text-sm truncate">{item.name}</p>
+                                    <p className="text-xs text-blue-500 font-medium">{item.category}</p>
+                                    </div>
+                                </div>
+                                <a href="#" className="text-xs font-semibold text-blue-500 hover:underline shrink-0">
+                                    Active ↗
+                                </a>
+                                </div>
+                                <div className="mt-3 flex items-center gap-3 pl-13">
+                                <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                    <div className="bg-blue-600 h-full" style={{ width: item.bar }} />
+                                </div>
+                                <span className="text-sm font-semibold text-gray-700 shrink-0">{item.clicks}</span>
+                                </div>
+                            </div>
+                            ))}
+                        </div>
 
-  {/* Desktop table layout */}
-  <div className="hidden md:block overflow-x-auto">
-    <table className="w-full text-left">
-      <thead className="bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-        <tr>
-          <th className="px-6 py-4">Product</th>
-          <th className="px-6 py-4">Category</th>
-          <th className="px-6 py-4">Total Clicks</th>
-          <th className="px-6 py-4 text-right">Status</th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-gray-50">
-        <tr className="hover:bg-gray-50/50 transition-colors">
-          <td className="px-6 py-4 flex items-center gap-3">
-            <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden shrink-0">
-              <img
-                src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="font-semibold text-sm">Echo Dot (5th Gen)</span>
-          </td>
-          <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
-          <td className="px-6 py-4">
-            <div className="flex items-center gap-3">
-              <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <div className="bg-blue-600 h-full w-[60%]" />
-              </div>
-              <span className="text-sm font-semibold">1,240</span>
-            </div>
-          </td>
-          <td className="px-6 py-4 text-right">
-            <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
-          </td>
-        </tr>
-        <tr className="hover:bg-gray-50/50 transition-colors">
-          <td className="px-6 py-4 flex items-center gap-3">
-            <div className="w-10 h-10 bg-slate-200 rounded-lg overflow-hidden shrink-0">
-              <img
-                src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="font-semibold text-sm">Kindle Paperwhite</span>
-          </td>
-          <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
-          <td className="px-6 py-4">
-            <div className="flex items-center gap-3">
-              <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <div className="bg-blue-600 h-full w-[40%]" />
-              </div>
-              <span className="text-sm font-semibold">850</span>
-            </div>
-          </td>
-          <td className="px-6 py-4 text-right">
-            <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
-          </td>
-        </tr>
-        <tr className="hover:bg-gray-50/50 transition-colors">
-          <td className="px-6 py-4 flex items-center gap-3">
-            <div className="w-10 h-10 bg-slate-200 rounded-lg overflow-hidden shrink-0">
-              <img
-                src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="font-semibold text-sm">Kindle Paperwhite</span>
-          </td>
-          <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
-          <td className="px-6 py-4">
-            <div className="flex items-center gap-3">
-              <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <div className="bg-blue-600 h-full w-[40%]" />
-              </div>
-              <span className="text-sm font-semibold">850</span>
-            </div>
-          </td>
-          <td className="px-6 py-4 text-right">
-            <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+                        {/* Desktop table layout */}
+                        <div className="hidden md:block overflow-x-auto">
+                            <table className="w-full text-left">
+                            <thead className="bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                                <tr>
+                                <th className="px-6 py-4">Product</th>
+                                <th className="px-6 py-4">Category</th>
+                                <th className="px-6 py-4">Total Clicks</th>
+                                <th className="px-6 py-4 text-right">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-50">
+                                <tr className="hover:bg-gray-50/50 transition-colors">
+                                <td className="px-6 py-4 flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden shrink-0">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    </div>
+                                    <span className="font-semibold text-sm">Echo Dot (5th Gen)</span>
+                                </td>
+                                <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center gap-3">
+                                    <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                        <div className="bg-blue-600 h-full w-[60%]" />
+                                    </div>
+                                    <span className="text-sm font-semibold">1,240</span>
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4 text-right">
+                                    <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
+                                </td>
+                                </tr>
+                                <tr className="hover:bg-gray-50/50 transition-colors">
+                                <td className="px-6 py-4 flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-slate-200 rounded-lg overflow-hidden shrink-0">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    </div>
+                                    <span className="font-semibold text-sm">Kindle Paperwhite</span>
+                                </td>
+                                <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center gap-3">
+                                    <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                        <div className="bg-blue-600 h-full w-[40%]" />
+                                    </div>
+                                    <span className="text-sm font-semibold">850</span>
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4 text-right">
+                                    <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
+                                </td>
+                                </tr>
+                                <tr className="hover:bg-gray-50/50 transition-colors">
+                                <td className="px-6 py-4 flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-slate-200 rounded-lg overflow-hidden shrink-0">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    </div>
+                                    <span className="font-semibold text-sm">Kindle Paperwhite</span>
+                                </td>
+                                <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center gap-3">
+                                    <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                        <div className="bg-blue-600 h-full w-[40%]" />
+                                    </div>
+                                    <span className="text-sm font-semibold">850</span>
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4 text-right">
+                                    <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
+                                </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                        </div>
                     </div>
 
             </div>

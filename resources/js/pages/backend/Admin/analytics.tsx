@@ -179,107 +179,107 @@ export default function Analytics() {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-  {/* Traffic Trend */}
-  <div className="bg-white p-4 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
-    <div className="flex justify-between items-start mb-6">
-      <div>
-        <h2 className="text-md font-bold text-gray-800">Traffic Trend</h2>
-        <p className="text-xs text-gray-400">Daily visitors over the last 7 days</p>
-      </div>
-      <span className="text-[10px] font-bold text-green-600 flex items-center gap-1 shrink-0 ml-2">
-        📈 +5.4%
-      </span>
-    </div>
-    <div className="relative h-48 sm:h-64 w-full">
-      <svg
-        className="w-full h-full"
-        viewBox="0 0 1000 100"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="blueGradient" x1={0} y1={0} x2={0} y2={1}>
-            <stop offset="0%" stopColor="#2563eb" />
-            <stop offset="100%" stopColor="#2563eb" stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <path
-          d="M0,80 Q150,75 250,60 T400,20 T600,45 T800,90 T1000,40 V100 H0 Z"
-          fill="url(#blueGradient)"
-          fillOpacity="0.1"
-        />
-        <path
-          d="M0,80 Q150,75 250,60 T400,20 T600,45 T800,90 T1000,40"
-          fill="none"
-          stroke="#2563eb"
-          strokeWidth={3}
-        />
-      </svg>
-      <div className="flex justify-between  text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase tracking-widest font-inter">
-        <span>Mon</span>
-        <span>Tue</span>
-        <span>Wed</span>
-        <span>Thu</span>
-        <span>Fri</span>
-        <span>Sat</span>
-        <span>Sun</span>
-      </div>
-    </div>
-  </div>
+                {/* Traffic Trend */}
+                <div className="bg-white p-4 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
+                    <div className="flex justify-between items-start mb-6">
+                    <div>
+                        <h2 className="text-md font-bold text-gray-800">Traffic Trend</h2>
+                        <p className="text-xs text-gray-400">Daily visitors over the last 7 days</p>
+                    </div>
+                    <span className="text-[10px] font-bold text-green-600 flex items-center gap-1 shrink-0 ml-2">
+                        📈 +5.4%
+                    </span>
+                    </div>
+                    <div className="relative h-48 sm:h-64 w-full">
+                    <svg
+                        className="w-full h-full"
+                        viewBox="0 0 1000 100"
+                        preserveAspectRatio="none"
+                    >
+                        <defs>
+                        <linearGradient id="blueGradient" x1={0} y1={0} x2={0} y2={1}>
+                            <stop offset="0%" stopColor="#2563eb" />
+                            <stop offset="100%" stopColor="#2563eb" stopOpacity={0} />
+                        </linearGradient>
+                        </defs>
+                        <path
+                        d="M0,80 Q150,75 250,60 T400,20 T600,45 T800,90 T1000,40 V100 H0 Z"
+                        fill="url(#blueGradient)"
+                        fillOpacity="0.1"
+                        />
+                        <path
+                        d="M0,80 Q150,75 250,60 T400,20 T600,45 T800,90 T1000,40"
+                        fill="none"
+                        stroke="#2563eb"
+                        strokeWidth={3}
+                        />
+                    </svg>
+                    <div className="flex justify-between  text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase tracking-widest font-inter">
+                        <span>Mon</span>
+                        <span>Tue</span>
+                        <span>Wed</span>
+                        <span>Thu</span>
+                        <span>Fri</span>
+                        <span>Sat</span>
+                        <span>Sun</span>
+                    </div>
+                    </div>
+                </div>
 
-  {/* Product Click Distribution */}
-  <div className="bg-white p-4 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
-    <div className="flex justify-between items-start mb-6">
-      <div>
-        <h2 className="text-md font-bold text-gray-800 font-inter">
-          Product Click Distribution
-        </h2>
-        <p className="text-xs text-gray-400">Total clicks per product category</p>
-      </div>
-      <span className="text-[10px] font-bold text-green-600 flex items-center gap-1 shrink-0 ml-2">
-        📈 +10.2%
-      </span>
-    </div>
-    <div className="space-y-6">
-      <div>
-        <div className="flex justify-between text-[11px] mb-2 font-bold">
-          <span className="text-gray-500">Echo Dot</span>
-          <span className="text-gray-400">12%</span>
-        </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div className="bg-blue-600 h-full w-[12%] rounded-full" />
-        </div>
-      </div>
-      <div>
-        <div className="flex justify-between text-[11px] mb-2 font-bold">
-          <span className="text-gray-500">Kindle Paperwhite</span>
-          <span className="text-gray-400">68%</span>
-        </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div className="bg-blue-600 h-full w-[68%] rounded-full" />
-        </div>
-      </div>
-      <div>
-        <div className="flex justify-between text-[11px] mb-2 font-bold">
-          <span className="text-gray-500">Fire TV Stick 4K</span>
-          <span className="text-gray-400">82%</span>
-        </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div className="bg-blue-600 h-full w-[82%] rounded-full" />
-        </div>
-      </div>
-      <div>
-        <div className="flex justify-between text-[11px] mb-2 font-bold">
-          <span className="text-gray-500">Ring Video Doorbell</span>
-          <span className="text-gray-400">35%</span>
-        </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div className="bg-blue-600 h-full w-[35%] rounded-full" />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-                <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                    {/* Product Click Distribution */}
+                    <div className="bg-white p-4 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
+                        <div className="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 className="text-md font-bold text-gray-800 font-inter">
+                            Product Click Distribution
+                            </h2>
+                            <p className="text-xs text-gray-400">Total clicks per product category</p>
+                        </div>
+                        <span className="text-[10px] font-bold text-green-600 flex items-center gap-1 shrink-0 ml-2">
+                            📈 +10.2%
+                        </span>
+                        </div>
+                        <div className="space-y-6">
+                        <div>
+                            <div className="flex justify-between text-[11px] mb-2 font-bold">
+                            <span className="text-gray-500">Echo Dot</span>
+                            <span className="text-gray-400">12%</span>
+                            </div>
+                            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div className="bg-blue-600 h-full w-[12%] rounded-full" />
+                            </div>
+                        </div>
+                        <div>
+                            <div className="flex justify-between text-[11px] mb-2 font-bold">
+                            <span className="text-gray-500">Kindle Paperwhite</span>
+                            <span className="text-gray-400">68%</span>
+                            </div>
+                            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div className="bg-blue-600 h-full w-[68%] rounded-full" />
+                            </div>
+                        </div>
+                        <div>
+                            <div className="flex justify-between text-[11px] mb-2 font-bold">
+                            <span className="text-gray-500">Fire TV Stick 4K</span>
+                            <span className="text-gray-400">82%</span>
+                            </div>
+                            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div className="bg-blue-600 h-full w-[82%] rounded-full" />
+                            </div>
+                        </div>
+                        <div>
+                            <div className="flex justify-between text-[11px] mb-2 font-bold">
+                            <span className="text-gray-500">Ring Video Doorbell</span>
+                            <span className="text-gray-400">35%</span>
+                            </div>
+                            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div className="bg-blue-600 h-full w-[35%] rounded-full" />
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                                    <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
                     <h2 className="text-lg font-bold text-gray-800 mb-8 font-inter">User Demographics</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                     <div>
