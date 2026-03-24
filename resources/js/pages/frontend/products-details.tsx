@@ -3,20 +3,56 @@ import { useState } from 'react';
 
 import FrontendLayout from '@/layouts/frontend-layout';
 import { cn } from '@/lib/utils';
-interface SpecificationItem {
-    label: string;
-    value: string;
-}
-
-interface SpecGroupProps {
-    title: string;
-    items: SpecificationItem[];
-}
 
 export default function ProductDetails() {
-    const [activeTab, setActiveTab] = useState('SPECIFICATION');
+    const [activeTab, setActiveTab] = useState('DESCRIPTION');
 
-    const tabs = ['DESCRIPTION', 'ADDITIONAL INFORMATION', 'SPECIFICATION', 'REVIEW'];
+    const tabs = ['DESCRIPTION', 'REVIEW'];
+    const features = [
+        'Free 1 Year Warranty',
+        'Free Shipping & Fastest Delivery',
+        '100% Money-back guarantee',
+        '24/7 Customer support',
+        'Secure payment method',
+    ];
+    const shippingDetails = [
+        { label: 'Courier', value: '2-4 days, free shipping' },
+        { label: 'Local Shipping', value: 'up to one week, $19.00' },
+        { label: 'UPS Ground Shipping', value: '4-6 days, $29.00' },
+        { label: 'Unishop Global Export', value: '3-4 days, $39.00' },
+    ];
+    const reviews = [
+        {
+            id: 1,
+            name: 'Darrell Steward',
+            time: 'Just now',
+            avatar: 'https://i.pravatar.cc/40?img=11',
+            text: 'This was my very first 3D printer and honestly, the setup was way easier than I expected. The automatic bed leveling saved me a lot of time, and my first print came out perfectly. Highly recommended for anyone starting out!',
+        },
+        {
+            id: 2,
+            name: 'Brooklyn Simmons',
+            time: '2 mins ago',
+            avatar: 'https://i.pravatar.cc/40?img=32',
+            text: "For this price, the print quality is incredible. The details are clean, the layers are smooth, and it works consistently. I've used it for cosplay parts and miniatures - no complaints at all!",
+        },
+        {
+            id: 3,
+            name: 'Kathryn Murphy',
+            time: '21 mins ago',
+            avatar: 'https://i.pravatar.cc/40?img=45',
+            text: 'I was able to assemble the printer in under 25 minutes. The instructions were clear and all tools were included. It has been running almost daily for two months now without a single issue.',
+        },
+        {
+            id: 4,
+            name: 'Guy Hawkins',
+            time: '1 hour ago',
+            avatar: 'https://i.pravatar.cc/40?img=57',
+            text: "I use the Kobra Go for small mechanical prototypes in my workshop. The accuracy and speed are surprisingly good for a budget machine. It's a real workhorse once you get the settings dialed in.",
+        },
+    ];
+
+
 
     return (
         <FrontendLayout>
@@ -48,16 +84,18 @@ export default function ProductDetails() {
                 </div>
             </div>
 
-            {/* Bottom Section: Tabs & Specs */}
-            <div className="border-t border-gray-100">
-                <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-8 border-b border-gray-100 overflow-x-auto no-scrollbar font-inter">
+            {/* Bottom Section: Dynamic Tabs */}
+            <div className="max-w-6xl mx-auto px-6 py-8 border border-b border-gray-200">
+                <div className="flex justify-center gap-10  border-b  border-gray-200 overflow-x-auto no-scrollbar">
                     {tabs.map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
                             className={cn(
-                                "py-4 text-[10px] md:text-xs font-bold tracking-widest transition-all border-b-2 whitespace-nowrap",
-                                activeTab === tab ? "border-orange-500 text-gray-900" : "border-transparent text-gray-900 hover:text-gray-600"
+                                'pb-3 text-sm font-semibold tracking-widest uppercase border-b-2 transition-colors whitespace-nowrap',
+                                activeTab === tab
+                                    ? 'border-orange-500 text-gray-900'
+                                    : 'border-transparent text-gray-500 hover:text-gray-700',
                             )}
                         >
                             {tab}
@@ -65,95 +103,167 @@ export default function ProductDetails() {
                     ))}
                 </div>
 
-                {/* Specification Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 py-10">
-                    {/* Column 1 */}
-                    <div className="space-y-10 ">
-                        <SpecGroup title="General" items={[
-                            { label: 'Sales Package', value: '3D Printer Kit, Power Cable, Filament Holder, Tools, USB Cable, Manual' },
-                            { label: 'Model Number', value: 'Kobra Go' },
-                            { label: 'Series', value: 'Anycubic Kobra Series' },
-                            { label: 'Color', value: 'Black & Orange' },
-                            {label: 'Type', value: 'FDM 3D Printer'},
-                            {label: 'Suitable For', value: 'Hobbyists, Students, Makers, Light Prototyping'},
-                            {label: 'Power Supply', value: 'Standard AC Power'},
-                            {label: 'MS Office Provided', value: 'No'}
-                        ]} />
-
-                        <SpecGroup title="Printing Features" items={[
-                            { label: 'Print Technology', value: 'Fused Deposition Modeling (FDM)' },
-                            { label: 'Build Volume', value: '220 x 220 x 250 mm' },
-                            { label: 'Layer Resolution:', value: '0.1 – 0.4 mm'},
-                            { label: 'Print Speed', value: 'Up to 100 mm/s' },
-                            { label: 'Filament Diameter:', value: '1.75 mm' },
-                            {label: 'Nozzle Diameter:', value: '0.4 mm (Standard)'},
-                            {label: 'Leveling System:', value: 'Automatic 25-point'},
-                            {label: 'Supported Filaments:', value: 'PLA, TPU, PETG, ABS'}
-
-                        ]} />
+                {activeTab === 'DESCRIPTION' && (
+                    <div className="max-w-7xl mx-auto  font-sans  rounded-sm overflow-hidden">
+                    <div className="flex">
                     </div>
-
-                    {/* Column 2 */}
-                    <div className="space-y-10">
-                        <SpecGroup title="Mechanical & Electrical Features" items={[
-                            { label: 'Extruder Type', value: 'Single Bowden Extruder' },
-                            { label: 'Nozzle Temp', value: 'Max 260 °C' },
-                            { label: 'Frame Material', value: 'Metal' },
-                        ]} />
-
-                        <SpecGroup title="Additional Features" items={[
-                            { label: 'Power Recovery:', value: '✅ Resume print after power loss' },
-                            { label: 'Filament Run-out Detection:', value: '❌' },
-                            { label: 'Fast Assembly:', value: 'Modular design — can be set up in 20 minutes' },
-                            { label: 'Maintenance::', value: 'Easy nozzle replacement & bed leveling' },
-                        ]} />
-
-                        <SpecGroup title="Warranty" items={[
-                            { label: 'Warranty Summary', value: '1 Year Limited Warranty' },
-                            { label: 'Warranty Service Type', value: 'Carry-in / Manufacturer' },
-                            { label: 'Domestic Warranty', value: '1 Year' },
-                            { label: 'Not Covered in Warranty', value: '1 Year' },
-                            { label: 'Domestic Warranty', value: '1 Year' },
-                        ]} />
+                    <div className="p-8 grid grid-cols-1 md:grid-cols-12 gap-10 bg-white">
+                      <div className="md:col-span-5">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4 font-inter">Description</h3>
+                        <div className="space-y-4 text-xs leading-relaxed text-gray-500">
+                          <p className="font-inter">
+                            The Anycubic Kobra Go is a beginner-friendly and budget 3D printer
+                            designed for smooth, accurate, and stable printing. It features a 220
+                            × 220 × 250 mm build volume, giving plenty of space for a wide range
+                            of models and projects.
+                          </p>
+                          <p className="font-inter">
+                            With its automatic bed leveling, fast assembly, and sturdy frame, this
+                            printer ensures consistent results with minimal setup. Its modular
+                            design makes maintenance and upgrades easy, making it ideal for
+                            hobbyists, students, and makers who want a reliable machine at an
+                            affordable price.
+                          </p>
+                          <p className="font-inter">
+                            The Kobra Go stands out for its precision and performance, thanks to
+                            its smooth motion system and powerful stepper motors. It supports a
+                            wide variety of filament types, allowing users to experiment with
+                            different materials for creative projects.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="md:col-span-3">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4 font-inter">Feature</h3>
+                        <ul className="space-y-2">
+                          <li className="flex items-center gap-3">
+                            <span className="text-orange-500 text-xl">🏆</span>
+                            <span className="text-sm font-medium text-gray-700">
+                              Free 1 Year Warranty
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-3">
+                            <span className="text-orange-500 text-xl">🚚</span>
+                            <span className="text-sm font-medium text-gray-700">
+                              Free Shipping &amp; Fasted Delivery
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-3">
+                            <span className="text-orange-500 text-xl">🤝</span>
+                            <span className="text-sm font-medium text-gray-700">
+                              100% Money-back guarantee
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-3">
+                            <span className="text-orange-500 text-xl">🎧</span>
+                            <span className="text-sm font-medium text-gray-700">
+                              24/7 Customer support
+                            </span>
+                          </li>
+                          <li className="flex items-center gap-3">
+                            <span className="text-orange-500 text-xl">💳</span>
+                            <span className="text-sm font-medium text-gray-700">
+                              Secure payment method
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="md:col-span-4">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4 font-inter">
+                          Shipping Information
+                        </h3>
+                        <div className="space-y-3 text-xs">
+                          <div className="flex flex-wrap gap-1">
+                            <span className="font-semibold text-gray-800">Courier:</span>
+                            <span className="text-gray-500">2 - 4 days, free shipping</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            <span className="font-semibold text-gray-800">Local Shipping:</span>
+                            <span className="text-gray-500">up to one week, $19.00</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            <span className="font-semibold text-gray-800">UPS Ground Shipping:</span>
+                            <span className="text-gray-500">4 - 6 days, $29.00</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            <span className="font-semibold text-gray-800">
+                              Unishop Global Export:
+                            </span>
+                            <span className="text-gray-500">3 - 4 days, $39.00</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
 
-                    {/* Column 3 */}
-                    <div className="space-y-10">
-                        <SpecGroup title="Display & Control" items={[
-                            { label: 'Display Type:', value: 'LCD Screen with Knob Control' },
-                            { label: 'Touchscreen:', value: 'No' },
-                            { label: 'Control Method:', value: 'SD Card / USB Cable' },
-                            { label: 'Supported File Types::', value: 'STL, OBJ, AMF' },
-                            { label: 'Slicing Software::', value: 'Cura, PrusaSlicer, Anycubic Slicer' },
-                        ]} />
+                )}
 
-                        <SpecGroup title="Connectivity Features" items={[
-                            { label: 'USB:', value: 'Yes (USB Cable)' },
-                            { label: 'SD Card:', value: 'Yes' },
-                            { label: 'Wi-Fi:', value: '❌ (Not available in this model)' },
-                            { label: 'Bluetooth:', value: '❌' },
-                        ]} />
+                {activeTab === 'REVIEW' && (
+                    <div className="bg-white text-gray-800 max-w-6xl mx-auto px-6 py-8">
+                        <h2 className="font-semibold text-base mb-6 text-gray-900">Customer Feedback</h2>
+                        <div className="space-y-6">
+                            <div className="flex flex-col md:flex-row gap-8 mb-2">
+                                <div className="bg-amber-50 rounded-xl flex flex-col items-center justify-center px-12 py-8 min-w-[200px]">
+                                    <span className="text-6xl font-bold text-gray-900 leading-none">4.7</span>
+                                    <div className="flex gap-1 mt-3 text-orange-400 text-xl">
+                                        ★★★★<span className="text-orange-300">★</span>
+                                    </div>
+                                    <p className="text-sm text-gray-600 mt-2 text-center">
+                                        Customer Rating <span className="text-gray-500">(934,516)</span>
+                                    </p>
+                                </div>
+                                <div className="flex-1 flex flex-col justify-center gap-3">
+                                    {[
+                                        { stars: '★★★★★', percent: '63%', count: '(94,532)' },
+                                        { stars: '★★★★', starsOff: '★', percent: '24%', count: '(6,717)' },
+                                        { stars: '★★★', starsOff: '★★', percent: '9%', count: '(714)' },
+                                        { stars: '★★', starsOff: '★★★', percent: '1%', count: '(152)' },
+                                        { stars: '★', starsOff: '★★★★', percent: '7%', count: '(643)' },
+                                    ].map((item) => (
+                                        <div key={`${item.stars}-${item.percent}`} className="flex items-center gap-3">
+                                            <div className="flex text-orange-400 text-sm gap-0.5">
+                                                {item.stars}
+                                                {item.starsOff ? (
+                                                    <span className="text-gray-300">{item.starsOff}</span>
+                                                ) : null}
+                                            </div>
+                                            <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                                <div className="h-full bg-orange-400 rounded-full" style={{ width: item.percent }} />
+                                            </div>
+                                            <span className="text-sm text-gray-700 w-8 text-right">{item.percent}</span>
+                                            <span className="text-sm text-gray-400">{item.count}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="space-y-0 max-w-3xl">
+                                {reviews.map((review, index) => (
+                                    <div
+                                        key={review.id}
+                                        className={cn('py-6', index < reviews.length - 1 && 'border-b border-gray-100')}
+                                    >
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <img src={review.avatar} alt={review.name} className="w-10 h-10 rounded-full object-cover" />
+                                            <div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="font-semibold text-sm text-gray-900">{review.name}</span>
+                                                    <span className="text-gray-400 text-xs">·</span>
+                                                    <span className="text-gray-400 text-xs">{review.time}</span>
+                                                </div>
+                                                <div className="text-orange-400 text-sm mt-0.5">★★★★★</div>
+                                            </div>
+                                        </div>
+                                        <p className="text-sm text-gray-600 leading-relaxed">{review.text}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
+            <p className="text-sm text-gray-500 font-inter text-center mt-10">Showing 12 products</p>
         </section>
             </FrontendLayout>
 
-    );
-}
-
-function SpecGroup({ title, items }: SpecGroupProps) {
-    return (
-        <div>
-            <h3 className="font-bold text-gray-900 mb-4 border-b border-gray-50 pb-2">{title}</h3>
-            <div className="space-y-3">
-                {items.map((item, i) => (
-                    <div key={i} className="grid grid-cols-2 gap-4 text-[11px] md:text-xs">
-                        <span className="text-gray-900 font-medium font-inter">{item.label}</span>
-                        <span className="text-gray-700 font-inter">{item.value}</span>
-                    </div>
-                ))}
-            </div>
-        </div>
     );
 }

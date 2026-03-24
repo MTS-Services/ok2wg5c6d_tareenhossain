@@ -32,4 +32,9 @@ class FrontendController extends Controller
     {
         return Inertia::render('frontend/stay-connected');
     }
+
+    public function faq(): Response
+    {
+        return Inertia::render('frontend/faq');
+    }
 }

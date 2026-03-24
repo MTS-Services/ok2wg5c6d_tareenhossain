@@ -1,9 +1,17 @@
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { faq } from '@/routes';
 
 const socialLinks = [
     { label: 'Facebook', href: '#', Icon: Facebook },
     { label: 'Instagram', href: '#', Icon: Instagram },
     { label: 'LinkedIn', href: '#', Icon: Linkedin },
+] as const;
+
+const supportLinks = [
+    { label: 'Shipping', href: '#' },
+    { label: 'Returns', href: '#' },
+    { label: 'Contact', href: '#' },
+    { label: 'FAQ', href: faq.url() },
 ] as const;
 
 export function FrontendFooter() {
@@ -49,10 +57,10 @@ export function FrontendFooter() {
                         Support
                     </h4>
                     <ul className="flex flex-col gap-3">
-                        {["Shipping", "Returns", "Contact", "FAQ"].map((item) => (
-                            <li key={item}>
-                                <a href="#" className="text-sm text-gray-500 hover:text-gray-900">
-                                    {item}
+                        {supportLinks.map(({ label, href }) => (
+                            <li key={label}>
+                                <a href={href} className="text-sm text-gray-500 hover:text-gray-900">
+                                    {label}
                                 </a>
                             </li>
                         ))}
