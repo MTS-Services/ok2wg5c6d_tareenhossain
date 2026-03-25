@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
-import { faq } from '@/routes';
+import { faq, shipping, returnMethod, contact } from '@/routes';
 
 const socialLinks = [
     { label: 'Facebook', href: '#', Icon: Facebook },
@@ -8,9 +8,9 @@ const socialLinks = [
 ] as const;
 
 const supportLinks = [
-    { label: 'Shipping', href: '#' },
-    { label: 'Returns', href: '#' },
-    { label: 'Contact', href: '#' },
+    { label: 'Shipping Policy', href: shipping.url() },
+    { label: 'Returns Policy', href: returnMethod.url() },
+    { label: 'Contact', href: contact.url() },
     { label: 'FAQ', href: faq.url() },
 ] as const;
 
