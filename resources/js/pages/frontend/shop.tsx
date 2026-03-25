@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 
+import { ProductCardMedia } from '@/components/frontend/product-image';
 import FrontendLayout from '@/layouts/frontend-layout';
 
 type Product = {
@@ -247,15 +248,12 @@ export default function Shop() {
                                 onClick={() => {
                                     window.location.href = '/products-details';
                                 }}
-                                className="group box-border rounded-2xl border bg-white shadow-md"
+                                className="group box-border min-w-0 rounded-2xl border bg-white shadow-md"
                             >
-                                <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                    <img
-                                        src={product.image}
-                                        alt={product.name}
-                                        className="h-120 w-120"
-                                    />
-                                </div>
+                                <ProductCardMedia
+                                    src={product.image}
+                                    alt={product.name}
+                                />
                                 <div className="p-4">
                                     <span className="text-[12px] tracking-widest text-gray-400 uppercase">
                                         {product.category}
