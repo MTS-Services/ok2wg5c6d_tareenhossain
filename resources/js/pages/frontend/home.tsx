@@ -29,12 +29,14 @@ export default function Home() {
                             Experience unparalleled design and performance with our latest collection of premium essentials curated for the modern minimalist.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                            <button className="rounded-lg bg-blue-600 px-8 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95">
+                            <button onClick={() => {
+                                window.location.href = '/shop';
+                            }} className="rounded-lg bg-blue-600 px-8 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95">
                                 Shop Collection
                             </button>
-                            <button className="rounded-lg border border-white/30 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 active:scale-95">
+                            {/* <button className="rounded-lg border border-white/30 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 active:scale-95">
                                 Watch Film
-                            </button>
+                            </button> */}
                         </div>
                     </div>
 
@@ -273,7 +275,9 @@ export default function Home() {
                             <p className="mx-auto mb-10 max-w-lg text-sm text-gray-400">
                                 Have a specific inquiry or just want to say hello? Our team is ready to assist you with your professional needs.
                             </p>
-                            <button className="rounded-lg bg-blue-600 px-10 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">CONTACT US</button>
+                            <button onClick={() => {
+                                window.location.href = '/contact';
+                            }} className="rounded-lg bg-blue-600 px-10 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">CONTACT US</button>
                         </div>
                     </div>
                 </section>

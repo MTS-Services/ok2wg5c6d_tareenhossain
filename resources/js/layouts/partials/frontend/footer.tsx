@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
-import { faq, shipping, returnMethod, contact } from '@/routes';
+import { contact, faq, returnMethod, shipping, shop } from '@/routes';
 
 const socialLinks = [
     { label: 'Facebook', href: '#', Icon: Facebook },
@@ -41,9 +41,9 @@ export function FrontendFooter() {
                         Shop
                     </h4>
                     <ul className="flex flex-col gap-3">
-                        {["Electronics", "Home Decor", "Apparel", "Office"].map((item) => (
+                        {['Electronics', 'Home Decor', 'Apparel', 'Office'].map((item) => (
                             <li key={item}>
-                                <a href="#" className="text-sm text-gray-500 hover:text-gray-900">
+                                <a href={shop.url()} className="text-sm text-gray-500 hover:text-gray-900">
                                     {item}
                                 </a>
                             </li>
