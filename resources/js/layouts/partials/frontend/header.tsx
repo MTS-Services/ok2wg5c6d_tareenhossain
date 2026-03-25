@@ -42,7 +42,7 @@ export function FrontendHeader() {
                     <nav className="flex w-full items-center justify-between rounded-lg  border-rounded-md bg-white px-4 md:px-6 py-3 shadow">
 
                         {/* Logo */}
-                        <div className="flex items-center gap-2 z-20">
+                        <div onClick={() => router.visit(home.url())} className="flex items-center gap-2 z-20">
                             <img src="/assets/images/Home/Container.png" alt="Logo" className="h-6 w-6" />
                             <span className="text-sm font-bold tracking-widest text-gray-900 uppercase">
                                 Nexus
