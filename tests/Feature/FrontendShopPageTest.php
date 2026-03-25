@@ -2,6 +2,13 @@
 
 use function Pest\Laravel\get;
 
+it('loads the frontend home page', function () {
+    $response = get(route('home'));
+
+    $response->assertSuccessful();
+    $response->assertSee('frontend/home', false);
+});
+
 it('loads the frontend shop page', function () {
     $response = get(route('shop'));
 

@@ -20,7 +20,7 @@ export default function Home() {
                             <p className="mx-auto mb-10 max-w-lg text-sm text-gray-400">
                                 Have a specific inquiry or just want to say hello? Our team is ready to assist you with your professional needs.
                             </p>
-                            <button className="rounded-lg bg-blue-600 px-10 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">CONTACT US</button>
+                            {/* <button className="rounded-lg bg-blue-600 px-10 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">CONTACT US</button> */}
                         </div>
                     </div>
                 </section>
