@@ -12,10 +12,9 @@ export default function Return() {
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col space-y-4">
                 <div className="flex items-center space-x-4">
                 <div className="bg-violet-100 p-3 rounded-xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
-                    </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAptJREFUeAHdVt1t2zAQPkqJHQMFwg2qEZwJom7gTmD7KTX6EHcCOxskD02TJysTtBtUnaDuBHY3YIGiiVVI7HciZf0mVRr3JR8g8CiS9x2PxzsSPXeITHgvf/Zd6pzGFF28VS+W1Ykf5K2nSQwccjx0D+3vH5pinhtOVG9NLbCXCQ7tT9EMQcrdcU4UjWDVEKIvqMliN22vZBSC/AbEAbUhrIJ3vEedhSbqZ/8gK5B+16R5VxJ0Ev1jOwyDXB/ExyA+u2/HjYTXMhomROc6VZoSfYHy+QHtLcdKqOp864UZRA8fZMfHEbxqIhX5ok0gSMB1GpOEl+0I8uuJ2g+pBaBjDh0z09PrLnWOqgY69WWGzBDHR23JGBPVncOd40zPhqJFdY5z32Kdno/7GWeygou/8plSK9IePJW8s6QDuNZvRSjM+Xn8ceAgigfUEifq4BxNaPS4s+JYIWgSuMNZNylAVKoedQN6BBA4F5oSHyIHkJcFkKD/hIXU8o5+r9hT8NB4ojoB/y+5lC2hHYGjE8rXLIvCXXZyMg5pd8Ut7QgJ6W9WPKwRkgkQWCNe0o5gA68EJx/cXtBW4d+Scpvka4Q42KVtPT5w2g18ozNe1giRVcLUJrjhliKfngjOr4VuWCO09yQ0P8UpPRE2maeJv5jES9eCy4oV/Uv5a0r/iGu5ySoHEAcVQ8q4kpuPnAPt4OhEdW7oUWTRELsKbDd4ozrj4ngtl6Kk8IQ1y7zQWtsKl/JumpPpdcFjWzSmNs44XClo6xZenJw1PR84oiMEmTbn7hfmP1yAm0jhgLkpyiWEUMiFmZ8bfbwMvPIF15/YS00vgwcJc+I0vEeFt0sjsmfI3wp262phduzyy62PciXNYqFMwohbPxOfP/4A/Zf9dxmbyE8AAAAASUVORK5CYII=" width="28" height="28"/>
+                </svg>
                 </div>
                 <div>
                     <h2 className="text-lg font-bold">30-Day Returns</h2>
@@ -29,10 +28,10 @@ export default function Return() {
 
             <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
                 <div className="bg-violet-600 p-6 flex items-center space-x-3">
-                <div className="bg-white/20 p-2 rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
+                <div className="bg-white/50 p-2 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+                <image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAptJREFUeAHdVt1t2zAQPkqJHQMFwg2qEZwJom7gTmD7KTX6EHcCOxskD02TJysTtBtUnaDuBHY3YIGiiVVI7HciZf0mVRr3JR8g8CiS9x2PxzsSPXeITHgvf/Zd6pzGFF28VS+W1Ykf5K2nSQwccjx0D+3vH5pinhtOVG9NLbCXCQ7tT9EMQcrdcU4UjWDVEKIvqMliN22vZBSC/AbEAbUhrIJ3vEedhSbqZ/8gK5B+16R5VxJ0Ev1jOwyDXB/ExyA+u2/HjYTXMhomROc6VZoSfYHy+QHtLcdKqOp864UZRA8fZMfHEbxqIhX5ok0gSMB1GpOEl+0I8uuJ2g+pBaBjDh0z09PrLnWOqgY69WWGzBDHR23JGBPVncOd40zPhqJFdY5z32Kdno/7GWeygou/8plSK9IePJW8s6QDuNZvRSjM+Xn8ceAgigfUEifq4BxNaPS4s+JYIWgSuMNZNylAVKoedQN6BBA4F5oSHyIHkJcFkKD/hIXU8o5+r9hT8NB4ojoB/y+5lC2hHYGjE8rXLIvCXXZyMg5pd8Ut7QgJ6W9WPKwRkgkQWCNe0o5gA68EJx/cXtBW4d+Scpvka4Q42KVtPT5w2g18ozNe1giRVcLUJrjhliKfngjOr4VuWCO09yQ0P8UpPRE2maeJv5jES9eCy4oV/Uv5a0r/iGu5ySoHEAcVQ8q4kpuPnAPt4OhEdW7oUWTRELsKbDd4ozrj4ngtl6Kk8IQ1y7zQWtsKl/JumpPpdcFjWzSmNs44XClo6xZenJw1PR84oiMEmTbn7hfmP1yAm0jhgLkpyiWEUMiFmZ8bfbwMvPIF15/YS00vgwcJc+I0vEeFt0sjsmfI3wp262phduzyy62PciXNYqFMwohbPxOfP/4A/Zf9dxmbyE8AAAAASUVORK5CYII=" width="28" height="28"/>
+                </svg>
                 </div>
                 <h1 className="text-2xl font-bold text-white tracking-tight ">Return Policy</h1>
                 </div>
