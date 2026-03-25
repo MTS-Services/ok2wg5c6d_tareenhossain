@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
-import { contact, faq, returnMethod, shipping, shop } from '@/routes';
+import { contact, faq, home, returnMethod, shipping, shop } from '@/routes';
+import { router } from '@inertiajs/react';
 
 const socialLinks = [
     { label: 'Facebook', href: '#', Icon: Facebook },
@@ -23,7 +24,7 @@ export function FrontendFooter() {
 
                 {/* Brand Column */}
                 <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-2">
+                    <div onClick={() => router.visit(home.url())} className="flex items-center gap-2">
                         <img src="/assets/images/Home/Container.png" alt="" />
                         <span className="text-sm font-bold tracking-widest text-gray-900 uppercase font-inter">
                             Nexus
