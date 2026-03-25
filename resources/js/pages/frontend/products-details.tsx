@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 
+import { ProductDetailMedia } from '@/components/frontend/product-image';
 import FrontendLayout from '@/layouts/frontend-layout';
 import { cn } from '@/lib/utils';
 
@@ -59,12 +60,11 @@ export default function ProductDetails() {
             <Head title="Product Details" />
             <section className="container mx-auto px-4 py-8 max-w-7xl">
             {/* Top Section: Product Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-                <div className="rounded-2xl overflow-hidden  aspect-square flex items-center justify-center">
-                    <img
+            <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
+                <div className="min-w-0">
+                    <ProductDetailMedia
                         src="/assets/images/Rectangle 20 (6).png"
                         alt="Premium Wireless Headphones"
-                        className="object-contain w-full h-full mix-blend-multiply"
                     />
                 </div>
 
