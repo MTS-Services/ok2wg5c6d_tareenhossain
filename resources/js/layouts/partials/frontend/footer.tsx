@@ -1,7 +1,11 @@
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
 import { contact, faq, home, returnMethod, shipping, shop } from '@/routes';
 import { router } from '@inertiajs/react';
-
+import { privacyPolicy } from '@/routes';
+import { privacyPolicy as privacyPolicyRoute } from '@/routes';
+import { shipping as shippingRoute } from '@/routes';
+import { returnMethod as returnMethodRoute } from '@/routes';
+import { termsService as termsServiceRoute } from '@/routes';
 const socialLinks = [
     { label: 'Facebook', href: '#', Icon: Facebook },
     { label: 'Instagram', href: '#', Icon: Instagram },
@@ -95,10 +99,10 @@ export function FrontendFooter() {
                         © 2026 Nexus Storefront Inc. All rights reserved.
                     </p>
                     <div className="flex items-center gap-4">
-                        <a href="#" className="text-xs text-gray-500 hover:text-gray-900">
+                        <a  href={privacyPolicyRoute.url()} className="text-xs text-gray-500 hover:text-gray-900">
                             Privacy Policy
                         </a>
-                        <a href="#" className="text-xs text-gray-500 hover:text-gray-900">
+                        <a  href={termsServiceRoute.url()} className="text-xs text-gray-500 hover:text-gray-900">
                             Terms of Service
                         </a>
                     </div>
