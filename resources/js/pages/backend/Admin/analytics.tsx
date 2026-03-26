@@ -9,8 +9,8 @@ export default function Analytics() {
             <div className="flex">
                 <AdminSidebar isCollapsed={false} activeSlug="analytics" />
 
-                <div className="min-h-screen bg-white p-8 font-inter text-gray-900 mt-12 lg:mt-0">
-                <div className="container mx-auto mb-10 flex items-center justify-between gap-4">
+                <div className="flex-1 min-h-screen bg-white p-8 font-inter text-gray-900 mt-12 lg:mt-0">
+                <div className="w-full mb-10 flex items-center justify-between gap-4">
                     <div className="relative flex-1">
                         <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400">
                         <svg

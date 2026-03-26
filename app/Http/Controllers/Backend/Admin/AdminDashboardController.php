@@ -33,4 +33,14 @@ class AdminDashboardController extends Controller
     {
         return Inertia::render('backend/Admin/settings');
     }
+
+    public function EditProduct(Request $request)
+    {
+        return Inertia::render('backend/Admin/edit-product');
+    }
+
+    public function Category(Request $request)
+    {
+        return Inertia::render('backend/Admin/category');
+    }
 }
