@@ -18,5 +18,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/products', [AdminDashboardController::class, 'Products'])->name('products');
         Route::get('/analytics', [AdminDashboardController::class, 'Analytics'])->name('analytics');
         Route::get('/settings', [AdminDashboardController::class, 'Settings'])->name('settings');
+        Route::get('/edit-product', [AdminDashboardController::class, 'EditProduct'])->name('edit-product');
     });
 });
