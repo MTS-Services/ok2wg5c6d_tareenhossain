@@ -12,4 +12,6 @@ Route::middleware('guest')->group(function () {
     Route::get('/faq', [FrontendController::class, 'faq'])->name('faq');
     Route::get('/shipping', [FrontendController::class, 'shipping'])->name('shipping');
     Route::get('/return', [FrontendController::class, 'return'])->name('return');
+    Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('privacy-policy');
+    Route::get('/terms-service', [FrontendController::class, 'termsService'])->name('terms-service');
 });
