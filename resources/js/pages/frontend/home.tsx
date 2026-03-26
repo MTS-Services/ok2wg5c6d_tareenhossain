@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 
+import { ProductCardMedia } from '@/components/frontend/product-image';
 import FrontendLayout from '@/layouts/frontend-layout';
 
 export default function Home() {
@@ -68,11 +69,12 @@ export default function Home() {
                         onClick={() => {
                             window.location.href = '/products-details';
                         }}
-                        className="group border rounded-2xl bg-white box-border shadow-md"
+                        className="group border min-w-0 rounded-2xl bg-white box-border shadow-md"
                     >
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img.png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                            <ProductCardMedia
+                                src="/assets/images/Home/img.png"
+                                alt="Wireless Headphones"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Electronics</span>
                             <h3 className=" text-lg font-bold font-inter">Premium Wireless Headphones</h3>
@@ -84,10 +86,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (1).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (1).png"
+                                alt="Minimalist Leather Wallet"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Accessories</span>
                             <h3 className=" text-lg font-bold font-inter">Minimalist Leather Wallet</h3>
@@ -99,10 +102,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (2).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (2).png"
+                                alt="Designer Sunglasses"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Accessories</span>
                             <h3 className=" text-lg font-bold font-inter">Designer Sunglasses</h3>
@@ -119,10 +123,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (3).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (3).png"
+                                alt="Mechanical Keyboard"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Electronics</span>
                             <h3 className=" text-lg font-bold font-inter">Mechanical Keyboard</h3>
@@ -134,10 +139,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (4).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (4).png"
+                                alt="Premium Coffee Maker"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Home</span>
                             <h3 className=" text-lg font-bold font-inter">Premium Coffee Maker</h3>
@@ -149,10 +155,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (5).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (5).png"
+                                alt="Wireless Charging Pad"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Electronics</span>
                             <h3 className=" text-lg font-bold font-inter">Wireless Charging Pad</h3>
@@ -169,10 +176,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (6).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (6).png"
+                                alt="Stainless Steel Water Bottle"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Lifestyle</span>
                             <h3 className=" text-lg font-bold font-inter">Stainless Steel Water Bottle</h3>
@@ -184,10 +192,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (7).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (7).png"
+                                alt="Smart Watch Pro"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Electronics</span>
                             <h3 className=" text-lg font-bold font-inter">Smart Watch Pro</h3>
@@ -199,10 +208,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (8).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (8).png"
+                                alt="Leather Messenger Bag"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Accessories</span>
                             <h3 className=" text-lg font-bold font-inter">Leather Messenger Bag</h3>
@@ -218,10 +228,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (9).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (9).png"
+                                alt="Studio Desk Lamp"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Home</span>
                             <h3 className=" text-lg font-bold font-inter">Studio Desk Lamp</h3>
@@ -233,10 +244,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (10).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (10).png"
+                                alt="Ergonomic Office Chair"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Furniture</span>
                             <h3 className=" text-lg font-bold font-inter">Ergonomic Office Chair</h3>
@@ -248,10 +260,11 @@ export default function Home() {
 
                     <div onClick={() => {
                             window.location.href = '/products-details';
-                        }} className="group border rounded-2xl bg-white box-border shadow-md">
-                            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl bg-gray-100 transition-transform group-hover:scale-[1.02]">
-                                <img src="/assets/images/Home/img (11).png" alt="Wireless Headphones" className="w-120 h-120" />
-                            </div>
+                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                            <ProductCardMedia
+                                src="/assets/images/Home/img (11).png"
+                                alt="Running Sneakers"
+                            />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Footwear</span>
                             <h3 className=" text-lg font-bold font-inter">Running Sneakers</h3>
