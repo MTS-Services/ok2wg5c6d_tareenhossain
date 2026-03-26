@@ -1,5 +1,5 @@
 import { Link, router, usePage } from '@inertiajs/react';
-import { BarChart3, Boxes, LayoutGrid, Menu, Settings, Users, X } from 'lucide-react';
+import { BarChart3, Boxes, ChevronDown, LayoutGrid, Menu, Settings, Tag, Users, X } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -9,6 +9,7 @@ type SidebarItem = {
     href: string;
     icon: React.ComponentType<{ className?: string }>;
     isCurrent?: (currentRoute: string) => boolean;
+    subItems?: SidebarItem[];
 };
 
 const sidebarItems: SidebarItem[] = [
@@ -19,18 +20,33 @@ const sidebarItems: SidebarItem[] = [
         isCurrent: (currentRoute) => currentRoute.startsWith('/admin/dashboard'),
     },
 
-    {
-        title: 'Products',
-        href: route('admin.products'),
-        icon: Boxes,
-        isCurrent: (currentRoute) => currentRoute.startsWith('/admin/products'),
-    },
 
     {
         title: 'User Track',
         href: route('admin.users-track'),
         icon: Users,
         isCurrent: (currentRoute) => currentRoute.startsWith('/admin/users-track'),
+    },
+    {
+        title: 'Products Management',
+        subItems: [
+
+            {
+                title: 'Products',
+                href: route('admin.products'),
+                icon: Boxes,
+                isCurrent: (currentRoute) => currentRoute.startsWith('/admin/products'),
+            },
+            {
+                title: 'Category',
+                href: route('admin.category'),
+                icon: Tag,
+                isCurrent: (currentRoute) => currentRoute.startsWith('/admin/category'),
+            },
+        ],
+        href: route('admin.products'),
+        icon: Boxes,
+        isCurrent: (currentRoute) => currentRoute.startsWith('/admin/products'),
     },
     {
         title: 'Analytics',
@@ -55,6 +71,7 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, active
     const { url } = usePage();
     const currentRoute = url ?? '';
     const [isMobileOpen, setIsMobileOpen] = React.useState(false);
+    const [openGroups, setOpenGroups] = React.useState<Record<string, boolean>>({});
 
     const shouldUseSlugFallback = activeSlug === 'dashboard' || activeSlug === 'admin-users';
     const isCollapsedView = isCollapsed;
@@ -64,13 +81,17 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, active
             return item.title === 'Overview' ? activeSlug === 'dashboard' : item.title === 'User Track' && activeSlug === 'admin-users';
         }
 
-        return item.isCurrent?.(currentRoute) ?? false;
+        const isSelfActive = item.isCurrent?.(currentRoute) ?? false;
+        if (isSelfActive) return true;
+        if (!item.subItems?.length) return false;
+        return item.subItems.some((subItem) => subItem.isCurrent?.(currentRoute) ?? false);
     };
 
     const sidebarContent = (mobile = false) => (
         <div
             className={cn(
-                'flex h-full flex-col border-r border-gray-200 bg-white p-6 shadow-sm',
+                'fixed left-0 top-0 z-50 flex h-full flex-col border-r border-gray-200 bg-white shadow-sm',
+                mobile ? 'w-full' : isCollapsedView ? 'w-20' : 'w-72',
                 !mobile && isCollapsedView && 'items-center px-3'
             )}
         >
@@ -85,33 +106,104 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(({ isCollapsed, active
                 {sidebarItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = isActiveItem(item);
+                    const hasSubItems = (item.subItems?.length ?? 0) > 0;
+                    const isOpen = openGroups[item.title] ?? isActive;
+
+                    if (!hasSubItems || (!mobile && isCollapsedView)) {
+                        return (
+                            <Link
+                                key={item.title}
+                                href={item.href}
+                                className={cn(
+                                    'group flex items-center rounded-xl px-4 py-3 transition-all duration-200',
+                                    !mobile && isCollapsedView ? 'justify-center px-2' : 'gap-4',
+                                    isActive
+                                        ? 'bg-blue-50 text-blue-600'
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                )}
+                                preserveScroll
+                                onClick={() => {
+                                    if (mobile) {
+                                        setIsMobileOpen(false);
+                                    }
+                                }}
+                            >
+                                <Icon
+                                    className={cn(
+                                        'h-5 w-5',
+                                        isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
+                                    )}
+                                />
+                                {(!isCollapsedView || mobile) && (
+                                    <span className={cn(isActive ? 'font-semibold' : 'font-medium')}>{item.title}</span>
+                                )}
+                            </Link>
+                        );
+                    }
 
                     return (
-                        <Link
-                            key={item.title}
-                            href={item.href}
-                            className={cn(
-                                'group flex items-center rounded-xl px-4 py-3 transition-all duration-200',
-                                !mobile && isCollapsedView ? 'justify-center px-2' : 'gap-4',
-                                isActive
-                                    ? 'bg-blue-50 text-blue-600'
-                                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
-                            )}
-                            preserveScroll
-                            onClick={() => {
-                                if (mobile) {
-                                    setIsMobileOpen(false);
-                                }
-                            }}
-                        >
-                            <Icon
+                        <div key={item.title} className="space-y-1">
+                            <button
+                                type="button"
                                 className={cn(
-                                    'h-5 w-5',
-                                    isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
+                                    'group flex w-full items-center rounded-xl px-3 py-3 transition-all duration-200',
+                                    'gap-4',
+                                    isActive
+                                        ? 'bg-blue-50 text-blue-600'
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
                                 )}
-                            />
-                            {(!isCollapsedView || mobile) && <span className={cn(isActive ? 'font-semibold' : 'font-medium')}>{item.title}</span>}
-                        </Link>
+                                onClick={() => {
+                                    setOpenGroups((prev) => ({ ...prev, [item.title]: !(prev[item.title] ?? isActive) }));
+                                }}
+                            >
+                                <Icon
+                                    className={cn(
+                                        'h-5 w-5',
+                                        isActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
+                                    )}
+                                />
+                                <span className={cn('flex-1 text-left', isActive ? 'font-semibold' : 'font-medium')}>{item.title}</span>
+                                <ChevronDown
+                                    className={cn('h-4 w-4 transition-transform', isOpen ? 'rotate-180' : 'rotate-0')}
+                                />
+                            </button>
+
+                            {isOpen && (
+                                <div className="ml-4 space-y-1 border-l border-gray-100 pl-3">
+                                    {item.subItems!.map((subItem) => {
+                                        const SubIcon = subItem.icon;
+                                        const subActive = isActiveItem(subItem);
+                                        return (
+                                            <Link
+                                                key={subItem.title}
+                                                href={subItem.href}
+                                                className={cn(
+                                                    'group flex items-center rounded-lg px-3 py-2 text-sm transition-colors',
+                                                    'gap-3',
+                                                    subActive
+                                                        ? 'bg-blue-50 text-blue-600'
+                                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                                                )}
+                                                preserveScroll
+                                                onClick={() => {
+                                                    if (mobile) {
+                                                        setIsMobileOpen(false);
+                                                    }
+                                                }}
+                                            >
+                                                <SubIcon
+                                                    className={cn(
+                                                        'h-4 w-4',
+                                                        subActive ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
+                                                    )}
+                                                />
+                                                <span className={cn(subActive ? 'font-semibold' : 'font-medium')}>{subItem.title}</span>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
                     );
                 })}
             </nav>

@@ -8,7 +8,7 @@ export default function AdminDashboard() {
             <Head title="Dashboard" />
             <div className="flex">
                 <AdminSidebar isCollapsed={false} activeSlug="dashboard" />
-                <div className="container bg-white  font-inter text-gray-900 p-8">
+                <div className="container bg-white  font-inter text-gray-900 p-6">
                     <header className="mb-8 lg:mt-0 mt-12">
                         <h1 className="text-3xl font-bold tracking-tight font-inter text-gray-900">Dashboard Overview</h1>
                     </header>
