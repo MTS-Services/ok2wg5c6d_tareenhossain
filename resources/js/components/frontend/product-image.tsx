@@ -1,3 +1,5 @@
+import type { MouseEventHandler } from 'react';
+
 import { cn } from '@/lib/utils';
 
 /** 20% shorter than square: height = 80% of width → aspect ratio width/height = 5/4 */
@@ -10,12 +12,14 @@ type ProductCardMediaProps = {
     src: string;
     alt: string;
     className?: string;
+    onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
 export function ProductCardMedia({
     src,
     alt,
     className,
+    onClick,
 }: ProductCardMediaProps) {
     return (
         <div
@@ -24,6 +28,7 @@ export function ProductCardMedia({
                 aspectProduct,
                 className,
             )}
+            onClick={onClick}
         >
             <img src={src} alt={alt} className={imgClass} />
         </div>
