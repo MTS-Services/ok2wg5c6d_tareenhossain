@@ -244,13 +244,14 @@ export default function Shop() {
                     <div className="grid grid-cols-1 gap-8 py-6 sm:grid-cols-2 lg:grid-cols-3">
                         {visibleProducts.map((product) => (
                             <div
-                                key={product.id}
-                                onClick={() => {
-                                    window.location.href = '/products-details';
-                                }}
+
                                 className="group box-border min-w-0 rounded-2xl border bg-white shadow-md"
                             >
                                 <ProductCardMedia
+                                  key={product.id}
+                                  onClick={() => {
+                                      window.location.href = '/products-details';
+                                  }}
                                     src={product.image}
                                     alt={product.name}
                                 />
@@ -264,7 +265,9 @@ export default function Shop() {
                                     <p className="mt-2 mb-4 border-b border-gray-200 pb-2 text-md text-gray-500">
                                         {product.description}
                                     </p>
-                                    <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">
+                                    <button onClick={() => {
+                                        window.location.href = '/stay-connected';
+                                    }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">
                                         Up Coming
                                     </button>
                                 </div>

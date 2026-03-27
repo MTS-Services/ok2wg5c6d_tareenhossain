@@ -35,10 +35,14 @@ export default function Home() {
                             }} className="rounded-lg bg-blue-600 px-8 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-95">
                                 Shop Collection
                             </button>
-                            {/* <button className="rounded-lg border border-white/30 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 active:scale-95">
-                                Watch Film
-                            </button> */}
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="rounded-lg border border-white/30 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 active:scale-95">
+                            Stay Connected
+                            </button>
                         </div>
+
+
                     </div>
 
                     {/* Image Column */}
@@ -66,28 +70,32 @@ export default function Home() {
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 py-6">
 
                     <div
-                        onClick={() => {
-                            window.location.href = '/products-details';
-                        }}
+
                         className="group border min-w-0 rounded-2xl bg-white box-border shadow-md"
                     >
                             <ProductCardMedia
                                 src="/assets/images/Home/img.png"
                                 alt="Wireless Headphones"
+                                onClick={() => {
+                                    window.location.href = '/products-details';
+                                }}
                             />
                             <div className='p-4'>
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Electronics</span>
                             <h3 className=" text-lg font-bold font-inter">Premium Wireless Headphones</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Studio-quality sound with active noise cancellation.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (1).png"
                                 alt="Minimalist Leather Wallet"
                             />
@@ -95,15 +103,18 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Accessories</span>
                             <h3 className=" text-lg font-bold font-inter">Minimalist Leather Wallet</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Handcrafted full-grain leather with RFID protection.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (2).png"
                                 alt="Designer Sunglasses"
                             />
@@ -111,7 +122,9 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Accessories</span>
                             <h3 className=" text-lg font-bold font-inter">Designer Sunglasses</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">UV400 protection with polarized lenses.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
@@ -121,10 +134,11 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (3).png"
                                 alt="Mechanical Keyboard"
                             />
@@ -132,15 +146,18 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Electronics</span>
                             <h3 className=" text-lg font-bold font-inter">Mechanical Keyboard</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Custom switches with RGB backlighting.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (4).png"
                                 alt="Premium Coffee Maker"
                             />
@@ -148,15 +165,18 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Home</span>
                             <h3 className=" text-lg font-bold font-inter">Premium Coffee Maker</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Programmable brewing system with thermal carafe.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                            window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (5).png"
                                 alt="Wireless Charging Pad"
                             />
@@ -164,7 +184,9 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Electronics</span>
                             <h3 className=" text-lg font-bold font-inter">Wireless Charging Pad</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Fast charging for all Qi-enabled devices.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
@@ -174,10 +196,11 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 py-6">
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (6).png"
                                 alt="Stainless Steel Water Bottle"
                             />
@@ -185,15 +208,18 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Lifestyle</span>
                             <h3 className=" text-lg font-bold font-inter">Stainless Steel Water Bottle</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Double-wall insulated, keeps drinks cold for 24 hours.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (7).png"
                                 alt="Smart Watch Pro"
                             />
@@ -201,15 +227,18 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Electronics</span>
                             <h3 className=" text-lg font-bold font-inter">Smart Watch Pro</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Advanced health tracking with 7-day battery life.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (8).png"
                                 alt="Leather Messenger Bag"
                             />
@@ -217,7 +246,9 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Accessories</span>
                             <h3 className=" text-lg font-bold font-inter">Leather Messenger Bag</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Professional laptop bag with multiple compartments.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
@@ -226,10 +257,11 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (9).png"
                                 alt="Studio Desk Lamp"
                             />
@@ -237,15 +269,18 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Home</span>
                             <h3 className=" text-lg font-bold font-inter">Studio Desk Lamp</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Adjustable LED with touch controls and USB charging.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (10).png"
                                 alt="Ergonomic Office Chair"
                             />
@@ -253,15 +288,18 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Furniture</span>
                             <h3 className=" text-lg font-bold font-inter">Ergonomic Office Chair</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Full lumbar support with adjustable armrests.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
 
-                    <div onClick={() => {
-                            window.location.href = '/products-details';
-                        }} className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
+                    <div  className="group border min-w-0 rounded-2xl bg-white box-border shadow-md">
                             <ProductCardMedia
+                            onClick={() => {
+                                window.location.href = '/products-details';
+                            }}
                                 src="/assets/images/Home/img (11).png"
                                 alt="Running Sneakers"
                             />
@@ -269,7 +307,9 @@ export default function Home() {
                             <span className="text-[12px] tracking-widest text-gray-400 uppercase">Footwear</span>
                             <h3 className=" text-lg font-bold font-inter">Running Sneakers</h3>
                             <p className="border-b pb-2 border-gray-200 mt-2 mb-4 text-md text-gray-500">Lightweight mesh design with responsive cushioning.</p>
-                            <button className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
+                            <button onClick={() => {
+                                window.location.href = '/stay-connected';
+                            }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">Up Coming</button>
                             </div>
                     </div>
 
