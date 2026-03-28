@@ -10,8 +10,6 @@ class Category extends Model
     protected $fillable = [
         'title',
         'slug',
-        'description',
-        'image',
         'status',
 
         // Audit columns
