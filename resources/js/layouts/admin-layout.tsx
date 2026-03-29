@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { AdminHeader } from '@/layouts/partials/admin/header';
+import { Toaster } from '@/components/ui/sonner';
 
 import { AdminFooter } from './partials/admin/footer';
 
@@ -14,6 +15,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <AdminHeader />
             <main className="flex-1 flex flex-col">{children}</main>
             <AdminFooter />
+            <Toaster />
         </div>
     );
 }

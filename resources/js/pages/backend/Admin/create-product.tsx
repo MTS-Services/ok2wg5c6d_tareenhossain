@@ -1,5 +1,6 @@
-import { useState, FormEventHandler } from 'react';
+import { useState, useEffect, FormEventHandler } from 'react';
 import { Head, router, usePage } from '@inertiajs/react';
+import { toast } from 'sonner';
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 import { SearchBar } from '@/components/search-bar';
 
@@ -37,6 +38,7 @@ export default function CreateProduct() {
         
         router.post(route('admin.products.store'), formData, {
             onSuccess: () => {
+                toast.success('Product created successfully!');
                 form.reset();
                 setPreviewUrl(null);
                 setFormData({
@@ -49,10 +51,32 @@ export default function CreateProduct() {
                 });
             },
             onError: (errors) => {
+                toast.error('Please check the form for errors.');
                 console.error('Validation errors:', errors);
             },
         });
     };
+
+    // Show toast messages for success/error states
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+        const error = urlParams.get('error');
+        
+        if (success) {
+            toast.success(success);
+            // Clean URL
+            urlParams.delete('success');
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+        }
+        
+        if (error) {
+            toast.error(error);
+            // Clean URL
+            urlParams.delete('error');
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+        }
+    }, []);
 
     const generateSlug = (title: string): string => {
         return title

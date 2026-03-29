@@ -1,5 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 import { Button } from '@/components/ui/button';
@@ -47,6 +48,27 @@ export default function Products({ products, categories, filters }: Props) {
         
         window.location.href = `${window.location.pathname}?${params.toString()}`;
     };
+
+    // Show toast messages for success/error states
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+        const error = urlParams.get('error');
+        
+        if (success) {
+            toast.success(success);
+            // Clean URL
+            urlParams.delete('success');
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+        }
+        
+        if (error) {
+            toast.error(error);
+            // Clean URL
+            urlParams.delete('error');
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+        }
+    }, []);
 
     return (
         <>
@@ -237,6 +259,13 @@ export default function Products({ products, categories, filters }: Props) {
                                                     </Link>
                                                     <Link
                                                         href={route('admin.products.delete', product.slug)}
+                                                        onClick={(e) => {
+                                                            if (!confirm('Are you sure you want to delete this product?')) {
+                                                                e.preventDefault();
+                                                                return;
+                                                            }
+                                                            toast.success('Product deleted successfully!');
+                                                        }}
                                                         className="inline-flex h-9 w-9 items-center justify-center rounded-md text-gray-700 transition hover:bg-slate-100"
                                                         aria-label="Delete product"
                                                     >
