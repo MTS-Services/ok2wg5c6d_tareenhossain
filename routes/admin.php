@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Admin\CategoryController;
 use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AdminLoginController;
 use App\Http\Controllers\Backend\ProductManagement\ProductController;
@@ -18,7 +19,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/users-track', [AdminDashboardController::class, 'UsersTrack'])->name('users-track');
         Route::get('/analytics', [AdminDashboardController::class, 'Analytics'])->name('analytics');
         Route::get('/settings', [AdminDashboardController::class, 'Settings'])->name('settings');
-        Route::get('/category', [AdminDashboardController::class, 'Category'])->name('category');
+        Route::get('/edit-product', [AdminDashboardController::class, 'EditProduct'])->name('edit-product');
+
+        /* Category Routes */
+        Route::prefix('categories')->name('categories.')->group(function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('index');
+            Route::post('/store', [CategoryController::class, 'store'])->name('store');
+            Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
+            Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
+            Route::patch('/{category}/status', [CategoryController::class, 'updateStatus'])->name('status');
+        });
+
 
         // Product Management Routes
         Route::prefix('products')->name('products.')->group(function () {

@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\CategoryStatus;
 use App\Traits\AuditColumnsTrait;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,11 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('status')->index(CategoryStatus::ACTIVE->value);
+            $table->string('status')->index();
+            $table->boolean('divider_before')->default(false);
+            $table->boolean('is_active')->default(true);
 
-            
             $table->timestamps();
             $this->addAdminAuditColumns($table);
+            $table->softDeletes();
         });
     }
 
