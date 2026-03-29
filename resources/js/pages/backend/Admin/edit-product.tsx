@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { toast } from 'sonner';
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 import { SearchBar } from '@/components/search-bar';
 import { Button } from '@/components/ui/button';
@@ -45,6 +46,27 @@ export default function EditProduct() {
         }
     }, [product.image]);
 
+    // Show toast messages for success/error states
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+        const error = urlParams.get('error');
+        
+        if (success) {
+            toast.success(success);
+            // Clean URL
+            urlParams.delete('success');
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+        }
+        
+        if (error) {
+            toast.error(error);
+            // Clean URL
+            urlParams.delete('error');
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+        }
+    }, []);
+
     const previewImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -72,7 +94,14 @@ export default function EditProduct() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('admin.products.update', product.slug));
+        post(route('admin.products.update', product.slug), {
+            onSuccess: () => {
+                toast.success('Product updated successfully!');
+            },
+            onError: (errors) => {
+                toast.error('Please check the form for errors.');
+            },
+        });
     };
 
     return (
