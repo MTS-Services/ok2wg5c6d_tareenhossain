@@ -5,7 +5,19 @@ import { ProductDetailMedia } from '@/components/frontend/product-image';
 import FrontendLayout from '@/layouts/frontend-layout';
 import { cn } from '@/lib/utils';
 
-export default function ProductDetails() {
+interface Product {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    image: string | null;
+    category: {
+        id: number;
+        title: string;
+    } | null;
+}
+
+export default function ProductDetails({ product }: { product: Product }) {
     const [activeTab, setActiveTab] = useState('DESCRIPTION');
 
     const tabs = ['DESCRIPTION', 'REVIEW'];
@@ -63,17 +75,21 @@ export default function ProductDetails() {
             <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
                 <div className="min-w-0">
                     <ProductDetailMedia
-                        src="/assets/images/Rectangle 20 (6).png"
-                        alt="Premium Wireless Headphones"
+                        src={
+                            product.image
+                                ? `/storage/${product.image}`
+                                : ''
+                        }
+                        alt={product.title}
                     />
                 </div>
 
                 <div className="flex flex-col justify-start pt-4">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2 font-inter">Premium Wireless Headphones</h1>
-                    <p className="text-gray-500 text-sm mb-4">Studio-quality sound with active noise cancellation</p>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2 font-inter">{product.title}</h1>
+                    <p className="text-gray-500 text-sm mb-4">{product.description}</p>
                     <div className="flex items-center gap-2 mb-8">
                         <span className="text-xs text-gray-400 uppercase font-medium">Category:</span>
-                        <span className="text-xs font-bold text-gray-900">Electronics Devices</span>
+                        <span className="text-xs font-bold text-gray-900">{product.category?.title}</span>
                     </div>
 
                     <button onClick={() => {

@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, router, usePage } from '@inertiajs/react';
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { cn } from '@/lib/utils';
 import { contact, dashboard, home, logout, shop } from '@/routes';
 import { type SharedData } from '@/types';
+import { Link, router, usePage } from '@inertiajs/react';
+import { useEffect, useRef, useState } from 'react';
 
 const navItems: { label: string; href: string }[] = [
     { label: 'Home', href: home.url() },
@@ -37,20 +37,25 @@ export function FrontendHeader() {
 
     return (
         <header className="relative">
-            <div className="container mx-auto m-2">
-                <div className="bg-gray-100 rounded-lg p-0.5 border border-gray-50/30">
-                    <nav className="flex w-full items-center justify-between rounded-lg  border-rounded-md bg-white px-4 md:px-6 py-3 shadow">
-
+            <div className="container m-2 mx-auto">
+                <div className="rounded-lg border border-gray-50/30 bg-gray-100 p-0.5">
+                    <nav className="border-rounded-md flex w-full items-center justify-between rounded-lg bg-white px-4 py-3 shadow md:px-6">
                         {/* Logo */}
-                        <div onClick={() => router.visit(home.url())} className="flex items-center gap-2 z-20">
-                            <img src="/assets/images/Home/Container.png" alt="Logo" className="h-6 w-6" />
-                            <span className="text-sm font-bold tracking-widest text-gray-900 uppercase">
-                                Nexus
-                            </span>
-                        </div>
+                        <Link href={home.url()}>
+                            <div className="z-20 flex items-center gap-2">
+                                <img
+                                    src="/assets/images/Home/Container.png"
+                                    alt="Logo"
+                                    className="h-6 w-6"
+                                />
+                                <span className="text-sm font-bold tracking-widest text-gray-900 uppercase">
+                                    Nexus
+                                </span>
+                            </div>
+                        </Link>
 
                         {/* Desktop Nav Links */}
-                        <div className="hidden md:flex items-center gap-7">
+                        <div className="hidden items-center gap-7 md:flex">
                             {navItems.map(({ label, href }) => (
                                 <Link
                                     key={label}
@@ -68,11 +73,18 @@ export function FrontendHeader() {
                         </div>
 
                         {/* Actions & Mobile Toggle */}
-                        <div className="flex items-center gap-2 md:gap-3 z-20">
+                        <div className="z-20 flex items-center gap-2 md:gap-3">
                             {/* Search */}
-                            <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-2 md:px-4 md:py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200">
-                                <svg className="h-4 w-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                                    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+                            <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4 md:py-2">
+                                <svg
+                                    className="h-4 w-4 text-gray-500"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="2"
+                                >
+                                    <circle cx="11" cy="11" r="8" />
+                                    <path d="m21 21-4.35-4.35" />
                                 </svg>
                                 <input
                                     type="text"
@@ -81,7 +93,7 @@ export function FrontendHeader() {
                                         setSearchQuery(event.target.value)
                                     }
                                     placeholder="Search"
-                                    className="w-20 bg-transparent text-sm text-gray-700 placeholder:text-gray-500 outline-none sm:w-28 md:w-36"
+                                    className="w-20 bg-transparent text-sm text-gray-700 outline-none placeholder:text-gray-500 sm:w-28 md:w-36"
                                 />
                             </div>
 
@@ -95,8 +107,15 @@ export function FrontendHeader() {
                                         }
                                         className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100"
                                     >
-                                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+                                        <svg
+                                            className="h-5 w-5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth="2"
+                                        >
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
                                         </svg>
                                     </button>
 
@@ -106,7 +125,9 @@ export function FrontendHeader() {
                                                 type="button"
                                                 onClick={() => {
                                                     setIsUserMenuOpen(false);
-                                                    router.visit(dashboard.url());
+                                                    router.visit(
+                                                        dashboard.url(),
+                                                    );
                                                 }}
                                                 className="block w-full px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-100"
                                             >
@@ -128,24 +149,56 @@ export function FrontendHeader() {
                             ) : (
                                 <button
                                     type="button"
-                                    onClick={() => router.visit(route('admin.login'))}
+                                    onClick={() =>
+                                        router.visit(route('admin.login'))
+                                    }
                                     className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100"
                                     aria-label="Login"
                                 >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users h-5 w-5 opacity-100"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-users h-5 w-5 opacity-100"
+                                    >
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
                                 </button>
                             )}
 
                             {/* Mobile Hamburger Toggle */}
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
-                                className="flex md:hidden h-9 w-9 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+                                className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-600 transition-colors hover:bg-gray-100 md:hidden"
                             >
-                                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                                <svg
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="2"
+                                >
                                     {isOpen ? (
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
                                     ) : (
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M4 6h16M4 12h16M4 18h16"
+                                        />
                                     )}
                                 </svg>
                             </button>
@@ -155,10 +208,14 @@ export function FrontendHeader() {
             </div>
 
             {/* Mobile Dropdown Menu */}
-            <div className={cn(
-                "absolute top-full left-0 right-0 px-4 pt-2 pb-6 bg-white border-b border-gray-100 shadow-xl transition-all duration-300 md:hidden z-10",
-                isOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0 pointer-events-none"
-            )}>
+            <div
+                className={cn(
+                    'absolute top-full right-0 left-0 z-10 border-b border-gray-100 bg-white px-4 pt-2 pb-6 shadow-xl transition-all duration-300 md:hidden',
+                    isOpen
+                        ? 'translate-y-0 opacity-100'
+                        : 'pointer-events-none -translate-y-4 opacity-0',
+                )}
+            >
                 <div className="flex flex-col gap-4">
                     {navItems.map(({ label, href }) => (
                         <Link
@@ -166,8 +223,10 @@ export function FrontendHeader() {
                             href={href}
                             onClick={() => setIsOpen(false)}
                             className={cn(
-                                'text-lg font-medium py-2 transition-colors border-b border-gray-50',
-                                urlIsActive(href) ? 'text-blue-600' : 'text-gray-600'
+                                'border-b border-gray-50 py-2 text-lg font-medium transition-colors',
+                                urlIsActive(href)
+                                    ? 'text-blue-600'
+                                    : 'text-gray-600',
                             )}
                         >
                             {label}
