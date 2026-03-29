@@ -33,7 +33,7 @@ const sidebarItems: SidebarItem[] = [
 
             {
                 title: 'Products',
-                href: route('admin.products'),
+                href: route('admin.products.index'),
                 icon: Boxes,
                 isCurrent: (currentRoute) => currentRoute.startsWith('/admin/products'),
             },
@@ -44,7 +44,7 @@ const sidebarItems: SidebarItem[] = [
                 isCurrent: (currentRoute) => currentRoute.startsWith('/admin/category'),
             },
         ],
-        href: route('admin.products'),
+        href: route('admin.products.index'),
         icon: Boxes,
         isCurrent: (currentRoute) => currentRoute.startsWith('/admin/products'),
     },
