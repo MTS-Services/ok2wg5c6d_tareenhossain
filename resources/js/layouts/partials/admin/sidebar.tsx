@@ -39,9 +39,9 @@ const sidebarItems: SidebarItem[] = [
             },
             {
                 title: 'Category',
-                href: route('admin.category'),
+                href: route('admin.categories.index'),
                 icon: Tag,
-                isCurrent: (currentRoute) => currentRoute.startsWith('/admin/category'),
+                isCurrent: (currentRoute) => currentRoute.startsWith('/admin/categories'),
             },
         ],
         href: route('admin.products.index'),

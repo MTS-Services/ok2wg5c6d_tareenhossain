@@ -82,7 +82,7 @@ class CategoryController extends Controller
             'updated_by' => $adminId,
         ]);
 
-        return redirect()->route('admin.category');
+        return redirect()->route('admin.categories.index');
     }
 
     public function update(Request $request, Category $category): RedirectResponse
@@ -102,14 +102,14 @@ class CategoryController extends Controller
             'updated_by' => Auth::guard('admin')->id(),
         ]);
 
-        return redirect()->route('admin.category');
+        return redirect()->route('admin.categories.index');
     }
 
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
 
-        return redirect()->route('admin.category');
+        return redirect()->route('admin.categories.index');
     }
 
     public function updateStatus(Request $request, Category $category): RedirectResponse
@@ -123,7 +123,7 @@ class CategoryController extends Controller
             'updated_by' => Auth::guard('admin')->id(),
         ]);
 
-        return redirect()->route('admin.category');
+        return redirect()->route('admin.categories.index');
     }
 
     private function uniqueSlugFromTitle(string $title, ?int $ignoreId = null): string

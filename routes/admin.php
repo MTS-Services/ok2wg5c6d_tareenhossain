@@ -22,12 +22,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/edit-product', [AdminDashboardController::class, 'EditProduct'])->name('edit-product');
 
         /* Category Routes */
-        Route::get('/category', [CategoryController::class, 'index'])->name('category');
-        Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-        Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-        Route::patch('/categories/{category}/status', [CategoryController::class, 'updateStatus'])->name('categories.status');
-        Route::get('/category', [AdminDashboardController::class, 'Category'])->name('category');
+        Route::prefix('categories')->name('categories.')->group(function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('index');
+            Route::post('/store', [CategoryController::class, 'store'])->name('store');
+            Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
+            Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
+            Route::patch('/{category}/status', [CategoryController::class, 'updateStatus'])->name('status');
+        });
+
 
         // Product Management Routes
         Route::prefix('products')->name('products.')->group(function () {
