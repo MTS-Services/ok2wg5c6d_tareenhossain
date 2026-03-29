@@ -26,4 +26,11 @@ class Category extends Model
     protected $casts = [
         'status' => CategoryStatus::class,
     ];
+
+
+    
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
 }

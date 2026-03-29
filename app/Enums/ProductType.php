@@ -5,13 +5,13 @@ namespace App\Enums;
 enum ProductType: string
 {
     case INSTOCK = 'instock';
-    case UPCAMING = 'upcoming';
+    case UPCOMING = 'upcoming';
 
     public function label(): string
     {
         return match ($this) {
             self::INSTOCK => 'In Stock',
-            self::UPCAMING => 'Upcoming',
+            self::UPCOMING => 'Upcoming',
         };
     }
 
@@ -19,7 +19,7 @@ enum ProductType: string
     {
         return match ($this) {
             self::INSTOCK => 'success',
-            self::UPCAMING => 'warning',
+            self::UPCOMING => 'warning',
         };
     }
 

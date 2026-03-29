@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\ProductStatus;
 use App\Enums\ProductType;
 use App\Traits\AuditColumnsTrait;
 use Illuminate\Database\Migrations\Migration;
@@ -18,12 +17,12 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->unsignedBigInteger('category_id');
             $table->longText('description')->nullable();
             $table->string('image')->nullable();
-            $table->string('status')->default(ProductStatus::ACTIVE->value);
-            $table->string('type')->default(ProductType::UPCAMING->value);
+            $table->boolean('status');
+            $table->string('type')->default(ProductType::UPCOMING->value);
 
             $table->integer('stock_level')->nullable();
             $table->decimal('price', 15, 2)->nullable();
@@ -31,7 +30,7 @@ return new class extends Migration
             $table->string('discount_type')->nullable();
 
 
-            $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
+             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
             $this->addAdminAuditColumns($table);
 
