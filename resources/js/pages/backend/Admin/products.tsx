@@ -37,22 +37,6 @@ export default function Products({ products, categories, filters }: Props) {
 
     const formatClicks = (n: number | undefined) => (n || 0).toLocaleString();
 
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        const formData = new FormData(form);
-        const searchValue = formData.get('search') as string;
-        
-        const params = new URLSearchParams(window.location.search);
-        if (searchValue) {
-            params.set('search', searchValue);
-        } else {
-            params.delete('search');
-        }
-        
-        window.location.href = `${window.location.pathname}?${params.toString()}`;
-    };
-
     const handleFilter = (type: string, value: string) => {
         const params = new URLSearchParams(window.location.search);
         if (value) {
@@ -79,11 +63,11 @@ export default function Products({ products, categories, filters }: Props) {
                                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                             </span>
-                            <form onSubmit={handleSearch}>
+                            <form >
                                 <input
                                     type="text"
                                     name="search"
-                                    defaultValue={filters.search || ''}
+                                    defaultValue=""
                                     placeholder="Search products, visitors..."
                                     className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pr-4 pl-12 text-sm shadow-sm transition-all focus:ring-2 focus:ring-blue-500/10 focus:outline-none"
                                 />
@@ -116,7 +100,17 @@ export default function Products({ products, categories, filters }: Props) {
                                     </span>
                                     <input
                                         type="text"
-                                        placeholder="Search products by name or category..."
+                                        placeholder="Search by product title..."
+                                        defaultValue={filters.search || ''}
+                                        onChange={(e) => {
+                                            const params = new URLSearchParams(window.location.search);
+                                            if (e.target.value) {
+                                                params.set('search', e.target.value);
+                                            } else {
+                                                params.delete('search');
+                                            }
+                                            window.location.href = `${window.location.pathname}?${params.toString()}`;
+                                        }}
                                         className="w-full rounded-lg border border-gray-200 bg-gray-100/50 py-2 pr-4 pl-10 text-sm transition-all focus:bg-white focus:outline-none"
                                     />
                                 </div>
