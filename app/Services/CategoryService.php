@@ -11,59 +11,54 @@ class CategoryService
     public function __construct(protected Category $model) {}
 
     /**
-     * @return list<array{id: string, name: string, active: bool}>
+     * Get all categories for admin
      */
-    public function getForAdminIndex(): array
+    public function getAll()
     {
-        return $this->model->query()
-            ->orderBy('id')
-            ->get()
-            ->map(fn (Category $category) => [
-                'id' => (string) $category->id,
-                'name' => $category->title,
-                'active' => $category->status === CategoryStatus::ACTIVE,
-            ])
-            ->values()
-            ->all();
+        return $this->model->latest()->get(['id', 'title', 'slug']);
     }
 
+    /**
+     * Create a new category
+     */
     public function create(array $data): Category
     {
         return $this->model->create([
             'title' => $data['title'],
-            'slug' => $this->uniqueSlugFromTitle($data['title']),
+            'slug' => $this->generateUniqueSlug($data['title']),
             'status' => CategoryStatus::ACTIVE,
             'created_by' => $data['created_by'],
             'updated_by' => $data['updated_by'] ?? $data['created_by'],
         ]);
     }
 
+    /**
+     * Update an existing category
+     */
     public function update(Category $category, array $data): void
     {
         $category->update([
             'title' => $data['title'],
-            'slug' => $this->uniqueSlugFromTitle($data['title'], $category->id),
+            'slug' => $this->generateUniqueSlug($data['title'], $category->id),
             'updated_by' => $data['updated_by'],
         ]);
     }
 
+    /**
+     * Delete a category (soft delete)
+     */
     public function delete(Category $category): void
     {
         $category->delete();
     }
 
-    public function updateStatus(Category $category, bool $active, int|string $updatedBy): void
-    {
-        $category->update([
-            'status' => $active ? CategoryStatus::ACTIVE : CategoryStatus::INACTIVE,
-            'updated_by' => $updatedBy,
-        ]);
-    }
-
-    private function uniqueSlugFromTitle(string $title, ?int $ignoreId = null): string
+    /**
+     * Generate unique slug from title
+     */
+    private function generateUniqueSlug(string $title, ?int $ignoreId = null): string
     {
         $base = Str::slug($title);
-        if ($base === '') {
+        if (empty($base)) {
             $base = 'category';
         }
 
@@ -72,7 +67,7 @@ class CategoryService
 
         while ($this->model->query()
             ->where('slug', $slug)
-            ->when($ignoreId !== null, fn ($q) => $q->where('id', '!=', $ignoreId))
+            ->when($ignoreId !== null, fn ($query) => $query->where('id', '!=', $ignoreId))
             ->exists()) {
             $slug = $base.'-'.$suffix;
             $suffix++;

@@ -3,19 +3,42 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Services\CategoryService;
+use App\Services\ProductService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class FrontendController extends Controller
 {
+
+    protected ProductService $service;
+    protected CategoryService $categoryService;
+
+    public function __construct(ProductService $service, CategoryService $categoryService)
+    {
+        $this->service = $service;
+        $this->categoryService = $categoryService;
+    }
+
     public function index(): Response
     {
-        return Inertia::render('frontend/home');
+
+        $products = $this->service->getAll();
+
+        return Inertia::render('frontend/home', [
+            'products' => $products,
+        ]);
     }
 
     public function shop(): Response
     {
-        return Inertia::render('frontend/shop');
+        $products = $this->service->getAll();
+        $categories = $this->categoryService->getAll();
+        
+        return Inertia::render('frontend/shop', [
+            'products' => $products,
+            'categories' => $categories,
+        ]);
     }
 
     public function contact(): Response
@@ -23,9 +46,12 @@ class FrontendController extends Controller
         return Inertia::render('frontend/contact');
     }
 
-    public function productsDetails(): Response
+    public function productsDetails($slug): Response
     {
-        return Inertia::render('frontend/products-details');
+        $product = $this->service->getBySlug($slug);
+        return Inertia::render('frontend/products-details', [
+            'product' => $product,
+        ]);
     }
 
     public function stayConnected(): Response

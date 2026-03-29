@@ -1,190 +1,75 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 
 import { ProductCardMedia } from '@/components/frontend/product-image';
 import FrontendLayout from '@/layouts/frontend-layout';
 
-type Product = {
+interface Product {
     id: number;
-    name: string;
-    category: string;
+    title: string;
+    slug: string;
     description: string;
-    image: string;
-    rating: number;
+    image: string | null;
+    category: {
+        id: number;
+        title: string;
+    } | null;
     price: number;
-    createdAt: string;
-};
+    created_at: string;
+}
 
-const shopData = {
-    categories: [
-        'All Products',
-        'Electronics',
-        'Accessories',
-        'Home',
-        'Furniture',
-        'Lifestyle',
-        'Footwear',
-    ],
-    sortOptions: [
-        'Featured',
-        'Price: Low to High',
-        'Price: High to Low',
-        'Highest Rated',
-        'Newest',
-    ],
-    products: [
-        {
-            id: 1,
-            category: 'Electronics',
-            name: 'Premium Wireless Headphones',
-            description: 'Studio-quality sound with active noise cancellation.',
-            image: '/assets/images/Home/img.png',
-            rating: 4.7,
-            price: 199,
-            createdAt: '2026-01-10',
-        },
-        {
-            id: 2,
-            category: 'Accessories',
-            name: 'Minimalist Leather Wallet',
-            description: 'Handcrafted full-grain leather with RFID protection.',
-            image: '/assets/images/Home/img (1).png',
-            rating: 4.5,
-            price: 79,
-            createdAt: '2025-09-15',
-        },
-        {
-            id: 3,
-            category: 'Accessories',
-            name: 'Designer Sunglasses',
-            description: 'UV400 protection with polarized lenses.',
-            image: '/assets/images/Home/img (2).png',
-            rating: 4.6,
-            price: 129,
-            createdAt: '2026-02-04',
-        },
-        {
-            id: 4,
-            category: 'Electronics',
-            name: 'Mechanical Keyboard',
-            description: 'Custom switches with RGB backlighting.',
-            image: '/assets/images/Home/img (3).png',
-            rating: 4.8,
-            price: 159,
-            createdAt: '2025-12-20',
-        },
-        {
-            id: 5,
-            category: 'Home',
-            name: 'Premium Coffee Maker',
-            description: 'Programmable brewing system with thermal carafe.',
-            image: '/assets/images/Home/img (4).png',
-            rating: 4.4,
-            price: 149,
-            createdAt: '2025-10-30',
-        },
-        {
-            id: 6,
-            category: 'Electronics',
-            name: 'Wireless Charging Pad',
-            description: 'Fast charging for all Qi-enabled devices.',
-            image: '/assets/images/Home/img (5).png',
-            rating: 4.3,
-            price: 49,
-            createdAt: '2025-08-11',
-        },
-        {
-            id: 7,
-            category: 'Lifestyle',
-            name: 'Stainless Steel Water Bottle',
-            description:
-                'Double-wall insulated, keeps drinks cold for 24 hours.',
-            image: '/assets/images/Home/img (6).png',
-            rating: 4.2,
-            price: 39,
-            createdAt: '2025-07-03',
-        },
-        {
-            id: 8,
-            category: 'Electronics',
-            name: 'Smart Watch Pro',
-            description: 'Advanced health tracking with 7-day battery life.',
-            image: '/assets/images/Home/img (7).png',
-            rating: 4.9,
-            price: 249,
-            createdAt: '2026-03-01',
-        },
-        {
-            id: 9,
-            category: 'Accessories',
-            name: 'Leather Messenger Bag',
-            description: 'Professional laptop bag with multiple compartments.',
-            image: '/assets/images/Home/img (8).png',
-            rating: 4.6,
-            price: 169,
-            createdAt: '2026-01-22',
-        },
-        {
-            id: 10,
-            category: 'Home',
-            name: 'Studio Desk Lamp',
-            description: 'Adjustable LED with touch controls and USB charging.',
-            image: '/assets/images/Home/img (9).png',
-            rating: 4.1,
-            price: 59,
-            createdAt: '2025-11-09',
-        },
-        {
-            id: 11,
-            category: 'Furniture',
-            name: 'Ergonomic Office Chair',
-            description: 'Full lumbar support with adjustable armrests.',
-            image: '/assets/images/Home/img (10).png',
-            rating: 4.8,
-            price: 299,
-            createdAt: '2026-02-15',
-        },
-        {
-            id: 12,
-            category: 'Footwear',
-            name: 'Running Sneakers',
-            description: 'Lightweight mesh design with responsive cushioning.',
-            image: '/assets/images/Home/img (11).png',
-            rating: 4.5,
-            price: 139,
-            createdAt: '2025-12-01',
-        },
-    ] satisfies Product[],
-};
+interface Category {
+    id: number;
+    title: string;
+    slug: string;
+}
 
-export default function Shop() {
+interface Props {
+    products: Product[];
+    categories: Category[];
+}
+
+const sortOptions = [
+    'Featured',
+    'Price: Low to High',
+    'Price: High to Low',
+    'Highest Rated',
+    'Newest',
+];
+
+export default function Shop({ products, categories }: Props) {
     const [selectedCategory, setSelectedCategory] = useState('All Products');
     const [selectedSort, setSelectedSort] = useState('Featured');
 
+    // Create categories list with "All Products" option
+    const categoryOptions = useMemo(
+        () => ['All Products', ...categories.map((cat) => cat.title)],
+        [categories],
+    );
+
     const visibleProducts = useMemo(() => {
-        let products =
+        let filteredProducts =
             selectedCategory === 'All Products'
-                ? [...shopData.products]
-                : shopData.products.filter(
-                      (product) => product.category === selectedCategory,
+                ? [...products]
+                : products.filter(
+                      (product) => product.category?.title === selectedCategory,
                   );
 
+        // Sort products
         if (selectedSort === 'Price: Low to High') {
-            products.sort((a, b) => a.price - b.price);
+            filteredProducts.sort((a, b) => (a.price || 0) - (b.price || 0));
         } else if (selectedSort === 'Price: High to Low') {
-            products.sort((a, b) => b.price - a.price);
-        } else if (selectedSort === 'Highest Rated') {
-            products.sort((a, b) => b.rating - a.rating);
+            filteredProducts.sort((a, b) => (b.price || 0) - (a.price || 0));
         } else if (selectedSort === 'Newest') {
-            products.sort(
+            filteredProducts.sort(
                 (a, b) =>
-                    new Date(b.createdAt).getTime() -
-                    new Date(a.createdAt).getTime(),
+                    new Date(b.created_at).getTime() -
+                    new Date(a.created_at).getTime(),
             );
         }
 
-        return products;
-    }, [selectedCategory, selectedSort]);
+        return filteredProducts;
+    }, [selectedCategory, selectedSort, products]);
 
     return (
         <FrontendLayout>
@@ -198,14 +83,14 @@ export default function Shop() {
                                 Category
                             </span>
                             <div className="flex flex-wrap gap-2">
-                                {shopData.categories.map((category) => (
+                                {categoryOptions.map((category: string) => (
                                     <button
                                         key={category}
                                         type="button"
                                         onClick={() =>
                                             setSelectedCategory(category)
                                         }
-                                        className={`rounded-lg px-5 py-2.5 text-md font-medium transition-colors ${
+                                        className={`text-md rounded-lg px-5 py-2.5 font-medium transition-colors cursor-pointer ${
                                             selectedCategory === category
                                                 ? 'bg-bg-background-dark text-white'
                                                 : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
@@ -227,9 +112,9 @@ export default function Shop() {
                                     onChange={(event) =>
                                         setSelectedSort(event.target.value)
                                     }
-                                    className="w-full rounded-lg border border-gray-200 bg-gray-100 px-4 py-2.5 text-sm text-gray-700 outline-none transition-colors hover:bg-gray-200 focus:border-gray-300 md:w-[240px]"
+                                    className="w-full rounded-lg border border-gray-200 bg-gray-100 px-4 py-2.5 text-sm text-gray-700 transition-colors cursor-pointer outline-none hover:bg-gray-200 focus:border-gray-300 md:w-[240px]"
                                 >
-                                    {shopData.sortOptions.map((option) => (
+                                    {sortOptions.map((option: string) => (
                                         <option key={option} value={option}>
                                             {option}
                                         </option>
@@ -244,31 +129,50 @@ export default function Shop() {
                     <div className="grid grid-cols-1 gap-8 py-6 sm:grid-cols-2 lg:grid-cols-3">
                         {visibleProducts.map((product) => (
                             <div
-
+                                key={product.id}
                                 className="group box-border min-w-0 rounded-2xl border bg-white shadow-md"
                             >
-                                <ProductCardMedia
-                                  key={product.id}
-                                  onClick={() => {
-                                      window.location.href = '/products-details';
-                                  }}
-                                    src={product.image}
-                                    alt={product.name}
-                                />
+                                <Link
+                                    className="cursor-pointer"
+                                    href={`/products/${product.slug}`}
+                                >
+                                    <ProductCardMedia
+                                        src={
+                                            product.image
+                                                ? `/storage/${product.image}`
+                                                : ''
+                                        }
+                                        alt={product.title}
+                                    />
+                                </Link>
                                 <div className="p-4">
                                     <span className="text-[12px] tracking-widest text-gray-400 uppercase">
-                                        {product.category}
+                                        {product.category?.title || 'General'}
                                     </span>
-                                    <h3 className="font-inter text-lg font-bold">
-                                        {product.name}
-                                    </h3>
-                                    <p className="mt-2 mb-4 border-b border-gray-200 pb-2 text-md text-gray-500">
-                                        {product.description}
-                                    </p>
-                                    <button onClick={() => {
-                                        window.location.href = '/stay-connected';
-                                    }} className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100">
-                                        Up Coming
+                                    <Link
+                                        className="cursor-pointer"
+                                        href={`/products/${product.slug}`}
+                                    >
+                                        <h3 className="font-inter text-lg font-bold">
+                                            {product.title}
+                                        </h3>
+                                    </Link>
+                                    <Link
+                                        className="cursor-pointer"
+                                        href={`/products/${product.slug}`}
+                                    >
+                                        <p className="text-md mt-2 mb-4 border-b border-gray-200 pb-2 text-gray-500">
+                                            {product.description}
+                                        </p>
+                                    </Link>
+                                    <button
+                                        onClick={() => {
+                                            window.location.href =
+                                                '/stay-connected';
+                                        }}
+                                        className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100 cursor-pointer"
+                                    >
+                                        UP COMING
                                     </button>
                                 </div>
                             </div>

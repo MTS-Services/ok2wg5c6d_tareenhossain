@@ -18,12 +18,15 @@ class ProductService
 
     public function getAll()
     {
-        return $this->model->all();
+        return $this->model->with('category')->latest()->get();
     }
 
     public function getBySlug($slug)
     {
-        return $this->model->where('slug', $slug)->first();
+        return $this->model
+            ->where('slug', $slug)
+            ->with('category')
+            ->first();
     }
 
     public function getFilteredProducts(Request $request)

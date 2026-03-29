@@ -1,5 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { Head, Link, router } from '@inertiajs/react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
@@ -38,37 +38,63 @@ export default function Products({ products, categories, filters }: Props) {
 
     const formatClicks = (n: number | undefined) => (n || 0).toLocaleString();
 
-    const handleFilter = (type: string, value: string) => {
-        const params = new URLSearchParams(window.location.search);
-        if (value) {
-            params.set(type, value);
-        } else {
-            params.delete(type);
-        }
-        
-        window.location.href = `${window.location.pathname}?${params.toString()}`;
+    // ── search state ──────────────────────────────────────────────────────────
+    const [search, setSearch] = useState(filters.search || '');
+    const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const handleSearch = (value: string) => {
+        setSearch(value);
+
+        if (debounceTimer.current) clearTimeout(debounceTimer.current);
+
+        debounceTimer.current = setTimeout(() => {
+            router.get(
+                route('admin.products.index'),
+                {
+                    search: value || undefined,
+                    category_id: filters.category_id || undefined,
+                    status: filters.status || undefined,
+                },
+                { preserveState: true, replace: true },
+            );
+        }, 400);
     };
 
-    // Show toast messages for success/error states
+    // ── filter (category / status) ────────────────────────────────────────────
+    const handleFilter = (type: string, value: string) => {
+        router.get(
+            route('admin.products.index'),
+            {
+                search: filters.search || undefined,
+                [type]: value || undefined,
+                ...(type !== 'category_id' ? { category_id: filters.category_id || undefined } : {}),
+                ...(type !== 'status' ? { status: filters.status || undefined } : {}),
+            },
+            { preserveState: true, replace: true },
+        );
+    };
+
+    // ── toast from URL params ─────────────────────────────────────────────────
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const success = urlParams.get('success');
         const error = urlParams.get('error');
-        
+
         if (success) {
             toast.success(success);
-            // Clean URL
             urlParams.delete('success');
             window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
         }
-        
         if (error) {
             toast.error(error);
-            // Clean URL
             urlParams.delete('error');
             window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
         }
     }, []);
+
+    useEffect(() => {
+        setSearch(filters.search || '');
+    }, [filters.search]);
 
     return (
         <>
@@ -76,7 +102,8 @@ export default function Products({ products, categories, filters }: Props) {
             <div className="flex">
                 <AdminSidebar isCollapsed={false} activeSlug="products" />
 
-                <div className="container bg-white p-8 font-inter text-gray-900 mt-12 lg:mt-0">
+                <div className="container mt-12 bg-white p-8 font-inter text-gray-900 lg:mt-0">
+                    {/* Top search bar */}
                     <div className="mx-auto mb-10 max-w-2xl">
                         <div className="relative">
                             <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
@@ -85,15 +112,12 @@ export default function Products({ products, categories, filters }: Props) {
                                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                             </span>
-                            <form >
-                                <input
-                                    type="text"
-                                    name="search"
-                                    defaultValue=""
-                                    placeholder="Search products, visitors..."
-                                    className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pr-4 pl-12 text-sm shadow-sm transition-all focus:ring-2 focus:ring-blue-500/10 focus:outline-none"
-                                />
-                            </form>
+                            <input
+                                type="text"
+                                value=""
+                                placeholder="Search products, visitors..."
+                                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pr-4 pl-12 text-sm shadow-sm transition-all focus:ring-2 focus:ring-blue-500/10 focus:outline-none"
+                            />
                         </div>
                     </div>
 
@@ -103,14 +127,15 @@ export default function Products({ products, categories, filters }: Props) {
                             <Link href={route('admin.products.create')}>
                                 Add New Product
                                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-                                    <path d="M12 5v14M5 12h14" />
+                                    <path d="M12 5v14" />
+                                    <path d="M5 12h14" />
                                 </svg>
                             </Link>
                         </Button>
                     </div>
 
                     <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
-                        {/* Header */}
+                        {/* Table header / filters */}
                         <div className="flex flex-col gap-4 p-4 sm:p-6 md:flex-row md:items-start md:justify-between">
                             <div className="w-full space-y-3 md:w-auto">
                                 <div className="relative w-full md:max-w-md">
@@ -122,17 +147,9 @@ export default function Products({ products, categories, filters }: Props) {
                                     </span>
                                     <input
                                         type="text"
+                                        value={search}
+                                        onChange={(e) => handleSearch(e.target.value)}
                                         placeholder="Search by product title..."
-                                        defaultValue={filters.search || ''}
-                                        onChange={(e) => {
-                                            const params = new URLSearchParams(window.location.search);
-                                            if (e.target.value) {
-                                                params.set('search', e.target.value);
-                                            } else {
-                                                params.delete('search');
-                                            }
-                                            window.location.href = `${window.location.pathname}?${params.toString()}`;
-                                        }}
                                         className="w-full rounded-lg border border-gray-200 bg-gray-100/50 py-2 pr-4 pl-10 text-sm transition-all focus:bg-white focus:outline-none"
                                     />
                                 </div>
@@ -142,7 +159,7 @@ export default function Products({ products, categories, filters }: Props) {
                                 </div>
                             </div>
                             <div className="flex gap-3">
-                                <select 
+                                <select
                                     value={filters.category_id || ''}
                                     onChange={(e) => handleFilter('category_id', e.target.value)}
                                     className="flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-xs font-medium text-gray-600 outline-none transition-colors hover:bg-slate-50 md:flex-none md:px-4"
@@ -154,7 +171,7 @@ export default function Products({ products, categories, filters }: Props) {
                                         </option>
                                     ))}
                                 </select>
-                                <select 
+                                <select
                                     value={filters.status || ''}
                                     onChange={(e) => handleFilter('status', e.target.value)}
                                     className="flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-xs font-medium text-gray-600 outline-none transition-colors hover:bg-slate-50 md:flex-none md:px-4"
@@ -173,20 +190,14 @@ export default function Products({ products, categories, filters }: Props) {
                                     <div className="flex items-center gap-3">
                                         <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-gray-100 bg-gray-100">
                                             {product.image ? (
-                                                <img
-                                                    src={`/storage/${product.image}`}
-                                                    className="h-full w-full object-cover grayscale transition-all group-hover:grayscale-0"
-                                                    alt={product.title}
-                                                />
+                                                <img src={`/storage/${product.image}`} className="h-full w-full object-cover grayscale transition-all group-hover:grayscale-0" alt={product.title} />
                                             ) : (
                                                 <div className="h-full w-full bg-gray-200" />
                                             )}
                                         </div>
                                         <div className="min-w-0 flex-1">
                                             <p className="truncate text-sm font-semibold text-gray-700">{product.title}</p>
-                                            <p className="text-xs font-medium text-blue-500 hover:cursor-pointer hover:underline">
-                                                {product.category?.title ?? '—'}
-                                            </p>
+                                            <p className="text-xs font-medium text-blue-500">{product.category?.title ?? '—'}</p>
                                         </div>
                                         <span className="shrink-0 text-sm font-bold tracking-tight text-gray-600">
                                             {formatClicks(product.total_clicks)}
@@ -194,10 +205,7 @@ export default function Products({ products, categories, filters }: Props) {
                                     </div>
                                     <div className="mt-2.5 pl-13">
                                         <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
-                                            <div
-                                                className="h-full rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.4)]"
-                                                style={{ width: barWidth(product.total_clicks) }}
-                                            />
+                                            <div className="h-full rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.4)]" style={{ width: barWidth(product.total_clicks) }} />
                                         </div>
                                     </div>
                                 </div>
@@ -221,27 +229,20 @@ export default function Products({ products, categories, filters }: Props) {
                                             <td className="flex items-center gap-4 py-5">
                                                 <div className="h-10 w-10 overflow-hidden rounded-lg border border-gray-100 bg-gray-100">
                                                     {product.image ? (
-                                                        <img
-                                                            src={`/storage/${product.image}`}
-                                                            className="h-full w-full object-cover grayscale transition-all group-hover:grayscale-0"
-                                                            alt={product.title}
-                                                        />
+                                                        <img src={`/storage/${product.image}`} className="h-full w-full object-cover grayscale transition-all group-hover:grayscale-0" alt={product.title} />
                                                     ) : (
                                                         <div className="h-full w-full bg-gray-200" />
                                                     )}
                                                 </div>
                                                 <span className="text-sm font-semibold text-gray-700">{product.title}</span>
                                             </td>
-                                            <td className="py-5 text-sm font-medium text-blue-500 hover:cursor-pointer hover:underline">
+                                            <td className="py-5 text-sm font-medium text-blue-500">
                                                 {product.category?.title ?? '—'}
                                             </td>
                                             <td className="py-5">
                                                 <div className="flex items-center gap-4">
                                                     <div className="h-2 w-24 overflow-hidden rounded-full bg-gray-100">
-                                                        <div
-                                                            className="h-full rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.4)]"
-                                                            style={{ width: barWidth(product.total_clicks) }}
-                                                        />
+                                                        <div className="h-full rounded-full bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.4)]" style={{ width: barWidth(product.total_clicks) }} />
                                                     </div>
                                                     <span className="text-sm font-bold tracking-tight text-gray-600">
                                                         {formatClicks(product.total_clicks)}
