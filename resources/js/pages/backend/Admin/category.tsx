@@ -34,6 +34,16 @@ type CategoryPageProps = {
     errors?: Record<string, string>;
 };
 
+/** Rough preview of Laravel `Str::slug($title)` for ASCII names; server is authoritative. */
+function slugPreviewFromTitle(title: string): string {
+    const base = title
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    return base === '' ? 'category' : base;
+}
+
 export default function Category() {
     const {
         categories: initialCategories,
@@ -77,6 +87,11 @@ export default function Category() {
     }, [categoryRowActions]);
 
     const canSave = newCategory.trim().length > 0 && !categoryFormBusy;
+
+    const categorySlugPreview = useMemo(
+        () => slugPreviewFromTitle(newCategory),
+        [newCategory],
+    );
 
     const removeCategory = (id: string) => {
         router.delete(route('admin.categories.destroy', id), {
@@ -418,6 +433,7 @@ export default function Category() {
                             ? 'Update the category name.'
                             : 'Add category name.'}
                     </DialogDescription>
+
                     <Input
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
@@ -425,6 +441,17 @@ export default function Category() {
                         placeholder="Enter category name"
                         className="mb-1"
                     />
+                    <div className="rounded-md border border-gray-100 bg-gray-50 px-3 py-2">
+                        <p className="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                            Slug
+                        </p>
+                        <p
+                            className="mt-0.5 font-mono text-sm text-gray-800 break-all"
+                            aria-live="polite"
+                        >
+                            {categorySlugPreview}
+                        </p>
+                    </div>
                     <InputError
                         message={errors?.title}
                         className="mb-4"
