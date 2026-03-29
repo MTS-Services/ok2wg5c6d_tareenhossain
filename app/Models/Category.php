@@ -30,4 +30,11 @@ class Category extends Model
         'status' => CategoryStatus::class,
         'divider_before' => 'boolean',
     ];
+
+
+    
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
 }
