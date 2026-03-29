@@ -2,31 +2,23 @@
 
 namespace App\Http\Controllers\Backend\Admin;
 
-use App\Enums\CategoryStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class CategoryController extends Controller
 {
+    public function __construct(protected CategoryService $categoryService) {}
+
     public function index(Request $request): Response
     {
-        $categories = Category::query()
-            ->orderBy('id')
-            ->get()
-            ->map(fn (Category $category) => [
-                'id' => (string) $category->id,
-                'name' => $category->title,
-                'active' => $category->status === CategoryStatus::ACTIVE,
-            ])
-            ->values()
-            ->all();
+        $categories = $this->categoryService->getForAdminIndex();
 
         $categoryRowActions = [
             [
@@ -74,10 +66,8 @@ class CategoryController extends Controller
 
         $adminId = Auth::guard('admin')->id();
 
-        Category::create([
+        $this->categoryService->create([
             'title' => $data['title'],
-            'slug' => $this->uniqueSlugFromTitle($data['title']),
-            'status' => CategoryStatus::ACTIVE,
             'created_by' => $adminId,
             'updated_by' => $adminId,
         ]);
@@ -96,9 +86,8 @@ class CategoryController extends Controller
             ],
         ]);
 
-        $category->update([
+        $this->categoryService->update($category, [
             'title' => $data['title'],
-            'slug' => $this->uniqueSlugFromTitle($data['title'], $category->id),
             'updated_by' => Auth::guard('admin')->id(),
         ]);
 
@@ -107,7 +96,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category): RedirectResponse
     {
-        $category->delete();
+        $this->categoryService->delete($category);
 
         return redirect()->route('admin.categories.index');
     }
@@ -118,32 +107,12 @@ class CategoryController extends Controller
             'active' => ['required', 'boolean'],
         ]);
 
-        $category->update([
-            'status' => $data['active'] ? CategoryStatus::ACTIVE : CategoryStatus::INACTIVE,
-            'updated_by' => Auth::guard('admin')->id(),
-        ]);
+        $this->categoryService->updateStatus(
+            $category,
+            $data['active'],
+            Auth::guard('admin')->id()
+        );
 
         return redirect()->route('admin.categories.index');
-    }
-
-    private function uniqueSlugFromTitle(string $title, ?int $ignoreId = null): string
-    {
-        $base = Str::slug($title);
-        if ($base === '') {
-            $base = 'category';
-        }
-
-        $slug = $base;
-        $suffix = 1;
-
-        while (Category::query()
-            ->where('slug', $slug)
-            ->when($ignoreId !== null, fn ($q) => $q->where('id', '!=', $ignoreId))
-            ->exists()) {
-            $slug = $base.'-'.$suffix;
-            $suffix++;
-        }
-
-        return $slug;
     }
 }
