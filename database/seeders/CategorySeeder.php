@@ -13,14 +13,57 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::create([
-            'title' => 'Electronics',
-            'slug' => 'electronics',
-            'status' => 'active',
-            'created_by' => 1,
-            'updated_by' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+       Category::insert([
+    [
+        'id' => 1,
+        'title' => 'Electronics',
+        'slug' => 'electronics',
+        'status' => 'active',
+        'created_by' => 1,
+        'updated_by' => 1,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ],
+    [
+        'id' => 2,
+        'title' => 'Furniture',
+        'slug' => 'furniture',
+        'status' => 'active',
+        'created_by' => 1,
+        'updated_by' => 1,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ],
+    [
+        'id' => 3,
+        'title' => 'Footwear',
+        'slug' => 'footwear',
+        'status' => 'active',
+        'created_by' => 1,
+        'updated_by' => 1,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ],
+    [
+        'id' => 4,
+        'title' => 'Lifestyle',
+        'slug' => 'lifestyle',
+        'status' => 'active',
+        'created_by' => 1,
+        'updated_by' => 1,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ],
+    [
+        'id' => 5,
+        'title' => 'Home',
+        'slug' => 'home',
+        'status' => 'active',
+        'created_by' => 1,
+        'updated_by' => 1,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]
+]);
     }
 }
