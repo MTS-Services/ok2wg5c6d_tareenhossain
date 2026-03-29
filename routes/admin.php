@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Admin\CategoryController;
 use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AdminLoginController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/analytics', [AdminDashboardController::class, 'Analytics'])->name('analytics');
         Route::get('/settings', [AdminDashboardController::class, 'Settings'])->name('settings');
         Route::get('/edit-product', [AdminDashboardController::class, 'EditProduct'])->name('edit-product');
-        Route::get('/category', [AdminDashboardController::class, 'Category'])->name('category');
+
+        /* Category Routes */
+        Route::get('/category', [CategoryController::class, 'index'])->name('category');
+        Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+        Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+        Route::patch('/categories/{category}/status', [CategoryController::class, 'updateStatus'])->name('categories.status');
     });
 });
