@@ -83,10 +83,6 @@ export default function CreateProduct() {
                 </div>
                 <h1 className="text-2xl font-semibold text-gray-800 mb-8 font-inter">Create Product</h1>
 
-                {errors && <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-sm text-red-600">{JSON.stringify(errors)}</p>
-                </div>}
-
                 <form onSubmit={handleSubmit} className="space-y-6">
 
                     {/* Product Name + Category */}
