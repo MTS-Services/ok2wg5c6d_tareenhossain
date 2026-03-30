@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ContactMail;
+use App\Models\Contact;
 use App\Services\CategoryService;
 use App\Services\ProductService;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class FrontendController extends Controller
 {
@@ -43,7 +47,32 @@ class FrontendController extends Controller
 
     public function contact(): Response
     {
-        return Inertia::render('frontend/contact');
+        return Inertia::render('frontend/contact', [
+            'flash' => [
+                'success' => session('success'),
+            ],
+        ]);
+    }
+
+    public function contactStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|max:2000',
+        ], [
+            'name.required' => 'Please enter your name',
+            'email.required' => 'Please enter your email address',
+            'email.email' => 'Please enter a valid email address',
+            'message.required' => 'Please enter your message',
+            'message.max' => 'Message must not exceed 2000 characters',
+        ]);
+        
+        Contact::create($validated);
+        
+        Mail::to(config('mail.from.address'))->send(new ContactMail($validated));
+        
+        return redirect()->back()->with('success', 'Thank you for your message! We will get back to you soon.');
     }
 
     public function productsDetails($slug): Response
