@@ -1,8 +1,25 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 
 import FrontendLayout from '@/layouts/frontend-layout';
 
-export default function Home() {
+export default function Contact() {
+    const { flash } = usePage().props as any;
+    
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: '',
+        email: '',
+        message: '',
+    });
+
+    const submit = (e: React.FormEvent) => {
+        e.preventDefault();
+        post(route('contact.store'), {
+            onSuccess: () => {
+                reset();
+            },
+        });
+    };
+
     return (
         <FrontendLayout>
             <Head title="Contact Page" />
@@ -31,23 +48,39 @@ export default function Home() {
 
                         {/* Left Side: Contact Form */}
                         <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-10 shadow-sm">
-                            <form className="space-y-6">
+                            {flash.success && (
+                                <div className="mb-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg">
+                                    {flash.success}
+                                </div>
+                            )}
+                            
+                            <form onSubmit={submit} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <label className="text-sm font-semibold text-gray-700">Name</label>
                                         <input
                                             type="text"
+                                            value={data.name}
+                                            onChange={(e) => setData('name', e.target.value)}
                                             placeholder="John Doe"
                                             className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
                                         />
+                                        {errors.name && (
+                                            <p className="text-sm text-red-600">{errors.name}</p>
+                                        )}
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-semibold text-gray-700">Email</label>
                                         <input
                                             type="email"
+                                            value={data.email}
+                                            onChange={(e) => setData('email', e.target.value)}
                                             placeholder="john@example.com"
                                             className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
                                         />
+                                        {errors.email && (
+                                            <p className="text-sm text-red-600">{errors.email}</p>
+                                        )}
                                     </div>
                                 </div>
 
@@ -55,13 +88,22 @@ export default function Home() {
                                 <div className="space-y-2">
                                     <label className="text-sm font-semibold text-gray-700">Message</label>
                                     <textarea
+                                        value={data.message}
+                                        onChange={(e) => setData('message', e.target.value)}
                                         rows={6}
                                         placeholder="Tell us how we can help..."
                                         className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all resize-none"
                                     />
+                                    {errors.message && (
+                                        <p className="text-sm text-red-600">{errors.message}</p>
+                                    )}
                                 </div>
-                                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-blue-600/20 font-inter">
-                                    Send Message
+                                <button 
+                                    type="submit"
+                                    disabled={processing}
+                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-blue-600/20 font-inter disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {processing ? 'Sending...' : 'Send Message'}
                                 </button>
                             </form>
                         </div>
