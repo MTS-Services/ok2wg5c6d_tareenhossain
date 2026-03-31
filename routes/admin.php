@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\Admin\CategoryController;
 use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AdminLoginController;
+use App\Http\Controllers\Backend\FaqManagement\FaqController;
 use App\Http\Controllers\Backend\ProductManagement\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/edit/{product:slug}', [ProductController::class, 'edit'])->name('edit');
             Route::post('/update/{product:slug}', [ProductController::class, 'update'])->name('update');
             Route::get('/delete/{product:slug}', [ProductController::class, 'delete'])->name('delete');
+        });
+        
+        // FAQ Routes
+        Route::prefix('faqs')->name('faqs.')->group(function () {
+            Route::get('/', [FaqController::class, 'index'])->name('index');
+            Route::get('/create', [FaqController::class, 'create'])->name('create');
+            Route::post('/store', [FaqController::class, 'store'])->name('store');
+            Route::get('/edit/{faq}', [FaqController::class, 'edit'])->name('edit');
+            Route::post('/update/{faq}', [FaqController::class, 'update'])->name('update');
+            Route::get('/delete/{faq}', [FaqController::class, 'delete'])->name('delete');
         });
     });
 });

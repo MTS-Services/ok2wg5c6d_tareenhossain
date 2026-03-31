@@ -9,6 +9,7 @@ export default function Contact() {
         name: '',
         email: '',
         message: '',
+        phone: '',
     });
 
     const submit = (e: React.FormEvent) => {
@@ -80,6 +81,19 @@ export default function Contact() {
                                         />
                                         {errors.email && (
                                             <p className="text-sm text-red-600">{errors.email}</p>
+                                        )}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-semibold text-gray-700">Phone</label>
+                                        <input
+                                            type="tel"
+                                            value={data.phone}
+                                            onChange={(e) => setData('phone', e.target.value)}
+                                            placeholder="+1 (555) 123-4567 (optional)"
+                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
+                                        />
+                                        {errors.phone && (
+                                            <p className="text-sm text-red-600">{errors.phone}</p>
                                         )}
                                     </div>
                                 </div>
