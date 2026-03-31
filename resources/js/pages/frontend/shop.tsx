@@ -172,7 +172,7 @@ export default function Shop({ products, categories }: Props) {
                                         }}
                                         className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100 cursor-pointer"
                                     >
-                                        UP COMING
+                                        Amazone
                                     </button>
                                 </div>
                             </div>

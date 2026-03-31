@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Mail\ContactMail;
 use App\Models\Contact;
+use App\Models\Faq;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Support\Facades\Mail;
@@ -60,12 +61,14 @@ class FrontendController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'required|string|max:2000',
+            'phone' => 'nullable|string|max:20',
         ], [
             'name.required' => 'Please enter your name',
             'email.required' => 'Please enter your email address',
             'email.email' => 'Please enter a valid email address',
             'message.required' => 'Please enter your message',
             'message.max' => 'Message must not exceed 2000 characters',
+            'phone.max' => 'Phone number must not exceed 20 characters',
         ]);
         
         Contact::create($validated);
@@ -90,7 +93,11 @@ class FrontendController extends Controller
 
     public function faq(): Response
     {
-        return Inertia::render('frontend/faq');
+        $faqs = Faq::orderBy('id')->get(['id', 'question', 'answer']);
+        
+        return Inertia::render('frontend/faq', [
+            'faqs' => $faqs,
+        ]);
     }
 
     public function shipping(): Response
