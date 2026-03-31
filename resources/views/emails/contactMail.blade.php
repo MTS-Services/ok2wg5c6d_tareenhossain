@@ -55,6 +55,10 @@
             <div class="label">Email:</div>
             <div class="value">{{ $data['email'] }}</div>
         </div>
+        <div class="field">
+            <div class="label">Phone:</div>
+            <div class="value">{{ $data['phone'] }}</div>
+        </div>
         
         <div class="field">
             <div class="label">Message:</div>

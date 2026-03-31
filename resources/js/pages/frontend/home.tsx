@@ -131,7 +131,7 @@ export default function Home({ products }: Props) {
                                         }}
                                         className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100 cursor-pointer"
                                     >
-                                        UP COMING
+                                        Amazone
                                     </button>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@ export default function Home({ products }: Props) {
                                 onClick={() => {
                                     window.location.href = '/contact';
                                 }}
-                                className="rounded-lg bg-blue-600 px-10 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+                                className="rounded-lg bg-blue-600 px-10 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 cursor-pointer"
                             >
                                 CONTACT US
                             </button>
