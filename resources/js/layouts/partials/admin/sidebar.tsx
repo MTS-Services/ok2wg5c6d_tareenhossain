@@ -86,7 +86,7 @@ const sidebarItems: SidebarItem[] = [
 
     {
         title: 'Settings',
-        href: route('admin.settings'),
+        href: route('admin.settings.index'),
         isCurrent: (currentRoute) => currentRoute.startsWith('/admin/settings'),
         icon: Settings,
     },

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\Admin\CategoryController;
 use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AdminLoginController;
+use App\Http\Controllers\Backend\Admin\SettingsController;
 use App\Http\Controllers\Backend\FaqManagement\FaqController;
 use App\Http\Controllers\Backend\ProductManagement\ProductController;
 use App\Http\Controllers\Backend\StayConnectedManagement\StayConnectedController;
@@ -57,6 +58,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Stay Connected Routes
         Route::prefix('stay-connected')->name('stay-connected.')->group(function () {
             Route::get('/', [StayConnectedController::class, 'index'])->name('index');
+        });
+        
+        // Settings Routes
+        Route::prefix('settings')->name('settings.')->group(function () {
+            Route::get('/', [SettingsController::class, 'index'])->name('index');
+            Route::post('/update', [SettingsController::class, 'update'])->name('update');
+            Route::post('/update-connection', [SettingsController::class, 'updateConnection'])->name('update-connection');
         });
     });
 });

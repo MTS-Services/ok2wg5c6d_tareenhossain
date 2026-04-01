@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 
 import { ProductDetailMedia } from '@/components/frontend/product-image';
@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 interface Product {
     id: number;
     title: string;
+    slug: string;
     description: string;
     price: number;
     image: string | null;
@@ -92,11 +93,11 @@ export default function ProductDetails({ product }: { product: Product }) {
                         <span className="text-xs font-bold text-gray-900">{product.category?.title}</span>
                     </div>
 
-                    <button onClick={() => {
-                            window.location.href = '/stay-connected';
-                        }} className="w-full bg-blue-50 text-blue-600 font-bold py-4 rounded-xl transition-all hover:bg-blue-100">
-                        Up Coming
-                    </button>
+                    <Link
+                       href={route('stayconnected.index', product.slug)}  
+                        className="flex items-center justify-center rounded-xl bg-blue-50 py-3! font-semibold text-blue-600 transition hover:bg-blue-100">
+                        Amazon
+                    </Link>
                 </div>
             </div>
 

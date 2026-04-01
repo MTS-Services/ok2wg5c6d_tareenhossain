@@ -1,6 +1,7 @@
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { cn } from '@/lib/utils';
 import { contact, dashboard, home, logout, shop } from '@/routes';
+import settings from '@/routes/admin/settings';
 import { type SharedData } from '@/types';
 import { Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
@@ -12,7 +13,7 @@ const navItems: { label: string; href: string }[] = [
 ];
 
 export function FrontendHeader() {
-    const { auth } = usePage<SharedData>().props;
+    const { auth, settings } = usePage<SharedData>().props;
     const { urlIsActive } = useActiveUrl();
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -44,12 +45,12 @@ export function FrontendHeader() {
                         <Link href={home.url()}>
                             <div className="z-20 flex items-center gap-2">
                                 <img
-                                    src="/assets/images/Home/Container.png"
+                                    src={settings?.website_logo ? `/storage/${settings.website_logo}` : ''}
                                     alt="Logo"
                                     className="h-6 w-6"
                                 />
                                 <span className="text-sm font-bold tracking-widest text-gray-900 uppercase">
-                                    Nexus
+                                    {settings?.website_name || 'Nexus'}
                                 </span>
                             </div>
                         </Link>
@@ -165,7 +166,7 @@ export function FrontendHeader() {
                                         stroke-width="2"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        class="lucide lucide-users h-5 w-5 opacity-100"
+                                        className="lucide lucide-users h-5 w-5 opacity-100"
                                     >
                                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                                         <circle cx="9" cy="7" r="4"></circle>

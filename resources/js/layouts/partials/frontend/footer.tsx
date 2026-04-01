@@ -6,6 +6,8 @@ import { privacyPolicy as privacyPolicyRoute } from '@/routes';
 import { shipping as shippingRoute } from '@/routes';
 import { returnMethod as returnMethodRoute } from '@/routes';
 import { termsService as termsServiceRoute } from '@/routes';
+import { type SharedData } from '@/types';
+import { usePage } from '@inertiajs/react';
 const socialLinks = [
     { label: 'Facebook', href: '#', Icon: Facebook },
     { label: 'Instagram', href: '#', Icon: Instagram },
@@ -20,6 +22,7 @@ const supportLinks = [
 ] as const;
 
 export function FrontendFooter() {
+    const { settings } = usePage<SharedData>().props;
     return (
 
         <footer className="w-full border-t border-gray-200 mt-6 container mx-auto">
@@ -29,9 +32,13 @@ export function FrontendFooter() {
                 {/* Brand Column */}
                 <div className="flex flex-col gap-4">
                     <div onClick={() => router.visit(home.url())} className="flex items-center gap-2">
-                        <img src="/assets/images/Home/Container.png" alt="" />
+                        <img src={
+            settings?.website_logo
+                ? `/storage/${settings.website_logo}`
+                : '/assets/images/default-logo.png'
+        } alt="" />
                         <span className="text-sm font-bold tracking-widest text-gray-900 uppercase font-inter">
-                            Nexus
+                            {settings?.website_name || 'web name'}
                         </span>
                     </div>
                     <p className="text-sm leading-relaxed text-gray-500">

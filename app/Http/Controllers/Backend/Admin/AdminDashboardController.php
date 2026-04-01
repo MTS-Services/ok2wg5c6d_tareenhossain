@@ -29,10 +29,10 @@ class AdminDashboardController extends Controller
         return Inertia::render('backend/Admin/analytics');
     }
 
-    public function Settings(Request $request)
-    {
-        return Inertia::render('backend/Admin/settings');
-    }
+    // public function Settings(Request $request)
+    // {
+    //     return Inertia::render('backend/Admin/settings');
+    // }
 
     public function EditProduct(Request $request)
     {
