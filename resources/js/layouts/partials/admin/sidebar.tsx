@@ -74,14 +74,14 @@ const sidebarItems: SidebarItem[] = [
         href: route('admin.stay-connected.index'),
         icon: Handshake,
         isCurrent: (currentRoute) =>
-            currentRoute.startsWith('/admin/stay-connected/index'),
+            currentRoute.startsWith('/admin/stay-connected'),
     },
     {
         title: 'FAQs',
         href: route('admin.faqs.index'),
         icon: MessageCircleQuestion,
         isCurrent: (currentRoute) =>
-            currentRoute.startsWith('/admin/faqs/index'),
+            currentRoute.startsWith('/admin/faqs'),
     },
 
     {
