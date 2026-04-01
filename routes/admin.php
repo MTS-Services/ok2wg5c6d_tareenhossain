@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AdminLoginController;
 use App\Http\Controllers\Backend\FaqManagement\FaqController;
 use App\Http\Controllers\Backend\ProductManagement\ProductController;
+use App\Http\Controllers\Backend\StayConnectedManagement\StayConnectedController;
 use Illuminate\Support\Facades\Route;
 
 // Admin Authentication Routes
@@ -51,6 +52,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/edit/{faq}', [FaqController::class, 'edit'])->name('edit');
             Route::post('/update/{faq}', [FaqController::class, 'update'])->name('update');
             Route::get('/delete/{faq}', [FaqController::class, 'delete'])->name('delete');
+        });
+        
+        // Stay Connected Routes
+        Route::prefix('stay-connected')->name('stay-connected.')->group(function () {
+            Route::get('/', [StayConnectedController::class, 'index'])->name('index');
         });
     });
 });

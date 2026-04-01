@@ -86,10 +86,6 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function stayConnected(): Response
-    {
-        return Inertia::render('frontend/stay-connected');
-    }
 
     public function faq(): Response
     {
