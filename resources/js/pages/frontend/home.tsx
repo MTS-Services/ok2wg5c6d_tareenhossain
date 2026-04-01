@@ -124,15 +124,12 @@ export default function Home({ products }: Props) {
                                                 'Premium quality product for modern living.'}
                                         </p>
                                     </Link>
-                                    <button
-                                        onClick={() => {
-                                            window.location.href =
-                                                '/stay-connected';
-                                        }}
-                                        className="w-full rounded-xl bg-blue-50 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100 cursor-pointer"
+                                    <Link 
+                                        href={route('stayconnected.index', product.slug)}
+                                        className="flex items-center justify-center rounded-xl bg-blue-50 py-3! text-sm font-semibold text-blue-600 transition hover:bg-blue-100 cursor-pointer"
                                     >
-                                        Amazone
-                                    </button>
+                                        Amazon
+                                    </Link>
                                 </div>
                             </div>
                         ))}

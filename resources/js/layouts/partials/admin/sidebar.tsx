@@ -4,7 +4,9 @@ import {
     Boxes,
     ChevronDown,
     LayoutGrid,
+    Handshake,
     Menu,
+    MessageCircleQuestion,
     Settings,
     Tag,
     Users,
@@ -68,12 +70,20 @@ const sidebarItems: SidebarItem[] = [
             currentRoute.startsWith('/admin/analytics'),
     },
     {
+        title: 'Stay Connected',
+        href: route('admin.stay-connected.index'),
+        icon: Handshake,
+        isCurrent: (currentRoute) =>
+            currentRoute.startsWith('/admin/stay-connected/index'),
+    },
+    {
         title: 'FAQs',
         href: route('admin.faqs.index'),
-        icon: BarChart3,
+        icon: MessageCircleQuestion,
         isCurrent: (currentRoute) =>
             currentRoute.startsWith('/admin/faqs/index'),
     },
+
     {
         title: 'Settings',
         href: route('admin.settings'),

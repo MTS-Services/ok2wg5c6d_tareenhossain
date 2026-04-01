@@ -1,6 +1,8 @@
 <?php
 
+
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\StayConnectedController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -9,10 +11,17 @@ Route::middleware('guest')->group(function () {
     Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
     Route::post('/contact', [FrontendController::class, 'contactStore'])->name('contact.store');
     Route::get('/products/{slug}', [FrontendController::class, 'productsDetails'])->name('products-details');
-    Route::get('/stay-connected', [FrontendController::class, 'stayConnected'])->name('stayconnected');
+    // Route::get('/stay-connected', [FrontendController::class, 'stayConnected'])->name('stayconnected');
     Route::get('/faq', [FrontendController::class, 'faq'])->name('faq');
     Route::get('/shipping', [FrontendController::class, 'shipping'])->name('shipping');
     Route::get('/return', [FrontendController::class, 'return'])->name('return');
     Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('privacy-policy');
     Route::get('/terms-service', [FrontendController::class, 'termsService'])->name('terms-service');
+
+
+    Route::group(['prefix' => 'stay-connected', 'as' => 'stayconnected.'], function () {
+        Route::get('/{slug}', [StayConnectedController::class, 'index'])->name('index');
+        Route::post('/store', [StayConnectedController::class, 'store'])->name('store');
+
+    });
 });
