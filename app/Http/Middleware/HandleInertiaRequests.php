@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Laravel\Fortify\Features;
@@ -68,6 +69,9 @@ class HandleInertiaRequests extends Middleware
                 'canVerifyEmail' => false,
                 'canUseTwoFactorAuthentication' => false,
             ],
+            'settings' => function () {
+                return Setting::first();
+            },
         ];
     }
 
