@@ -116,7 +116,7 @@ export default function Shop({ products, categories }: Props) {
                             </div>
                         </div>
 
-                        <div className="min-w-[240px]">
+                        {/* <div className="min-w-[240px]">
                             <span className="mb-3 block text-xs font-medium text-gray-400 md:text-right">
                                 Sort By
                             </span>
@@ -135,7 +135,7 @@ export default function Shop({ products, categories }: Props) {
                                     ))}
                                 </select>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </section>
 

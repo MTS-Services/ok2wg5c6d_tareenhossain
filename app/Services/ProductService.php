@@ -94,10 +94,8 @@ class ProductService
         return $product;
     }
 
-    public function updateProduct(Request $request, $slug)
+    public function updateProduct(Request $request, $product)
     {
-        $product = $this->getBySlug($slug);
-        
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,

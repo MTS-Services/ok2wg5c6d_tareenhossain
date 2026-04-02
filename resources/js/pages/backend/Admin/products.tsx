@@ -104,23 +104,6 @@ export default function Products({ products, categories, filters }: Props) {
                 <AdminSidebar isCollapsed={false} activeSlug="products" />
 
                 <div className="container mt-12 bg-white p-8 font-inter text-gray-900 lg:mt-0">
-                    {/* Top search bar */}
-                    <div className="mx-auto mb-10 max-w-2xl">
-                        <div className="relative">
-                            <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-                                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </span>
-                            <input
-                                type="text"
-                                value=""
-                                placeholder="Search products, visitors..."
-                                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pr-4 pl-12 text-sm shadow-sm transition-all focus:ring-2 focus:ring-blue-500/10 focus:outline-none"
-                            />
-                        </div>
-                    </div>
 
                     <div className="mb-8 flex items-center justify-between">
                         <h1 className="font-inter text-xl font-bold text-gray-800">Product Management</h1>
@@ -238,7 +221,7 @@ export default function Products({ products, categories, filters }: Props) {
                                                 <div className="font-medium text-gray-900">
                                                     {product.title}
                                                     
-                                                        <span className="block text-sm text-gray-500 mt-1">
+                                                        <span className="block text-sm text-gray-500 mt-1 truncate">
                                                             {product.subtitle}
                                                         </span>
                                                     

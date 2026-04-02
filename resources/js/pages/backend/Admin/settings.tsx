@@ -107,7 +107,7 @@ export default function Settings({ settings }: SettingsProps) {
                             <button
                                 onClick={handleSubmit}
                                 disabled={processing}
-                                className="rounded-xl bg-blue-600 px-6 py-2.5 font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:bg-blue-700 disabled:opacity-50"
+                                className="rounded-xl bg-blue-600 px-6 py-2.5 cursor-pointer font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:bg-blue-700 disabled:opacity-50"
                             >
                                 {processing ? 'Saving...' : 'Save All Changes'}
                             </button>
@@ -306,7 +306,7 @@ export default function Settings({ settings }: SettingsProps) {
                                         type="button"
                                         onClick={handleDisconnect}
                                         disabled={processing}
-                                        className="rounded-xl border border-gray-200 px-6 py-2 text-sm font-bold text-gray-600 transition-all hover:bg-gray-50 disabled:opacity-50"
+                                        className="rounded-xl border border-gray-200 px-6 py-2 text-sm cursor-pointer font-bold text-gray-600 transition-all hover:bg-gray-50 disabled:opacity-50"
                                     >
                                         {processing
                                             ? 'Saving...'
@@ -316,7 +316,7 @@ export default function Settings({ settings }: SettingsProps) {
                                         type="button"
                                         onClick={handleTestConnection}
                                         disabled={processing}
-                                        className="rounded-xl bg-blue-50 px-6 py-2 text-sm font-bold text-blue-600 transition-all hover:bg-blue-100 disabled:opacity-50"
+                                        className="rounded-xl bg-blue-50 px-6 py-2 text-sm cursor-pointer font-bold text-blue-600 transition-all hover:bg-blue-100 disabled:opacity-50"
                                     >
                                         {processing
                                             ? 'Connecting...'

@@ -9,6 +9,7 @@ interface Product {
     id: number;
     title: string;
     slug: string;
+    subtitle: string;
     description: string;
     price: number;
     image: string | null;
@@ -87,7 +88,7 @@ export default function ProductDetails({ product }: { product: Product }) {
 
                 <div className="flex flex-col justify-start pt-4">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2 font-inter">{product.title}</h1>
-                    <p className="text-gray-500 text-sm mb-4">{product.description}</p>
+                    <p className="text-gray-500 text-sm mb-4">{product.subtitle}</p>
                     <div className="flex items-center gap-2 mb-8">
                         <span className="text-xs text-gray-400 uppercase font-medium">Category:</span>
                         <span className="text-xs font-bold text-gray-900">{product.category?.title}</span>
@@ -120,7 +121,7 @@ export default function ProductDetails({ product }: { product: Product }) {
                     ))}
                 </div>
 
-                {activeTab === 'DESCRIPTION' && (
+                {/* {activeTab === 'DESCRIPTION' && (
                     <div className="max-w-7xl mx-auto  font-sans  rounded-sm overflow-hidden">
                     <div className="flex">
                     </div>
@@ -212,7 +213,14 @@ export default function ProductDetails({ product }: { product: Product }) {
                     </div>
                   </div>
 
-                )}
+                )} */}
+
+                <div
+                        className="prose prose-sm mb-4 max-w-none font-aktiv-grotesk text-base font-normal text-text-body"
+                        dangerouslySetInnerHTML={{
+                            __html: product.description ?? '',
+                        }}
+                    />
 
                 {activeTab === 'REVIEW' && (
                     <div className="bg-white text-gray-800 max-w-6xl mx-auto px-6 py-8">
