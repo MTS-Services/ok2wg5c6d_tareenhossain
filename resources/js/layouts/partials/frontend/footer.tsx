@@ -4,12 +4,11 @@ import {
     home,
     privacyPolicy as privacyPolicyRoute,
     returnMethod,
-    shipping,
     shop,
     termsService as termsServiceRoute,
 } from '@/routes';
 import { type SharedData } from '@/types';
-import { router, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
 const socialLinks = [
     { label: 'Facebook', href: '#', Icon: Facebook },
@@ -18,35 +17,35 @@ const socialLinks = [
 ] as const;
 
 const supportLinks = [
-    { label: 'Shipping Policy', href: shipping.url() },
     { label: 'Returns Policy', href: returnMethod.url() },
     { label: 'Contact', href: contact.url() },
     { label: 'FAQ', href: faq.url() },
 ] as const;
 
 export function FrontendFooter() {
-    const { settings } = usePage<SharedData>().props;
+    const { settings, categories } = usePage<SharedData>().props;
     return (
         <footer className="container mx-auto mt-6 w-full border-t border-gray-200">
             {/* Main Footer Content */}
             <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4">
                 {/* Brand Column */}
                 <div className="flex flex-col gap-4">
-                    <div
-                        onClick={() => router.visit(home.url())}
-                        className="flex items-center gap-2"
-                    >
-                        <img
-                            src={
-                                settings?.website_logo
-                                    ? `/storage/${settings.website_logo}`
-                                    : '/assets/images/default-logo.png'
-                            }
-                            alt=""
-                        />
-                        <span className="font-inter text-sm font-bold tracking-widest text-gray-900 uppercase">
-                            {settings?.website_name || 'web name'}
-                        </span>
+                    <div className="flex items-center gap-2">
+                        <Link href={home.url()}>
+                            <img
+                                src={
+                                    settings?.website_logo
+                                        ? `/storage/${settings.website_logo}`
+                                        : '/assets/images/default-logo.png'
+                                }
+                                alt=""
+                            />
+                        </Link>
+                        <Link href={home.url()}>
+                            <span className="font-inter text-sm font-bold tracking-widest text-gray-900 uppercase">
+                                {settings?.website_name || 'web name'}
+                            </span>
+                        </Link>
                     </div>
                     <p className="text-sm leading-relaxed text-gray-500">
                         Redefining the digital shopping experience through
@@ -61,18 +60,16 @@ export function FrontendFooter() {
                         Shop
                     </h4>
                     <ul className="flex flex-col gap-3">
-                        {['Electronics', 'Home Decor', 'Apparel', 'Office'].map(
-                            (item) => (
-                                <li key={item}>
-                                    <a
-                                        href={shop.url()}
-                                        className="text-sm text-gray-500 hover:text-gray-900"
-                                    >
-                                        {item}
-                                    </a>
-                                </li>
-                            ),
-                        )}
+                        {(categories as any[]).map((category) => (
+                            <li key={category.id}>
+                                <Link
+                                    href={`${shop.url()}?category=${category.slug}`}
+                                    className="text-sm text-gray-500 hover:text-gray-900"
+                                >
+                                    {category.title}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
                 </div>
 

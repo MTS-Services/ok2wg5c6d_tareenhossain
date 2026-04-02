@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 import { ProductCardMedia } from '@/components/frontend/product-image';
 import FrontendLayout from '@/layouts/frontend-layout';
@@ -40,6 +40,19 @@ const sortOptions = [
 export default function Shop({ products, categories }: Props) {
     const [selectedCategory, setSelectedCategory] = useState('All Products');
     const [selectedSort, setSelectedSort] = useState('Featured');
+
+    // Read category from URL parameter on component mount
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const categorySlug = urlParams.get('category');
+        
+        if (categorySlug) {
+            const category = categories.find(cat => cat.slug === categorySlug);
+            if (category) {
+                setSelectedCategory(category.title);
+            }
+        }
+    }, [categories]);
 
     // Create categories list with "All Products" option
     const categoryOptions = useMemo(

@@ -55,15 +55,19 @@ export default function Home({ products }: Props) {
                                 >
                                     Shop Collection
                                 </button>
-                                <button
-                                    onClick={() => {
-                                        window.location.href =
-                                            '/stay-connected';
-                                    }}
+                                <Link 
+                                    href="#up-coming-products"
                                     className="rounded-lg border border-white/30 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 active:scale-95"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        document.getElementById('up-coming-products')?.scrollIntoView({ 
+                                            behavior: 'smooth',
+                                            block: 'start'
+                                        });
+                                    }}
                                 >
                                     Stay Connected
-                                </button>
+                                </Link>
                             </div>
                         </div>
 
@@ -86,7 +90,7 @@ export default function Home({ products }: Props) {
                     <div className="absolute top-0 right-0 h-full w-full bg-gradient-to-b from-blue-500/20 to-transparent md:w-1/2 md:bg-gradient-to-l md:from-blue-500/10"></div>
                 </header>
 
-                <section className="container mx-auto p-4 lg:p-20">
+                <section className="container mx-auto p-4 lg:p-20" id="up-coming-products">
                     <h2 className="mb-12 text-center font-inter text-3xl font-bold lg:text-5xl">
                         Up Coming Products
                     </h2>
