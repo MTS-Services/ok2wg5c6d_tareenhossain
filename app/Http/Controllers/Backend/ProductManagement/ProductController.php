@@ -22,6 +22,8 @@ class ProductController extends Controller
         $categories = $this->service->getCategories();
         $filters = $this->service->getFilters($request);
 
+        // dd($products);
+
         return Inertia::render('backend/Admin/products', [
             'products' => $products,
             'categories' => $categories,

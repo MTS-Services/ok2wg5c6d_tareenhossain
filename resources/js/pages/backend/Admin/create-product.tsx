@@ -8,6 +8,7 @@ export default function CreateProduct() {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         title: '',
+        subtitle: '',
         slug: '',
         category_id: '',
         description: '',
@@ -43,6 +44,7 @@ export default function CreateProduct() {
                 setPreviewUrl(null);
                 setFormData({
                     title: '',
+                    subtitle: '',
                     slug: '',
                     category_id: '',
                     description: '',
@@ -129,6 +131,41 @@ export default function CreateProduct() {
                             )}
                         </div>
                         <div>
+                            <label className="block text-sm text-gray-600 mb-1.5">Product Subtitle</label>
+                            <input
+                                type="text"
+                                name="subtitle"
+                                value={formData.subtitle}
+                                onChange={(e) => handleInputChange('subtitle', e.target.value)}
+                                placeholder="Enter product subtitle"
+                                className={`w-full px-3 py-2.5 text-sm bg-white border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 ${
+                                    errors.subtitle ? 'border-red-500' : 'border-gray-200'
+                                }`}
+                                required
+                            />
+                            {errors.subtitle && (
+                                <p className="mt-1 text-xs text-red-500">{errors.subtitle}</p>
+                            )}
+                        </div>
+                        <div>
+                        <label className="block text-sm text-gray-600 mb-1.5">Slug</label>
+                        <input
+                            type="text"
+                            name="slug"
+                            value={formData.slug}
+                            onChange={(e) => handleInputChange('slug', e.target.value)}
+                            placeholder="Product slug (auto-generated)"
+                            className={`w-full px-3 py-2.5 text-sm bg-white border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 ${
+                                errors.slug ? 'border-red-500' : 'border-gray-200'
+                            }`}
+                            required
+                        />
+                        {errors.slug && (
+                            <p className="mt-1 text-xs text-red-500">{errors.slug}</p>
+                        )}
+                        <p className="mt-1 text-xs text-gray-400">URL-friendly version of the product name. Auto-generated from title.</p>
+                    </div>
+                        <div>
                             <label className="block text-sm text-gray-600 mb-1.5">Category</label>
                             <div className="relative">
                                 <select 
@@ -158,24 +195,7 @@ export default function CreateProduct() {
                     </div>
 
                     {/* Slug Field */}
-                    <div>
-                        <label className="block text-sm text-gray-600 mb-1.5">Slug</label>
-                        <input
-                            type="text"
-                            name="slug"
-                            value={formData.slug}
-                            onChange={(e) => handleInputChange('slug', e.target.value)}
-                            placeholder="Product slug (auto-generated)"
-                            className={`w-full px-3 py-2.5 text-sm bg-white border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 ${
-                                errors.slug ? 'border-red-500' : 'border-gray-200'
-                            }`}
-                            required
-                        />
-                        {errors.slug && (
-                            <p className="mt-1 text-xs text-red-500">{errors.slug}</p>
-                        )}
-                        <p className="mt-1 text-xs text-gray-400">URL-friendly version of the product name. Auto-generated from title.</p>
-                    </div>
+
 
                     {/* Short Description */}
                     <div>

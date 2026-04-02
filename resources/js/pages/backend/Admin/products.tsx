@@ -14,6 +14,7 @@ interface Category {
 interface Product {
     id: number;
     title: string;
+    subtitle?: string;
     slug: string;
     image: string | null;
     total_clicks?: number;
@@ -234,7 +235,14 @@ export default function Products({ products, categories, filters }: Props) {
                                                         <div className="h-full w-full bg-gray-200" />
                                                     )}
                                                 </div>
-                                                <span className="text-sm font-semibold text-gray-700">{product.title}</span>
+                                                <div className="font-medium text-gray-900">
+                                                    {product.title}
+                                                    
+                                                        <span className="block text-sm text-gray-500 mt-1">
+                                                            {product.subtitle}
+                                                        </span>
+                                                    
+                                                </div>
                                             </td>
                                             <td className="py-5 text-sm font-medium text-blue-500">
                                                 {product.category?.title ?? '—'}
