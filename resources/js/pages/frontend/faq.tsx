@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import React, { useState } from 'react';
 
 import FrontendLayout from '@/layouts/frontend-layout';
@@ -63,12 +63,12 @@ export default function FAQ({ faqs }: Props) {
                     <div className="bg-gray-50 border border-gray-200 rounded-2xl px-6 py-8 text-center">
                         <h3 className="font-bold text-gray-900 mb-1">Still have questions?</h3>
                         <p className="text-sm text-gray-500 mb-4">Our support team is here to help you 24/7</p>
-                        <button 
-                            onClick={() => window.location.href = '/contact'}
+                        <Link
+                            href={route('contact')}
                             className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors"
                         >
                             Contact Support
-                        </button>
+                        </Link>
                     </div>
 
                     <p className="text-center text-sm font-inter text-gray-500 mt-6">Showing {faqs.length} FAQs</p>

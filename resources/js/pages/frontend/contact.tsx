@@ -115,7 +115,7 @@ export default function Contact() {
                                 <button 
                                     type="submit"
                                     disabled={processing}
-                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-blue-600/20 font-inter disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-blue-600/20 font-inter disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                                 >
                                     {processing ? 'Sending...' : 'Send Message'}
                                 </button>

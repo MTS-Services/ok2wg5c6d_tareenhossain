@@ -72,6 +72,9 @@ class HandleInertiaRequests extends Middleware
             'settings' => function () {
                 return Setting::first();
             },
+            'categories' => function () {
+                return getAllCategories();
+            },
         ];
     }
 
