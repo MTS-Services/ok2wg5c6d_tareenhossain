@@ -25,19 +25,20 @@ class FrontendController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
-
-        $products = $this->service->getAll();
+        $perPage = $request->get('per_page', 12);
+        $products = $this->service->getAll($perPage);
 
         return Inertia::render('frontend/home', [
             'products' => $products,
         ]);
     }
 
-    public function shop(): Response
+    public function shop(Request $request): Response
     {
-        $products = $this->service->getAll();
+        $perPage = $request->get('per_page', 12);
+        $products = $this->service->getAll($perPage);
         $categories = $this->categoryService->getAll();
         
         return Inertia::render('frontend/shop', [

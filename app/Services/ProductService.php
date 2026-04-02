@@ -16,9 +16,9 @@ class ProductService
      */
     public function __construct(protected Product $model) {}
 
-    public function getAll()
+    public function getAll($perPage = 12)
     {
-        return $this->model->with('category')->latest()->get();
+        return $this->model->with('category')->latest()->paginate($perPage);
     }
 
     public function getBySlug($slug)
@@ -29,7 +29,7 @@ class ProductService
             ->first();
     }
 
-    public function getFilteredProducts(Request $request)
+    public function getFilteredProducts(Request $request, $perPage = 12)
     {
         $query = $this->model->with('category');
 
@@ -48,7 +48,7 @@ class ProductService
             $query->where('status', $request->status === '1');
         }
 
-        return $query->orderBy('created_at', 'desc')->get(['id', 'title', 'slug', 'subtitle', 'image', 'category_id']);
+        return $query->orderBy('created_at', 'desc')->paginate($perPage, ['id', 'title', 'slug', 'subtitle', 'image', 'category_id']);
     }
 
     public function getCategories()

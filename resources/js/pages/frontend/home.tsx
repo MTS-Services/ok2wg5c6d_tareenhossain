@@ -1,6 +1,7 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 
 import { ProductCardMedia } from '@/components/frontend/product-image';
+import Pagination from '@/components/pagination';
 import FrontendLayout from '@/layouts/frontend-layout';
 
 interface Product {
@@ -16,11 +17,33 @@ interface Product {
     } | null;
 }
 
+interface PaginatedProducts {
+    data: Product[];
+    current_page: number;
+    from: number;
+    last_page: number;
+    per_page: number;
+    to: number;
+    total: number;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+}
+
 interface Props {
-    products: Product[];
+    products: PaginatedProducts;
 }
 
 export default function Home({ products }: Props) {
+    const handlePerPageChange = (perPage: number) => {
+        router.get(
+            window.location.pathname,
+            { per_page: perPage },
+            { preserveScroll: true }
+        );
+    };
     return (
         <FrontendLayout>
             <Head title="Home Page" />
@@ -97,7 +120,7 @@ export default function Home({ products }: Props) {
                     </h2>
 
                     <div className="grid grid-cols-1 gap-8 py-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {products.map((product) => (
+                        {products.data.map((product: Product) => (
                             <div
                                 key={product.id}
                                 className="group box-border min-w-0 rounded-2xl border bg-white shadow-md"
@@ -139,9 +162,14 @@ export default function Home({ products }: Props) {
                         ))}
                     </div>
 
-                    <p className="mt-12 text-center text-lg text-gray-400">
-                        Showing {products.length} products
-                    </p>
+                    <Pagination 
+                        links={products.links}
+                        from={products.from}
+                        to={products.to}
+                        total={products.total}
+                        perPage={products.per_page}
+                        onPerPageChange={handlePerPageChange}
+                    />
                 </section>
 
                 <section className="container mx-auto mb-4">

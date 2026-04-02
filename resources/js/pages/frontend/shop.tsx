@@ -1,7 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { useMemo, useState, useEffect } from 'react';
 
 import { ProductCardMedia } from '@/components/frontend/product-image';
+import Pagination from '@/components/pagination';
 import FrontendLayout from '@/layouts/frontend-layout';
 
 interface Product {
@@ -25,8 +26,23 @@ interface Category {
     slug: string;
 }
 
+interface PaginatedProducts {
+    data: Product[];
+    current_page: number;
+    from: number;
+    last_page: number;
+    per_page: number;
+    to: number;
+    total: number;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+}
+
 interface Props {
-    products: Product[];
+    products: PaginatedProducts;
     categories: Category[];
 }
 
@@ -64,19 +80,19 @@ export default function Shop({ products, categories }: Props) {
     const visibleProducts = useMemo(() => {
         let filteredProducts =
             selectedCategory === 'All Products'
-                ? [...products]
-                : products.filter(
-                      (product) => product.category?.title === selectedCategory,
+                ? [...products.data]
+                : products.data.filter(
+                      (product: Product) => product.category?.title === selectedCategory,
                   );
 
         // Sort products
         if (selectedSort === 'Price: Low to High') {
-            filteredProducts.sort((a, b) => (a.price || 0) - (b.price || 0));
+            filteredProducts.sort((a: Product, b: Product) => (a.price || 0) - (b.price || 0));
         } else if (selectedSort === 'Price: High to Low') {
-            filteredProducts.sort((a, b) => (b.price || 0) - (a.price || 0));
+            filteredProducts.sort((a: Product, b: Product) => (b.price || 0) - (a.price || 0));
         } else if (selectedSort === 'Newest') {
             filteredProducts.sort(
-                (a, b) =>
+                (a: Product, b: Product) =>
                     new Date(b.created_at).getTime() -
                     new Date(a.created_at).getTime(),
             );
@@ -84,6 +100,14 @@ export default function Shop({ products, categories }: Props) {
 
         return filteredProducts;
     }, [selectedCategory, selectedSort, products]);
+
+    const handlePerPageChange = (perPage: number) => {
+        router.get(
+            window.location.pathname,
+            { per_page: perPage },
+            { preserveScroll: true }
+        );
+    };
 
     return (
         <FrontendLayout>
@@ -190,10 +214,14 @@ export default function Shop({ products, categories }: Props) {
                         ))}
                     </div>
 
-                    <p className="mt-12 text-center text-lg text-gray-400">
-                        Showing {visibleProducts.length} product
-                        {visibleProducts.length === 1 ? '' : 's'}
-                    </p>
+                    <Pagination 
+                        links={products.links}
+                        from={products.from}
+                        to={products.to}
+                        total={products.total}
+                        perPage={products.per_page}
+                        onPerPageChange={handlePerPageChange}
+                    />
                 </section>
             </div>
         </FrontendLayout>
