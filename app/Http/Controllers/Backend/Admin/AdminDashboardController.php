@@ -16,7 +16,10 @@ class AdminDashboardController extends Controller
 
     public function UsersTrack(Request $request)
     {
-        return Inertia::render('backend/Admin/users-track');
+        $analytics = app(TrackingController::class)->getAnalytics();
+        return Inertia::render('backend/Admin/users-track', [
+            'analytics' => $analytics,
+        ]);
     }
 
     public function Products(Request $request)
@@ -26,7 +29,10 @@ class AdminDashboardController extends Controller
 
     public function Analytics(Request $request)
     {
-        return Inertia::render('backend/Admin/analytics');
+        $analytics = app(TrackingController::class)->getAnalytics();
+        return Inertia::render('backend/Admin/analytics', [
+            'analytics' => $analytics,
+        ]);
     }
 
     // public function Settings(Request $request)

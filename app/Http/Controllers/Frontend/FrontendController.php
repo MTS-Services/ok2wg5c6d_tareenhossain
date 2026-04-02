@@ -8,10 +8,12 @@ use App\Models\Contact;
 use App\Models\Faq;
 use App\Services\CategoryService;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
-use Symfony\Component\HttpFoundation\Request;
+// use Symfony\Component\HttpFoundation\Request;
+
 
 class FrontendController extends Controller
 {
@@ -27,6 +29,7 @@ class FrontendController extends Controller
 
     public function index(Request $request): Response
     {
+        // dd($request->ip());
         $perPage = $request->get('per_page', 12);
         $products = $this->service->getAll($perPage);
 

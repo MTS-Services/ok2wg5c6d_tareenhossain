@@ -4,10 +4,12 @@ use App\Http\Controllers\Backend\Admin\CategoryController;
 use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AdminLoginController;
 use App\Http\Controllers\Backend\Admin\SettingsController;
+use App\Http\Controllers\Backend\Admin\TrackingController;
 use App\Http\Controllers\Backend\FaqManagement\FaqController;
 use App\Http\Controllers\Backend\ProductManagement\ProductController;
 use App\Http\Controllers\Backend\StayConnectedManagement\StayConnectedController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 // Admin Authentication Routes
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -47,21 +49,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/update/{product:slug}', [ProductController::class, 'update'])->name('update');
             Route::get('/delete/{product:slug}', [ProductController::class, 'delete'])->name('delete');
         });
-        
+
         // Editor Routes
         Route::prefix('editor')->name('editor.')->group(function () {
             Route::post('/upload', function () {
                 request()->validate(['image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120']);
-                
+
                 if (request()->hasFile('image')) {
                     $path = request()->file('image')->store('editor', 'public');
                     return response()->json(['url' => '/storage/' . $path]);
                 }
-                
+
                 return response()->json(['error' => 'No file uploaded'], 400);
             })->name('upload');
         });
-        
+
         // FAQ Routes
         Route::prefix('faqs')->name('faqs.')->group(function () {
             Route::get('/', [FaqController::class, 'index'])->name('index');
@@ -71,17 +73,27 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/update/{faq}', [FaqController::class, 'update'])->name('update');
             Route::get('/delete/{faq}', [FaqController::class, 'delete'])->name('delete');
         });
-        
+
         // Stay Connected Routes
         Route::prefix('stay-connected')->name('stay-connected.')->group(function () {
             Route::get('/', [StayConnectedController::class, 'index'])->name('index');
         });
-        
+
         // Settings Routes
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::get('/', [SettingsController::class, 'index'])->name('index');
             Route::post('/update', [SettingsController::class, 'update'])->name('update');
             Route::post('/update-connection', [SettingsController::class, 'updateConnection'])->name('update-connection');
         });
+        Route::get('/admin/analytics', [TrackingController::class, 'getAnalytics']);
     });
+
+    // routes/web.php
+    Route::post('/track/product-click', [TrackingController::class, 'trackProductClick']);
+    Route::get('/admin/tracking', [TrackingController::class, 'getTrackingData']);
+    Route::get('/admin/analytics', [TrackingController::class, 'getAnalytics']);
+
+    // Inertia pages
+    // Route::get('/admin/user-tracking', fn() => Inertia::render('Admin/UserTracking'));
+    // Route::get('/admin/dashboard', fn() => Inertia::render('Admin/Dashboard'));
 });
