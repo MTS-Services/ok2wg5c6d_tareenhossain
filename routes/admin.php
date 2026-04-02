@@ -23,6 +23,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/analytics', [AdminDashboardController::class, 'Analytics'])->name('analytics');
         Route::get('/settings', [AdminDashboardController::class, 'Settings'])->name('settings');
         Route::get('/edit-product', [AdminDashboardController::class, 'EditProduct'])->name('edit-product');
+        Route::get('/editor-demo', function () {
+            return inertia('backend/Admin/editor-demo');
+        })->name('editor-demo');
 
         /* Category Routes */
         Route::prefix('categories')->name('categories.')->group(function () {
@@ -43,6 +46,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/edit/{product:slug}', [ProductController::class, 'edit'])->name('edit');
             Route::post('/update/{product:slug}', [ProductController::class, 'update'])->name('update');
             Route::get('/delete/{product:slug}', [ProductController::class, 'delete'])->name('delete');
+        });
+        
+        // Editor Routes
+        Route::prefix('editor')->name('editor.')->group(function () {
+            Route::post('/upload', function () {
+                request()->validate(['image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120']);
+                
+                if (request()->hasFile('image')) {
+                    $path = request()->file('image')->store('editor', 'public');
+                    return response()->json(['url' => '/storage/' . $path]);
+                }
+                
+                return response()->json(['error' => 'No file uploaded'], 400);
+            })->name('upload');
         });
         
         // FAQ Routes

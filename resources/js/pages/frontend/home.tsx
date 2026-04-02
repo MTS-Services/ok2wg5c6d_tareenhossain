@@ -7,6 +7,7 @@ interface Product {
     id: number;
     title: string;
     slug: string;
+    subtitle: string | null;
     description: string | null;
     image: string | null;
     category: {
@@ -123,9 +124,8 @@ export default function Home({ products }: Props) {
                                     </Link>
 
                                     <Link href={`/products/${product.slug}`}>
-                                        <p className="text-md mt-2 mb-4 border-b border-gray-200 pb-2 text-gray-500">
-                                            {product.description ||
-                                                'Premium quality product for modern living.'}
+                                        <p className="text-md mt-2 mb-4 border-b border-gray-200 pb-2 text-gray-500 truncate">
+                                            {product.subtitle || 'N/A'}
                                         </p>
                                     </Link>
                                     <Link 

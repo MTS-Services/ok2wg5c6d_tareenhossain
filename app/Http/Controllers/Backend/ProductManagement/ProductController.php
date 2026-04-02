@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\ProductManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,6 +22,8 @@ class ProductController extends Controller
         $products = $this->service->getFilteredProducts($request);
         $categories = $this->service->getCategories();
         $filters = $this->service->getFilters($request);
+
+        // dd($products);
 
         return Inertia::render('backend/Admin/products', [
             'products' => $products,
@@ -53,11 +56,11 @@ class ProductController extends Controller
         ]);
     }
     
-    public function update(Request $request, $product)
-    {
-        $product = $this->service->updateProduct($request, $product);
-        return redirect()->route('admin.products.index', $product->fresh()->slug)->with('success', 'Product updated successfully!');
-    }
+public function update(Request $request, $product)
+{
+    $productModel = Product::where('slug', $product)->firstOrFail();
+    $this->service->updateProduct($request, $productModel);
+}
     
     public function delete($product)
     {

@@ -1,4 +1,4 @@
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
@@ -60,7 +60,17 @@ export default function EditFaq({ faq }: Props) {
 
             <div className="flex-1 p-8">
                 <div className="container mx-auto">
-                    <h1 className="text-2xl font-semibold text-gray-800 mb-8 font-inter">Edit FAQ</h1>
+                    <div className="flex items-center justify-between">
+                        <h1 className="mb-8 font-inter text-2xl font-semibold text-gray-800">
+                            Edit FAQ
+                        </h1>
+                        <Link
+                            href="/admin/faqs"
+                            className="rounded-lg border border-gray-200 bg-black px-6 py-2.5 text-sm font-medium text-white hover:bg-black/80"
+                        >
+                            Back
+                        </Link>
+                    </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Question Field */}
@@ -106,16 +116,9 @@ export default function EditFaq({ faq }: Props) {
                         {/* Form Actions */}
                         <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
                             <button
-                                type="button"
-                                onClick={() => window.history.back()}
-                                className="px-6 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            >
-                                Cancel
-                            </button>
-                            <button
                                 type="submit"
                                 disabled={processing}
-                                className="px-6 py-2.5 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="px-6 py-2.5 text-sm font-medium cursor-pointer text-white bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {processing ? 'Updating...' : 'Update FAQ'}
                             </button>

@@ -8,6 +8,7 @@ interface Product {
     id: number;
     title: string;
     slug: string;
+    subtitle: string;
     description: string;
     image: string | null;
     category: {
@@ -115,7 +116,7 @@ export default function Shop({ products, categories }: Props) {
                             </div>
                         </div>
 
-                        <div className="min-w-[240px]">
+                        {/* <div className="min-w-[240px]">
                             <span className="mb-3 block text-xs font-medium text-gray-400 md:text-right">
                                 Sort By
                             </span>
@@ -134,7 +135,7 @@ export default function Shop({ products, categories }: Props) {
                                     ))}
                                 </select>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </section>
 
@@ -174,8 +175,8 @@ export default function Shop({ products, categories }: Props) {
                                         className="cursor-pointer"
                                         href={`/products/${product.slug}`}
                                     >
-                                        <p className="text-md mt-2 mb-4 border-b border-gray-200 pb-2 text-gray-500">
-                                            {product.description}
+                                        <p className="text-md mt-2 mb-4 border-b border-gray-200 pb-2 text-gray-500 truncate">
+                                            {product.subtitle || 'N/A'}
                                         </p>
                                     </Link>
                                     <Link

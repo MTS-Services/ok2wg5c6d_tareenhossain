@@ -48,7 +48,7 @@ class ProductService
             $query->where('status', $request->status === '1');
         }
 
-        return $query->orderBy('created_at', 'desc')->get(['id', 'title', 'slug', 'image', 'category_id']);
+        return $query->orderBy('created_at', 'desc')->get(['id', 'title', 'slug', 'subtitle', 'image', 'category_id']);
     }
 
     public function getCategories()
@@ -61,6 +61,7 @@ class ProductService
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products,slug',
+            'subtitle' => 'nullable|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
@@ -71,6 +72,7 @@ class ProductService
         $productData = [
             'title' => $validated['title'],
             'slug' => $validated['slug'],
+            'subtitle' => $validated['subtitle'] ?? null,
             'category_id' => $validated['category_id'],
             'description' => $validated['description'] ?? null,
             'status' => $validated['status'],
@@ -92,13 +94,12 @@ class ProductService
         return $product;
     }
 
-    public function updateProduct(Request $request, $slug)
+    public function updateProduct(Request $request, $product)
     {
-        $product = $this->getBySlug($slug);
-        
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
+            'subtitle' => 'nullable|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
@@ -109,6 +110,7 @@ class ProductService
         $productData = [
             'title' => $validated['title'],
             'slug' => $validated['slug'],
+            'subtitle' => $validated['subtitle'] ?? null,
             'category_id' => $validated['category_id'],
             'description' => $validated['description'] ?? null,
             'status' => $validated['status'],

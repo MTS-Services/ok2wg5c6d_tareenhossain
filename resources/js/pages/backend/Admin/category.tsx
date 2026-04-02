@@ -143,27 +143,13 @@ export default function Category() {
                 <AdminSidebar isCollapsed={false} activeSlug="category" />
 
                 <div className="container mt-12 bg-white p-8 font-inter text-gray-900 lg:mt-0">
-                    <div className="mx-auto mb-10 max-w-2xl">
-                        <div className="relative">
-                            <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
-                                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </span>
-                            <input
-                                type="text"
-                                placeholder="Search categories..."
-                                className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pr-4 pl-12 text-sm shadow-sm transition-all focus:ring-2 focus:ring-blue-500/10 focus:outline-none"
-                            />
-                        </div>
-                    </div>
 
                     <div className="mb-8 flex items-center justify-between">
                         <h1 className="font-inter text-xl font-bold text-gray-800">Category</h1>
                         <Button
                             onClick={openAddModal}
                             variant="default"
-                            className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:bg-blue-600"
+                            className="flex items-center gap-2 cursor-pointer rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:bg-blue-600"
                         >
                             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
                                 <path d="M12 5v14M5 12h14" />
@@ -297,7 +283,7 @@ export default function Category() {
                         <Button
                             variant="outline"
                             onClick={closeModal}
-                            className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 cursor-pointer"
+                            className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-black cursor-pointer"
                         >
                             Cancel
                         </Button>

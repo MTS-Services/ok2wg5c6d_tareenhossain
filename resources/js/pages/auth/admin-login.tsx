@@ -77,7 +77,7 @@ export default function AdminLogin() {
                 <button
                     type="submit"
                     disabled={processing}
-                    className="w-full rounded-lg bg-gray-900 px-4 py-3 font-semibold text-white shadow-lg shadow-gray-500/20 transition-all active:scale-[0.98] hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="w-full rounded-lg bg-gray-900 px-4 py-3 cursor-pointer font-semibold text-white shadow-lg shadow-gray-500/20 transition-all active:scale-[0.98] hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                     {processing ? 'Signing In...' : 'Sign In to Dashboard'}
                 </button>

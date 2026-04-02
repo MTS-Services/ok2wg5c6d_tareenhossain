@@ -76,7 +76,7 @@ export function FrontendHeader() {
                         {/* Actions & Mobile Toggle */}
                         <div className="z-20 flex items-center gap-2 md:gap-3">
                             {/* Search */}
-                            <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4 md:py-2">
+                            {/* <div className="flex items-center gap-2 rounded-lg bg-gray-100 p-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4 md:py-2">
                                 <svg
                                     className="h-4 w-4 text-gray-500"
                                     fill="none"
@@ -96,7 +96,7 @@ export function FrontendHeader() {
                                     placeholder="Search"
                                     className="w-20 bg-transparent text-sm text-gray-700 outline-none placeholder:text-gray-500 sm:w-28 md:w-36"
                                 />
-                            </div>
+                            </div> */}
 
                             {/* User/Login Icon */}
                             {isLoggedIn ? (

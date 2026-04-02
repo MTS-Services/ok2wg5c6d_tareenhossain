@@ -3,7 +3,7 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { toast } from 'sonner';
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 import { SearchBar } from '@/components/search-bar';
-import { Button } from '@/components/ui/button';
+import TiptapEditor from '@/components/tiptap-editor';
 
 interface Category {
     id: number;
@@ -13,6 +13,7 @@ interface Category {
 interface Product {
     id: number;
     title: string;
+    subtitle?: string;
     slug: string;
     category_id: number;
     description: string | null;
@@ -32,12 +33,14 @@ export default function EditProduct() {
 
     const { data, setData, post, processing, errors } = useForm({
         title: product.title,
+        subtitle: product.subtitle || '',
         slug: product.slug,
         category_id: product.category_id,
         description: product.description || '',
         image: null as File | null,
         status: product.status,
         display_order: product.display_order || 1,
+        _method: 'POST',
     });
 
     useEffect(() => {
@@ -46,22 +49,19 @@ export default function EditProduct() {
         }
     }, [product.image]);
 
-    // Show toast messages for success/error states
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const success = urlParams.get('success');
         const error = urlParams.get('error');
-        
+
         if (success) {
             toast.success(success);
-            // Clean URL
             urlParams.delete('success');
             window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
         }
-        
+
         if (error) {
             toast.error(error);
-            // Clean URL
             urlParams.delete('error');
             window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
         }
@@ -70,7 +70,7 @@ export default function EditProduct() {
     const previewImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
-        
+
         setData('image', file);
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -79,11 +79,13 @@ export default function EditProduct() {
         reader.readAsDataURL(file);
     };
 
-    const generateSlug = (title: string) => {
+    const generateSlug = (title: string): string => {
         return title
             .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, '');
+            .trim()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/[\s_-]+/g, '-')
+            .replace(/^-+|-+$/g, '');
     };
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,33 +97,22 @@ export default function EditProduct() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         post(route('admin.products.update', product.slug), {
-            onSuccess: () => {
-                toast.success('Product updated successfully!');
-            },
-            onError: (errors) => {
-                toast.error('Please check the form for errors.');
-            },
+            onSuccess: () => toast.success('Product updated successfully!'),
+            onError: () => toast.error('Please check the form for errors.'),
         });
     };
 
     return (
         <div className="flex">
             <Head title="Edit Product" />
-            <AdminSidebar isCollapsed={false} activeSlug="edit-product" />
-
-
-
+            <AdminSidebar isCollapsed={false} activeSlug="products" />
 
             <div className="container bg-white p-8 font-inter text-gray-900 mt-12 lg:mt-0">
-                <div className="mx-auto mb-10 max-w-2xl">
-                    <SearchBar />
-                </div>
-                <form onSubmit={handleSubmit}>
                 <h1 className="text-2xl font-semibold text-gray-800 mb-8 font-inter">Edit Product</h1>
 
-                <div className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
 
-                    {/* Product Name + Category */}
+                    {/* Product Name + Subtitle */}
                     <div className="grid grid-cols-2 gap-5">
                         <div>
                             <label className="block text-sm text-gray-600 mb-1.5">Product Name</label>
@@ -129,19 +120,66 @@ export default function EditProduct() {
                                 type="text"
                                 value={data.title}
                                 onChange={handleTitleChange}
-                                className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
+                                placeholder="Enter product name"
+                                className={`w-full px-3 py-2.5 text-sm bg-white border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 ${
+                                    errors.title ? 'border-red-500' : 'border-gray-200'
+                                }`}
+                                required
                             />
-                            {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
+                            {errors.title && (
+                                <p className="mt-1 text-xs text-red-500">{errors.title}</p>
+                            )}
                         </div>
+
+                        <div>
+                            <label className="block text-sm text-gray-600 mb-1.5">Product Subtitle</label>
+                            <input
+                                type="text"
+                                value={data.subtitle}
+                                onChange={(e) => setData('subtitle', e.target.value)}
+                                placeholder="Enter product subtitle"
+                                className={`w-full px-3 py-2.5 text-sm bg-white border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 ${
+                                    errors.subtitle ? 'border-red-500' : 'border-gray-200'
+                                }`}
+                            />
+                            {errors.subtitle && (
+                                <p className="mt-1 text-xs text-red-500">{errors.subtitle}</p>
+                            )}
+                        </div>
+
+                        {/* Slug */}
+                        <div>
+                            <label className="block text-sm text-gray-600 mb-1.5">Slug</label>
+                            <input
+                                type="text"
+                                value={data.slug}
+                                onChange={(e) => setData('slug', e.target.value)}
+                                placeholder="Product slug (auto-generated)"
+                                className={`w-full px-3 py-2.5 text-sm bg-white border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 ${
+                                    errors.slug ? 'border-red-500' : 'border-gray-200'
+                                }`}
+                                required
+                            />
+                            {errors.slug && (
+                                <p className="mt-1 text-xs text-red-500">{errors.slug}</p>
+                            )}
+                            <p className="mt-1 text-xs text-gray-400">URL-friendly version of the product name. Auto-generated from title.</p>
+                        </div>
+
+                        {/* Category */}
                         <div>
                             <label className="block text-sm text-gray-600 mb-1.5">Category</label>
                             <div className="relative">
-                                <select 
+                                <select
                                     value={data.category_id}
                                     onChange={(e) => setData('category_id', Number(e.target.value))}
-                                    className="w-full appearance-none px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 pr-10"
+                                    className={`w-full appearance-none px-3 py-2.5 text-sm bg-white border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 pr-10 ${
+                                        errors.category_id ? 'border-red-500' : 'border-gray-200'
+                                    }`}
+                                    required
                                 >
-                                    {categories.map((category) => (
+                                    <option value="">Select a category</option>
+                                    {Array.isArray(categories) && categories.map((category) => (
                                         <option key={category.id} value={category.id}>
                                             {category.title}
                                         </option>
@@ -150,34 +188,25 @@ export default function EditProduct() {
                                 <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
                                 </svg>
+                                {errors.category_id && (
+                                    <p className="mt-1 text-xs text-red-500">{errors.category_id}</p>
+                                )}
                             </div>
-                            {errors.category_id && <p className="text-red-500 text-xs mt-1">{errors.category_id}</p>}
                         </div>
-                    </div>
-
-                    {/* Slug */}
-                    <div>
-                        <label className="block text-sm text-gray-600 mb-1.5">Slug</label>
-                        <input
-                            type="text"
-                            value={data.slug}
-                            onChange={(e) => setData('slug', e.target.value)}
-                            className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
-                        />
-                        {errors.slug && <p className="text-red-500 text-xs mt-1">{errors.slug}</p>}
                     </div>
 
                     {/* Short Description */}
                     <div>
                         <label className="block text-sm text-gray-600 mb-1.5">Short Description</label>
-                        <textarea
-                            rows={4}
+                        <TiptapEditor
                             value={data.description}
-                            onChange={(e) => setData('description', e.target.value)}
+                            onChange={(value) => setData('description', value)}
                             placeholder="Briefly describe product..."
-                            className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 resize-none"
-                        ></textarea>
-                        {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
+                            className="w-full"
+                        />
+                        {errors.description && (
+                            <p className="mt-1 text-xs text-red-500">{errors.description}</p>
+                        )}
                     </div>
 
                     {/* Product Image + Right Column */}
@@ -187,7 +216,7 @@ export default function EditProduct() {
                         <div>
                             <label className="block text-sm text-gray-600 mb-1.5">Product Image</label>
                             <label className="flex flex-col items-center justify-center gap-3 min-h-48 border-2 border-dashed border-gray-200 rounded-xl bg-white cursor-pointer hover:border-blue-400 hover:bg-blue-50">
-                                <div className="w-20 h-20 bg-amber-100 rounded-xl flex items-center justify-center overflow-hidden" id="preview-wrapper">
+                                <div className="w-20 h-20 bg-amber-100 rounded-xl flex items-center justify-center overflow-hidden">
                                     {previewUrl ? (
                                         <img src={previewUrl} className="w-full h-full object-cover rounded-xl" alt="Preview" />
                                     ) : (
@@ -201,6 +230,9 @@ export default function EditProduct() {
                                     <p className="text-xs text-gray-400 mt-0.5">PNG, JPG up to 5MB</p>
                                 </div>
                                 <input type="file" className="hidden" accept=".png,.jpg,.jpeg" onChange={previewImage} />
+                                {errors.image && (
+                                    <p className="mt-1 text-xs text-red-500">{errors.image}</p>
+                                )}
                             </label>
                         </div>
 
@@ -212,10 +244,15 @@ export default function EditProduct() {
                                     type="number"
                                     value={data.display_order}
                                     onChange={(e) => setData('display_order', Number(e.target.value))}
+                                    placeholder="1"
                                     min="1"
-                                    className="w-full px-3 py-2.5 text-sm bg-white border border-gray-200 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
+                                    className={`w-full px-3 py-2.5 text-sm bg-white border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 ${
+                                        errors.display_order ? 'border-red-500' : 'border-gray-200'
+                                    }`}
                                 />
-                                {errors.display_order && <p className="text-red-500 text-xs mt-1">{errors.display_order}</p>}
+                                {errors.display_order && (
+                                    <p className="mt-1 text-xs text-red-500">{errors.display_order}</p>
+                                )}
                             </div>
 
                             <div className="bg-white border border-gray-200 rounded-xl px-5 py-4 flex items-center justify-between">
@@ -225,12 +262,12 @@ export default function EditProduct() {
                                 </div>
                                 {/* Toggle */}
                                 <label className="relative inline-flex items-center cursor-pointer">
-                                    <input 
-                                    type="checkbox" 
-                                    checked={data.status}
-                                    onChange={(e) => setData('status', e.target.checked)}
-                                    className="sr-only peer" 
-                                />
+                                    <input
+                                        type="checkbox"
+                                        checked={data.status}
+                                        onChange={(e) => setData('status', e.target.checked)}
+                                        className="sr-only peer"
+                                    />
                                     <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-500 transition-colors duration-200"></div>
                                     <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 peer-checked:translate-x-5"></div>
                                 </label>
@@ -238,23 +275,24 @@ export default function EditProduct() {
                         </div>
 
                     </div>
-                </div>
 
-                {/* Action Buttons */}
-                <div className="flex justify-end gap-3 mt-10 pt-6 border-t border-gray-100">
-                    <Link href={route('admin.products.index')} className="px-6 py-2.5 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50">
-                        Cancel
-                    </Link>
-                    <Button 
-                        type="submit" 
-                        disabled={processing}
-                        className="px-6 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-                    >
-                        Save Product
-                    </Button>
-                </div>
+                    {/* Action Buttons */}
+                    <div className="flex justify-end gap-3 mt-10 pt-6 border-t border-gray-100">
+                        <Link
+                            href={route('admin.products.index')}
+                            className="px-6 py-2.5 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
+                        >
+                            Cancel
+                        </Link>
+                        <button
+                            type="submit"
+                            disabled={processing}
+                            className="px-6 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        >
+                            {processing ? 'Updating...' : 'Update Product'}
+                        </button>
+                    </div>
                 </form>
-
             </div>
         </div>
     );
