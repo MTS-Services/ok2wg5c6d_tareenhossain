@@ -38,7 +38,7 @@ class FrontendController extends Controller
     public function shop(Request $request): Response
     {
         $perPage = $request->get('per_page', 12);
-        $products = $this->service->getAll($perPage);
+        $products = $this->service->getFilteredProducts($request, $perPage);
         $categories = $this->categoryService->getAll();
         
         return Inertia::render('frontend/shop', [
@@ -46,6 +46,60 @@ class FrontendController extends Controller
             'categories' => $categories,
         ]);
     }
+
+    // public function liveSearch(Request $request)
+    // {
+    //     $query = $request->get('q', '');
+        
+    //     if (strlen($query) < 2) {
+    //         return response()->json([]);
+    //     }
+        
+    //     // Search for related products using multiple criteria
+    //     $products = \App\Models\Product::with('category')
+    //         ->where(function ($queryBuilder) use ($query) {
+    //             // Search in title
+    //             $queryBuilder->orWhere('title', 'like', '%' . $query . '%');
+                
+    //             // Search in description
+    //             $queryBuilder->orWhere('description', 'like', '%' . $query . '%');
+                
+    //             // Search in category title
+    //             $queryBuilder->orWhereHas('category', function ($categoryQuery) use ($query) {
+    //                 $categoryQuery->where('title', 'like', '%' . $query . '%');
+    //             });
+                
+    //             // Search in subtitle
+    //             $queryBuilder->orWhere('subtitle', 'like', '%' . $query . '%');
+    //         })
+    //         ->where('status', 1) // Only active products
+    //         ->limit(10)
+    //         ->get(['id', 'title', 'slug', 'price', 'image', 'category_id', 'category', 'subtitle', 'description']);
+            
+    //     return response()->json($products);
+    // }
+
+    public function liveSearch(Request $request): \Illuminate\Http\JsonResponse
+{
+    $query = trim($request->get('q', ''));
+
+    if (strlen($query) < 2) {
+        return response()->json([]);
+    }
+
+    $products = \App\Models\Product::with('category:id,title')
+        ->where('status', 1)
+        ->where(function ($q) use ($query) {
+            $q->where('title', 'like', "%{$query}%")
+              ->orWhere('subtitle', 'like', "%{$query}%")
+              ->orWhere('description', 'like', "%{$query}%")
+              ->orWhereHas('category', fn($c) => $c->where('title', 'like', "%{$query}%"));
+        })
+        ->limit(8)
+        ->get(['id', 'title', 'slug', 'price', 'image', 'category_id', 'subtitle']);
+
+    return response()->json($products);
+}
 
     public function contact(): Response
     {

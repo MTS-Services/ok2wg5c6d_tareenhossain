@@ -1,3 +1,4 @@
+import { GlobalSearchBar } from '@/components/global-search-bar';
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { cn } from '@/lib/utils';
 import { contact, dashboard, home, logout, shop } from '@/routes';
@@ -97,6 +98,7 @@ export function FrontendHeader() {
                                     className="w-20 bg-transparent text-sm text-gray-700 outline-none placeholder:text-gray-500 sm:w-28 md:w-36"
                                 />
                             </div> */}
+                            <GlobalSearchBar />
 
                             {/* User/Login Icon */}
                             {isLoggedIn ? (
