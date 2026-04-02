@@ -10,9 +10,10 @@ use Inertia\Response;
 
 class FaqController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $faqs = Faq::orderBy('id')->get(['id', 'question', 'answer']);
+        $perPage = $request->get('per_page', 10);
+        $faqs = Faq::orderBy('id')->paginate($perPage, ['id', 'question', 'answer']);
         
         return Inertia::render('backend/faq/index', [
             'faqs' => $faqs,

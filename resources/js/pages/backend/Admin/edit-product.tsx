@@ -29,6 +29,27 @@ interface Props {
 
 export default function EditProduct() {
     const { product, categories } = usePage().props as unknown as Props;
+    
+    // Safety check - if product is null, show error message
+    if (!product) {
+        return (
+            <div className="flex">
+                <Head title="Product Not Found" />
+                <AdminSidebar isCollapsed={false} activeSlug="products" />
+                
+                <div className="container bg-white p-8 font-inter text-gray-900 mt-12 lg:mt-0">
+                    <div className="text-center py-12">
+                        <h1 className="text-2xl font-semibold text-gray-800 mb-4">Product Not Found</h1>
+                        <p className="text-gray-600 mb-6">The product you're trying to edit doesn't exist or has been deleted.</p>
+                        <Link href={route('admin.products.index')} className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Back to Products
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     const { data, setData, post, processing, errors } = useForm({

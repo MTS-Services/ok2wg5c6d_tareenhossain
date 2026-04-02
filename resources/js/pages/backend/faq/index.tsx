@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 import { Button } from '@/components/ui/button';
+import AdminPagination from '@/components/admin-pagination';
 import { PenSquare, Trash } from 'lucide-react';
 
 interface Faq {
@@ -13,8 +14,23 @@ interface Faq {
     slug?: string;
 }
 
+interface PaginatedFaqs {
+    data: Faq[];
+    current_page: number;
+    from: number;
+    last_page: number;
+    per_page: number;
+    to: number;
+    total: number;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+}
+
 interface Props {
-    faqs: Faq[];
+    faqs: PaginatedFaqs;
 }
 
 export default function Faqs({ faqs }: Props) {
@@ -58,7 +74,7 @@ export default function Faqs({ faqs }: Props) {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    {faqs.map((faq, index) => (
+                                    {faqs.data.map((faq: Faq, index: number) => (
                                         <tr key={faq.id} className="hover:bg-gray-50">
                                             <td className="w-1/4 px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 {index + 1}
@@ -93,6 +109,14 @@ export default function Faqs({ faqs }: Props) {
                             </table>
                         </div>
                     </div>
+
+                    <AdminPagination 
+                        links={faqs.links}
+                        from={faqs.from}
+                        to={faqs.to}
+                        total={faqs.total}
+                        perPage={faqs.per_page}
+                    />
                 </div>
             </div>
         </>

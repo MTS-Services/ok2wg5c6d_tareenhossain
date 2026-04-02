@@ -29,7 +29,7 @@ class ProductService
             ->first();
     }
 
-    public function getFilteredProducts(Request $request, $perPage = 12)
+    public function getFilteredProducts(Request $request, $perPage = 10)
     {
         $query = $this->model->with('category');
 

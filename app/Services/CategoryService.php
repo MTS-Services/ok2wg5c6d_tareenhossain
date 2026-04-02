@@ -19,6 +19,14 @@ class CategoryService
     }
 
     /**
+     * Get all categories with pagination for admin (alternative method)
+     */
+    public function getAllPaginated($perPage = 10)
+    {
+        return $this->model->latest()->paginate($perPage, ['id', 'title', 'slug']);
+    }
+
+    /**
      * Create a new category
      */
     public function create(array $data): Category
