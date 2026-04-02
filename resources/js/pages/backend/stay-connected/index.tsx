@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 import { Button } from '@/components/ui/button';
+import AdminPagination from '@/components/admin-pagination';
 import { PenSquare, Trash } from 'lucide-react';
 
 interface Product {
@@ -21,8 +22,23 @@ interface StayConnected {
     product?: Product;
 }
 
+interface PaginatedStayConnected {
+    data: StayConnected[];
+    current_page: number;
+    from: number;
+    last_page: number;
+    per_page: number;
+    to: number;
+    total: number;
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+}
+
 interface Props {
-    stayConnected: StayConnected[];
+    stayConnected: PaginatedStayConnected;
 }
 
 export default function Index({ stayConnected }: Props) {
@@ -36,7 +52,7 @@ export default function Index({ stayConnected }: Props) {
                     <div className="mb-8 flex items-center justify-between">
                         <h1 className="font-inter text-xl font-bold text-gray-800">Stay Connected Management</h1>
                         <div className="text-sm text-gray-500">
-                            Total Subscriptions: {stayConnected.length}
+                            Total Subscriptions: {stayConnected.total}
                         </div>
                     </div>
 
@@ -63,7 +79,7 @@ export default function Index({ stayConnected }: Props) {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    {stayConnected.map((item, index) => (
+                                    {stayConnected.data.map((item: StayConnected, index: number) => (
                                         <tr key={item.id} className="hover:bg-gray-50">
                                             <td className="w-1/6 px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                 {index + 1}
@@ -93,11 +109,19 @@ export default function Index({ stayConnected }: Props) {
                         </div>
                     </div>
 
-                    {stayConnected.length === 0 && (
+                    {stayConnected.data.length === 0 && (
                         <div className="text-center py-12">
                             <p className="text-gray-500">No stay connected subscriptions found.</p>
                         </div>
                     )}
+
+                    <AdminPagination 
+                        links={stayConnected.links}
+                        from={stayConnected.from}
+                        to={stayConnected.to}
+                        total={stayConnected.total}
+                        perPage={stayConnected.per_page}
+                    />
                 </div>
             </div>
         </>

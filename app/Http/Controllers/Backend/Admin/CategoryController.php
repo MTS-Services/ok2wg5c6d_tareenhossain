@@ -18,8 +18,9 @@ class CategoryController extends Controller
 
     public function index(Request $request): Response
     {
+        $perPage = $request->get('per_page', 10);
         return Inertia::render('backend/Admin/category', [
-            'categories' => $this->categoryService->getAll(),
+            'categories' => $this->categoryService->getAllPaginated($perPage),
         ]);
     }
 

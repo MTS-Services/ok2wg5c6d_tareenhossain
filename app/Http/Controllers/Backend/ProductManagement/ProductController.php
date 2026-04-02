@@ -49,6 +49,12 @@ class ProductController extends Controller
     public function edit($product)
     {
         $product = $this->service->getBySlug($product);
+        
+        if (!$product) {
+            return redirect()->route('admin.products.index')
+                ->with('error', 'Product not found.');
+        }
+        
         $categories = $this->service->getCategories();
         return Inertia::render('backend/Admin/edit-product', [
             'product' => $product,
