@@ -92,6 +92,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/track/product-click', [TrackingController::class, 'trackProductClick']);
     Route::get('/admin/tracking', [TrackingController::class, 'getTrackingData']);
     Route::get('/admin/analytics', [TrackingController::class, 'getAnalytics']);
+    Route::post('/track/duration', [TrackingController::class, 'trackDuration']);
 
     // Inertia pages
     // Route::get('/admin/user-tracking', fn() => Inertia::render('Admin/UserTracking'));

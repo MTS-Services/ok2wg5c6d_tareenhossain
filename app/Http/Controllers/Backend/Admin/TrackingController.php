@@ -27,6 +27,20 @@ class TrackingController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function trackDuration(Request $request)
+    {
+        $visitorId = session('visitor_id');
+        if (!$visitorId) return response()->json(['success' => false]);
+
+        $data = json_decode($request->getContent(), true);
+        $duration = intval($data['duration'] ?? 0);
+
+        VisitorTracking::where('visitor_id', $visitorId)
+            ->increment('duration', $duration);
+
+        return response()->json(['success' => true]);
+    }
+
     public function getTrackingData(Request $request)
     {
         $query = VisitorTracking::query();
@@ -42,47 +56,129 @@ class TrackingController extends Controller
 
         return $query->paginate(7);
     }
+    // public function getAnalytics()
+    // {
+    //     return [
+    //         'total_visitors'    => VisitorTracking::count(),
+    //         'unique_visitors'   => VisitorTracking::distinct('ip_address')->count(),
+    //         'product_clicks'    => VisitorTracking::whereNotNull('product_clicked')->count(),
+    //         'ctr'               => VisitorTracking::whereNotNull('product_clicked')->count() / VisitorTracking::count() * 100,
+    //         'top_products'      => VisitorTracking::select('product_clicked', DB::raw('count(*) as clicks'))
+    //             ->whereNotNull('product_clicked')
+    //             ->groupBy('product_clicked')
+    //             ->orderByDesc('clicks')
+    //             ->get(),
+    //         'by_device'         => VisitorTracking::select('device', DB::raw('count(*) as count'))
+    //             ->groupBy('device')->get(),
+    //         'by_country'        => VisitorTracking::select('country', DB::raw('count(*) as count'))
+    //             ->groupBy('country')->orderByDesc('count')->take(5)->get(),
+    //         'sessions'          => VisitorTracking::select(
+    //             'visitor_id',
+    //             'country as location',
+    //             'device',
+    //             'page_visited',
+    //             'product_clicked',
+    //             'duration',
+    //             'created_at as visit_time'
+    //         )
+    //             ->orderByDesc('created_at')
+    //             ->take(10)
+    //             ->get()
+    //             ->map(function ($session) {
+    //                 return [
+    //                     'visitor_id' => $session->visitor_id,
+    //                     'location' => $session->location,
+    //                     'device' => $session->device,
+    //                     'page_visited' => $session->page_visited,
+    //                     'product_clicked' => $session->product_clicked,
+    //                     'duration' => $session->duration,
+    //                     'visit_time' => $session->visit_time,
+    //                     'timeline' => []
+    //                 ];
+    //             })
+    //             ->toArray(),
+    //     ];
+    // }
     public function getAnalytics()
-    {
-        return [
-            'total_visitors'    => VisitorTracking::count(),
-            'unique_visitors'   => VisitorTracking::distinct('ip_address')->count(),
-            'product_clicks'    => VisitorTracking::whereNotNull('product_clicked')->count(),
-            'ctr'               => VisitorTracking::whereNotNull('product_clicked')->count() / VisitorTracking::count() * 100,
-            'top_products'      => VisitorTracking::select('product_clicked', DB::raw('count(*) as clicks'))
-                ->whereNotNull('product_clicked')
-                ->groupBy('product_clicked')
-                ->orderByDesc('clicks')
-                ->get(),
-            'by_device'         => VisitorTracking::select('device', DB::raw('count(*) as count'))
-                ->groupBy('device')->get(),
-            'by_country'        => VisitorTracking::select('country', DB::raw('count(*) as count'))
-                ->groupBy('country')->orderByDesc('count')->take(5)->get(),
-            'sessions'          => VisitorTracking::select(
-                'visitor_id', 
-                'country as location', 
-                'device', 
-                'page_visited', 
-                'product_clicked', 
+{
+    $totalVisitors = VisitorTracking::count();
+    $productClicks = VisitorTracking::whereNotNull('product_clicked')->count();
+
+    return [
+        'total_visitors'  => $totalVisitors,
+
+        'unique_visitors' => VisitorTracking::distinct('ip_address')->count(),
+
+        'product_clicks'  => $productClicks,
+
+        // ✅ CTR safe
+        'ctr' => $totalVisitors > 0 ? ($productClicks / $totalVisitors) * 100 : 0,
+
+        // ✅ Top products
+        'top_products' => VisitorTracking::select(
+                'product_clicked',
+                DB::raw('count(*) as clicks')
+            )
+            ->whereNotNull('product_clicked')
+            ->groupBy('product_clicked')
+            ->orderByDesc('clicks')
+            ->get(),
+
+        // ✅ Device wise
+        'by_device' => VisitorTracking::select(
+                'device',
+                DB::raw('count(*) as count')
+            )
+            ->groupBy('device')
+            ->get(),
+
+        // ✅ Country wise (Top 5)
+        'by_country' => VisitorTracking::select(
+                'country',
+                DB::raw('count(*) as count')
+            )
+            ->groupBy('country')
+            ->orderByDesc('count')
+            ->take(5)
+            ->get(),
+
+        // ✅ Sessions + Timeline
+        'sessions' => VisitorTracking::with(['timelines' => function ($query) {
+                $query->orderBy('created_at', 'asc');
+            }])
+            ->select(
+                'visitor_id',
+                'country as location',
+                'device',
+                'page_visited',
+                'product_clicked',
                 'duration',
                 'created_at as visit_time'
             )
             ->orderByDesc('created_at')
             ->take(10)
             ->get()
-            ->map(function($session) {
+            ->map(function ($session) {
                 return [
-                    'visitor_id' => $session->visitor_id,
-                    'location' => $session->location,
-                    'device' => $session->device,
-                    'page_visited' => $session->page_visited,
+                    'visitor_id'      => $session->visitor_id,
+                    'location'        => $session->location,
+                    'device'          => $session->device,
+                    'page_visited'    => $session->page_visited,
                     'product_clicked' => $session->product_clicked,
-                    'duration' => $session->duration,
-                    'visit_time' => $session->visit_time,
-                    'timeline' => []
+                    'duration'        => $session->duration,
+                    'visit_time'      => $session->visit_time,
+
+                    // ✅ Timeline from SessionTimeline table
+                    'timeline' => $session->timelines->map(function ($item) {
+                        return [
+                            'event' => $item->event,   // column name adjust if needed
+                            'page'  => $item->page ?? null,
+                            'time'  => $item->created_at,
+                        ];
+                    }),
                 ];
             })
             ->toArray(),
-        ];
-    }
+    ];
+}
 }
