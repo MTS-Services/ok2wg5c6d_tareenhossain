@@ -30,44 +30,77 @@ type SessionRow = {
     timeline: TimelineEvent[];
 };
 
+// Analytics data shape from PHP controller
+type AnalyticsSession = {
+    visitor_id: string;
+    location: string;
+    device: string;
+    page_visited: string;
+    product_clicked: string;
+    duration: string;
+    visit_time: string;
+    timeline: {
+        time: string;
+        title: string;
+        subtitle?: string;
+        marker: 'start' | 'middle' | 'end';
+    }[];
+};
+
+type AnalyticsData = {
+    total_visitors: number;
+    unique_visitors: number;
+    product_clicks: number;
+    ctr: number;
+    top_products: Array<{
+        product_clicked: string;
+        clicks: number;
+    }>;
+    by_device: Array<{
+        device: string;
+        count: number;
+    }>;
+    by_country: Array<{
+        country: string;
+        count: number;
+    }>;
+    sessions?: AnalyticsSession[];
+};
+
+type Props = {
+    analytics: AnalyticsData;
+};
+
 const markerRing: Record<TimelineEvent['marker'], string> = {
     start: 'border-blue-600',
     middle: 'border-gray-400',
     end: 'border-gray-800',
 };
 
-const sessions: SessionRow[] = [
-    {
-        visitorId: 'VIS-001',
-        location: 'USA',
-        device: 'Desktop',
-        pageVisited: '/products',
-        productClicked: 'Echo Dot (5th Gen)',
-        duration: '5m 24s',
-        visitTimeLabel: '2024-03-12 10:30',
-        visitTimeShort: '10:30',
-        timeline: [
-            {
-                time: '10:30:00 AM',
-                title: 'Entered Website',
-                subtitle: 'Landing page/home',
-                marker: 'start',
-            },
-            {
-                time: '10:32:15 AM',
-                title: 'Visited Products Page',
-                subtitle: 'Viewed 12 items',
-                marker: 'middle',
-            },
-            {
-                time: '10:34:45 AM',
-                title: 'Session Ended',
-                marker: 'end',
-            },
-        ],
-    },
+// Map analytics data → SessionRow shape
+function mapToSessionRow(item: AnalyticsSession): SessionRow {
+    const visitDate = new Date(item.visit_time);
+    const visitTimeShort = visitDate.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    });
+    const visitTimeLabel = item.visit_time
+        ? item.visit_time.slice(0, 16).replace('T', ' ')
+        : '';
 
-];
+    return {
+        visitorId: item.visitor_id,
+        location: item.location,
+        device: item.device,
+        pageVisited: item.page_visited,
+        productClicked: item.product_clicked,
+        duration: item.duration,
+        visitTimeLabel,
+        visitTimeShort,
+        timeline: item.timeline ?? [],
+    };
+}
 
 function SessionDetailsSheet({
     session,
@@ -179,9 +212,12 @@ function SessionDetailsSheet({
     );
 }
 
-export default function UsersTrack() {
+export default function UsersTrack({ analytics }: Props) {
     const [detailsOpen, setDetailsOpen] = useState(false);
     const [selectedSession, setSelectedSession] = useState<SessionRow | null>(null);
+
+    // Map raw analytics → typed SessionRow[]
+    const sessions: SessionRow[] = (analytics.sessions ?? []).map(mapToSessionRow);
 
     function openSessionDetails(row: SessionRow) {
         setSelectedSession(row);
@@ -233,7 +269,6 @@ export default function UsersTrack() {
                         <div className="divide-y divide-gray-100 lg:hidden">
                             {sessions.map((row, index) => (
                             <div key={`${row.visitorId}-${index}-mobile`} className="p-4">
-                                {/* Card header row */}
                                 <div className="flex items-start justify-between gap-2">
                                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                                     <span className="cursor-pointer text-sm font-semibold text-blue-600 hover:underline">
@@ -253,7 +288,6 @@ export default function UsersTrack() {
                                 </button>
                                 </div>
 
-                                {/* Detail grid */}
                                 <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm sm:grid-cols-3">
                                 <div>
                                     <dt className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Location</dt>
@@ -330,7 +364,9 @@ export default function UsersTrack() {
 
                         {/* Pagination */}
                         <div className="flex flex-col items-center gap-3 border-t border-gray-100 bg-white px-4 py-4 sm:flex-row sm:justify-between sm:px-6">
-                            <p className="text-sm font-medium text-emerald-600">Showing 1 to 7 of 7 results</p>
+                            <p className="text-sm font-medium text-emerald-600">
+                                Showing 1 to {sessions.length} of {sessions.length} results
+                            </p>
                             <div className="flex gap-2">
                             <button
                                 type="button"
