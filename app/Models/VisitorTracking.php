@@ -18,4 +18,9 @@ class VisitorTracking extends Model
         'duration',
         'visit_time',
     ];
+
+    public function timeline()
+    {
+        return $this->hasMany(SessionTimeline::class, 'visitor_id', 'visitor_id');
+    }
 }

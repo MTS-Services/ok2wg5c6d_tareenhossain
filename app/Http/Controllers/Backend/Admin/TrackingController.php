@@ -7,59 +7,82 @@ use App\Models\SessionTimeline;
 use App\Models\VisitorTracking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Inertia\Inertia;
-use Inertia\Response;
 
 class TrackingController extends Controller
 {
     public function trackProductClick(Request $request)
-{
-    $visitorId = session('visitor_id');
+    {
+        $visitorId = session('visitor_id');
 
-    VisitorTracking::where('visitor_id', $visitorId)
-        ->update(['product_clicked' => $request->product_name]);
+        VisitorTracking::where('visitor_id', $visitorId)
+            ->update(['product_clicked' => $request->product_name]);
 
-    SessionTimeline::create([
-        'visitor_id'  => $visitorId,
-        'event'       => 'Clicked Product',
-        'description' => $request->product_name,
-        'event_time'  => now(),
-    ]);
+        SessionTimeline::create([
+            'visitor_id'  => $visitorId,
+            'event'       => 'Clicked Product',
+            'description' => $request->product_name,
+            'event_time'  => now(),
+        ]);
 
-    return response()->json(['success' => true]);
-}
-
-public function getTrackingData(Request $request)
-{
-    $query = VisitorTracking::query();
-    
-    if ($request->search) {
-        $query->where('visitor_id', 'like', "%{$request->search}%")
-              ->orWhere('country', 'like', "%{$request->search}%");
-    }
-    
-    if ($request->device && $request->device !== 'all') {
-        $query->where('device', $request->device);
+        return response()->json(['success' => true]);
     }
 
-    return $query->paginate(7);
-}
-public function getAnalytics()
-{
-    return [
-        'total_visitors'    => VisitorTracking::count(),
-        'unique_visitors'   => VisitorTracking::distinct('ip_address')->count(),
-        'product_clicks'    => VisitorTracking::whereNotNull('product_clicked')->count(),
-        'ctr'               => VisitorTracking::whereNotNull('product_clicked')->count() / VisitorTracking::count() * 100,
-        'top_products'      => VisitorTracking::select('product_clicked', DB::raw('count(*) as clicks'))
-                                ->whereNotNull('product_clicked')
-                                ->groupBy('product_clicked')
-                                ->orderByDesc('clicks')
-                                ->get(),
-        'by_device'         => VisitorTracking::select('device', DB::raw('count(*) as count'))
-                                ->groupBy('device')->get(),
-        'by_country'        => VisitorTracking::select('country', DB::raw('count(*) as count'))
-                                ->groupBy('country')->orderByDesc('count')->take(5)->get(),
-    ];
-}
+    public function getTrackingData(Request $request)
+    {
+        $query = VisitorTracking::query();
+
+        if ($request->search) {
+            $query->where('visitor_id', 'like', "%{$request->search}%")
+                ->orWhere('country', 'like', "%{$request->search}%");
+        }
+
+        if ($request->device && $request->device !== 'all') {
+            $query->where('device', $request->device);
+        }
+
+        return $query->paginate(7);
+    }
+    public function getAnalytics()
+    {
+        return [
+            'total_visitors'    => VisitorTracking::count(),
+            'unique_visitors'   => VisitorTracking::distinct('ip_address')->count(),
+            'product_clicks'    => VisitorTracking::whereNotNull('product_clicked')->count(),
+            'ctr'               => VisitorTracking::whereNotNull('product_clicked')->count() / VisitorTracking::count() * 100,
+            'top_products'      => VisitorTracking::select('product_clicked', DB::raw('count(*) as clicks'))
+                ->whereNotNull('product_clicked')
+                ->groupBy('product_clicked')
+                ->orderByDesc('clicks')
+                ->get(),
+            'by_device'         => VisitorTracking::select('device', DB::raw('count(*) as count'))
+                ->groupBy('device')->get(),
+            'by_country'        => VisitorTracking::select('country', DB::raw('count(*) as count'))
+                ->groupBy('country')->orderByDesc('count')->take(5)->get(),
+            'sessions'          => VisitorTracking::select(
+                'visitor_id', 
+                'country as location', 
+                'device', 
+                'page_visited', 
+                'product_clicked', 
+                'duration',
+                'created_at as visit_time'
+            )
+            ->orderByDesc('created_at')
+            ->take(10)
+            ->get()
+            ->map(function($session) {
+                return [
+                    'visitor_id' => $session->visitor_id,
+                    'location' => $session->location,
+                    'device' => $session->device,
+                    'page_visited' => $session->page_visited,
+                    'product_clicked' => $session->product_clicked,
+                    'duration' => $session->duration,
+                    'visit_time' => $session->visit_time,
+                    'timeline' => []
+                ];
+            })
+            ->toArray(),
+        ];
+    }
 }
