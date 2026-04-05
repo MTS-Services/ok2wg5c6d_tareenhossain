@@ -2,7 +2,6 @@ import { GlobalSearchBar } from '@/components/global-search-bar';
 import { useActiveUrl } from '@/hooks/use-active-url';
 import { cn } from '@/lib/utils';
 import { contact, dashboard, home, logout, shop } from '@/routes';
-import settings from '@/routes/admin/settings';
 import { type SharedData } from '@/types';
 import { Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
@@ -37,6 +36,22 @@ export function FrontendHeader() {
             document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const getLogo = () => {
+        if (urlIsActive(home.url())) {
+            return '/assets/images/logo/LEE-Uriy logo-02.svg';
+        } else if (urlIsActive(shop.url())) {
+            return '/assets/images/logo/LEE-Uriy logo-05.svg';
+        } else if (window.location.pathname.startsWith('/products/')) {
+            return '/assets/images/logo/LEE-Uriy logo-05.svg';
+        } else if (urlIsActive(contact.url())) {
+            return '/assets/images/logo/LEE-Uriy logo-04.svg';
+        } else if (window.location.pathname.startsWith('/stay-connected')) {
+            return '/assets/images/logo/LEE-Uriy logo-01.svg';
+        } else {
+            return '/assets/images/logo/LEE-Uriy logo-02.svg';
+        }
+    };
+
     return (
         <header className="relative">
             <div className="container m-2 mx-auto">
@@ -46,9 +61,9 @@ export function FrontendHeader() {
                         <Link href={home.url()}>
                             <div className="z-20 flex items-center gap-2">
                                 <img
-                                    src={settings?.website_logo ? `/storage/${settings.website_logo}` : ''}
+                                    src={getLogo()}
                                     alt="Logo"
-                                    className="h-6 w-6"
+                                    className="h-16 w-full"
                                 />
                                 <span className="text-sm font-bold tracking-widest text-gray-900 uppercase">
                                     {settings?.website_name || 'Nexus'}
