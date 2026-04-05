@@ -159,7 +159,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Customer Support</p>
-                                        <p className="font-bold text-gray-900 font-inter">info@supportleeuriy.com</p>
+                                        <p className="font-bold text-gray-900 font-inter">intakesupport@lee-uriy.com</p>
                                     </div>
                                 </div>
                             </div>

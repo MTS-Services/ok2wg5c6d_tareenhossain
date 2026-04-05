@@ -3,6 +3,7 @@ import { Head, Link, router, usePage } from '@inertiajs/react';
 import { ProductCardMedia } from '@/components/frontend/product-image';
 import Pagination from '@/components/pagination';
 import FrontendLayout from '@/layouts/frontend-layout';
+import { trackProductClick } from '@/components/tracking';
 
 interface Product {
     id: number;
@@ -124,6 +125,7 @@ export default function Home({ products }: Props) {
                             <div
                                 key={product.id}
                                 className="group box-border min-w-0 rounded-2xl border bg-white shadow-md"
+                                onClick={() => trackProductClick(product.title)}
                             >
                                 <Link href={`/products/${product.slug}`}>
                                     <ProductCardMedia

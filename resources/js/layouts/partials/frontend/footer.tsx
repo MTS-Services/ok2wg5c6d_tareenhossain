@@ -8,8 +8,9 @@ import {
     termsService as termsServiceRoute,
 } from '@/routes';
 import { type SharedData } from '@/types';
-import { Link, router, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { useActiveUrl } from '@/hooks/use-active-url';
 const socialLinks = [
     { label: 'Facebook', href: '#', Icon: Facebook },
     { label: 'Instagram', href: '#', Icon: Instagram },
@@ -24,6 +25,25 @@ const supportLinks = [
 
 export function FrontendFooter() {
     const { settings, categories } = usePage<SharedData>().props;
+    const { urlIsActive } = useActiveUrl();
+
+    const getLogo = () => {
+        if (urlIsActive(home.url())) {
+            return '/assets/images/logo/LEE-Uriy logo-02.svg';
+        } else if (urlIsActive(shop.url())) {
+            return '/assets/images/logo/LEE-Uriy logo-05.svg';
+        } else if (window.location.pathname.startsWith('/products/')) {
+            return '/assets/images/logo/LEE-Uriy logo-05.svg';
+        } else if (urlIsActive(contact.url())) {
+            return '/assets/images/logo/LEE-Uriy logo-04.svg';
+        } else if (window.location.pathname.startsWith('/stay-connected')) {
+            return '/assets/images/logo/LEE-Uriy logo-01.svg';
+        } else {
+            return '/assets/images/logo/LEE-Uriy logo-02.svg';
+        }
+    };
+
+
     return (
         <footer className="container mx-auto mt-6 w-full border-t border-gray-200">
             {/* Main Footer Content */}
@@ -33,12 +53,9 @@ export function FrontendFooter() {
                     <div className="flex items-center gap-2">
                         <Link href={home.url()}>
                             <img
-                                src={
-                                    settings?.website_logo
-                                        ? `/storage/${settings.website_logo}`
-                                        : '/assets/images/default-logo.png'
-                                }
-                                alt=""
+                                src={getLogo()}
+                                alt="Logo"
+                                className="h-16 w-full"
                             />
                         </Link>
                         <Link href={home.url()}>

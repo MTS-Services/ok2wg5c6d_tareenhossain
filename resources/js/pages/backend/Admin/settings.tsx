@@ -172,7 +172,7 @@ export default function Settings({ settings }: SettingsProps) {
                                         )}
                                     </div>
                                 </div>
-                                <div className="space-y-2">
+                                {/* <div className="space-y-2">
                                     <label className="font-inter text-sm font-semibold text-gray-600">
                                         Website Logo
                                     </label>
@@ -213,7 +213,7 @@ export default function Settings({ settings }: SettingsProps) {
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
 
                             <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">

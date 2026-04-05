@@ -11,6 +11,7 @@ import ErrorFallback from './components/error-fallback';
 import { ErrorBadge, ErrorOverlay } from './components/error-overlay';
 import { initializeTheme } from './hooks/use-appearance';
 import { ErrorObservabilityProvider } from './lib/errors/error-context';
+import { startDurationTracking } from './components/tracking';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -22,6 +23,7 @@ createInertiaApp({
             import.meta.glob('./pages/**/*.tsx'),
         ),
     setup({ el, App, props }) {
+        startDurationTracking();
         const root = createRoot(el);
 
         root.render(
