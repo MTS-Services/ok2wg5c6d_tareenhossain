@@ -23,7 +23,7 @@ interface SettingsProps {
 
 export default function Settings({ settings }: SettingsProps) {
     const [isTestingConnection, setIsTestingConnection] = useState(false);
-    const [activeTab, setActiveTab] = useState('general');
+    const [activeTab, setActiveTab] = useState('analytics');
 
     const { data, setData, post, processing, errors } = useForm({
         website_name: settings?.website_name || '',
@@ -145,9 +145,7 @@ export default function Settings({ settings }: SettingsProps) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (activeTab === 'general') {
-            handleSaveGeneral();
-        } else if (activeTab === 'analytics') {
+        if (activeTab === 'analytics') {
             handleSaveAnalytics();
         } else {
             handleSaveGeneral();
@@ -178,7 +176,7 @@ export default function Settings({ settings }: SettingsProps) {
                         {/* Tab Navigation */}
                         <div className="mb-6 border-b border-gray-200">
                             <nav className="flex space-x-8">
-                                {['general', 'analytics', 'advanced'].map((tab) => (
+                                {['analytics', 'advanced'].map((tab) => (
                                     <button
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
@@ -195,143 +193,6 @@ export default function Settings({ settings }: SettingsProps) {
 
                         {/* Tab Content */}
                         <form onSubmit={handleSubmit}>
-                            {/* General Settings Tab */}
-                            {activeTab === 'general' && (
-                                <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-                                    <div className="mb-6 flex items-center gap-2 text-blue-600">
-                                        <svg
-                                            className="h-5 w-5"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth={2}
-                                        >
-                                            <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                        </svg>
-                                        <h2 className="font-inter text-lg font-bold text-gray-800 ml-2">
-                                            General Settings
-                                        </h2>
-                                    </div>
-
-                                    <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-                                       
-                                   
-                                        <div className="space-y-2">
-                                            <label className="font-inter text-sm font-semibold text-gray-600">
-                                                Contact Email
-                                            </label>
-                                            <input
-                                                type="email"
-                                                value={data.contact_email}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        'contact_email',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300"
-                                            />
-                                            {errors.contact_email && (
-                                                <p className="text-sm text-red-500">
-                                                    {errors.contact_email}
-                                                </p>
-                                            )}
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="font-inter text-sm font-semibold text-gray-600">
-                                                Timezone
-                                            </label>
-                                            <select
-                                                value={data.timezone}
-                                                onChange={(e) =>
-                                                    setData('timezone', e.target.value)
-                                                }
-                                                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300"
-                                            >
-                                                <option value="UTC">UTC</option>
-                                                <option value="America/New_York">America/New York</option>
-                                                <option value="Europe/London">Europe/London</option>
-                                                <option value="Asia/Tokyo">Asia/Tokyo</option>
-                                            </select>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="font-inter text-sm font-semibold text-gray-600">
-                                                Date Format
-                                            </label>
-                                            <select
-                                                value={data.date_format}
-                                                onChange={(e) =>
-                                                    setData('date_format', e.target.value)
-                                                }
-                                                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300"
-                                            >
-                                                <option value="Y-m-d">YYYY-MM-DD</option>
-                                                <option value="d/m/Y">DD/MM/YYYY</option>
-                                                <option value="m/d/Y">MM/DD/YYYY</option>
-                                            </select>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <label className="font-inter text-sm font-semibold text-gray-600">
-                                                Currency
-                                            </label>
-                                            <select
-                                                value={data.currency}
-                                                onChange={(e) =>
-                                                    setData('currency', e.target.value)
-                                                }
-                                                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300"
-                                            >
-                                                <option value="USD">USD ($)</option>
-                                                <option value="EUR">EUR (€)</option>
-                                                <option value="GBP">GBP (£)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div className="space-y-4">
-                                        <div className="flex items-center gap-3">
-                                            <input
-                                                type="checkbox"
-                                                id="maintenance_mode"
-                                                checked={data.maintenance_mode}
-                                                onChange={(e) =>
-                                                    setData('maintenance_mode', e.target.checked as boolean)
-                                                }
-                                                className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                                            />
-                                            <label htmlFor="maintenance_mode" className="font-inter text-sm font-medium text-gray-700">
-                                                Enable Maintenance Mode
-                                            </label>
-                                        </div>
-                                        <p className="text-xs text-gray-500">
-                                            When enabled, visitors will see a maintenance page
-                                        </p>
-                                    </div>
-
-                                    <div className="space-y-4">
-                                        <div className="flex items-center gap-3">
-                                            <input
-                                                type="checkbox"
-                                                id="email_notifications"
-                                                checked={data.email_notifications}
-                                                onChange={(e) =>
-                                                    setData('email_notifications', e.target.checked as boolean)
-                                                }
-                                                className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
-                                            />
-                                            <label htmlFor="email_notifications" className="font-inter text-sm font-medium text-gray-700">
-                                                Email Notifications
-                                            </label>
-                                        </div>
-                                        <p className="text-xs text-gray-500">
-                                            Receive email alerts for important system events
-                                        </p>
-                                    </div>
-                                </div>
-                            )}
-
                             {/* Analytics Settings Tab */}
                             {activeTab === 'analytics' && (
                                 <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">

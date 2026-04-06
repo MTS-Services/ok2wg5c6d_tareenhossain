@@ -24,6 +24,13 @@ export default function ProductDetails({ product }: { product: Product }) {
 
     const tabs = ['DESCRIPTION'];
 
+    const descriptionHtml = (() => {
+        const raw = product.description ?? '';
+        // If description is plain text, preserve line breaks.
+        // If it's already HTML (from an editor), keep as-is.
+        const looksLikeHtml = /<\/?[a-z][\s\S]*>/i.test(raw);
+        return looksLikeHtml ? raw : raw.replace(/\r?\n/g, '<br />');
+    })();
 
     return (
         <FrontendLayout>
@@ -173,9 +180,9 @@ export default function ProductDetails({ product }: { product: Product }) {
                 )} */}
 
                     <div
-                        className="prose prose-sm mb-4 max-w-none font-aktiv-grotesk text-base font-normal text-text-body"
+                        className="richtext-content mb-4 max-w-none font-aktiv-grotesk text-base font-normal text-text-body"
                         dangerouslySetInnerHTML={{
-                            __html: product.description ?? '',
+                            __html: descriptionHtml,
                         }}
                     />
 
