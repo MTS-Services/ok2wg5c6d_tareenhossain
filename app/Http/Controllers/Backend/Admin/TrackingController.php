@@ -265,7 +265,8 @@ class TrackingController extends Controller
                 'clicks' => $dayData->clicks ?? 0,
             ];
 
-            $currentDate->addDay();
+            // In newer Laravel versions dates may be immutable; ensure we advance the pointer.
+            $currentDate = $currentDate->addDay();
         }
 
         return $result;
