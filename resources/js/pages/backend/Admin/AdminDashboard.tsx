@@ -26,12 +26,14 @@ export default function AdminDashboard({ dashboard }: DashboardProps) {
     const productClicks = dashboard?.product_clicks ?? 0;
 
     const chartData =
-        dashboard?.daily_stats?.map((d) => ({
-            date: new Date(d.date).toLocaleDateString('en-US', {
-                weekday: 'short',
-            }),
-            visitors: d.visitors ?? 0,
-        })) ?? [];
+        dashboard?.daily_stats?.map((d) => {
+            const dt = new Date(d.date);
+            return {
+                // Keep a unique x-axis label per day (weekday-only causes duplicates).
+                date: dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                visitors: d.visitors ?? 0,
+            };
+        }) ?? [];
 
     const topProducts = dashboard?.top_products ?? [];
     const maxClicks = Math.max(...topProducts.map((p) => p.clicks || 0), 1);
