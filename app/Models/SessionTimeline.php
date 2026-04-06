@@ -12,4 +12,8 @@ class SessionTimeline extends Model
         'description',
         'event_time',
     ];
+
+    protected $casts = [
+        'event_time' => 'datetime',
+    ];
 }
