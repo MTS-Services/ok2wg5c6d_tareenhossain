@@ -24,20 +24,20 @@ export default function FAQ({ faqs }: Props) {
         <FrontendLayout>
             <Head title="FAQ" />
             <div className="bg-white text-gray-800 min-h-screen">
-                <div className="max-w-6xl mx-auto px-4 py-12">
-                    <div className="text-center mb-10">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2 font-inter">Frequently Asked Questions</h1>
-                        <p className="text-sm text-gray-500">Everything you need to know about our service</p>
+                <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 md:py-12">
+                    <div className="text-center mb-8 sm:mb-10">
+                        <h1 className="text-2xl font-bold text-gray-900 mb-2 font-inter sm:text-3xl md:text-4xl">Frequently Asked Questions</h1>
+                        <p className="text-sm text-gray-500 max-w-2xl mx-auto">Everything you need to know about our service</p>
                     </div>
 
-                    <div className="space-y-2 mb-8">
+                    <div className="space-y-2 mb-8 sm:mb-10">
                         {faqs.map((item, index) => {
                             const isOpen = openIndex === index;
                             return (
-                                <div key={item.id} className="border border-gray-300 rounded-xl overflow-hidden font-inter ">
+                                <div key={item.id} className="border border-gray-300 rounded-xl overflow-hidden font-inter">
                                     <button
                                         onClick={() => toggleItem(index)}
-                                        className="w-full flex justify-between items-center px-5 py-4 text-left text-sm font-medium text-gray-900 hover:bg-gray-50 transition-colors font-inter"
+                                        className="w-full flex justify-between items-center px-4 py-3 text-left text-sm font-medium text-gray-900 hover:bg-gray-50 transition-colors font-inter sm:px-5 sm:py-4"
                                     >
                                         <span className="font-semibold">{item.question}</span>
                                         <svg
@@ -51,7 +51,7 @@ export default function FAQ({ faqs }: Props) {
                                         </svg>
                                     </button>
                                     {isOpen && (
-                                        <div className="px-5 pb-4">
+                                        <div className="px-4 pb-4 sm:px-5">
                                             <p className="text-sm text-gray-600 leading-relaxed">{item.answer}</p>
                                         </div>
                                     )}
@@ -60,18 +60,18 @@ export default function FAQ({ faqs }: Props) {
                         })}
                     </div>
 
-                    <div className="bg-gray-50 border border-gray-200 rounded-2xl px-6 py-8 text-center">
-                        <h3 className="font-bold text-gray-900 mb-1">Still have questions?</h3>
+                    <div className="bg-gray-50 border border-gray-200 rounded-2xl px-4 py-6 text-center sm:px-6 sm:py-8">
+                        <h3 className="font-bold text-gray-900 mb-1 text-base sm:text-lg">Still have questions?</h3>
                         <p className="text-sm text-gray-500 mb-4">Our support team is here to help you 24/7</p>
                         <Link
                             href={route('contact')}
-                            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors"
+                            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors sm:px-5 sm:py-3"
                         >
                             Contact Support
                         </Link>
                     </div>
 
-                    <p className="text-center text-sm font-inter text-gray-500 mt-6">Showing {faqs.length} FAQs</p>
+                    <p className="text-center text-sm font-inter text-gray-500 mt-6 mb-4">Showing {faqs.length} FAQs</p>
                 </div>
             </div>
 

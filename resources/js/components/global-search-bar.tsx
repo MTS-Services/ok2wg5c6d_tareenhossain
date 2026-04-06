@@ -251,7 +251,7 @@ export function GlobalSearchBar() {
                                     <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-gray-100 bg-gray-50">
                                         {product.image ? (
                                             <img
-                                                src={`/storage/${product.image}`}
+                                                src={`${product.image}`}
                                                 alt={product.title}
                                                 className="h-full w-full object-cover"
                                             />

@@ -252,11 +252,11 @@ export default function Category() {
                             <table className="w-full text-left">
                                 <thead className="border-b border-gray-50 bg-gray-100 text-[10px] font-bold tracking-widest text-gray-400 uppercase">
                                     <tr>
-                                        <th className="py-4">SL. No.</th>
-                                        <th className="py-4 text-center">
+                                        <th className="p-4">SL. No.</th>
+                                        <th className="p-4 text-center">
                                             Category Name
                                         </th>
-                                        <th className="py-4 text-center font-bold text-gray-600">
+                                        <th className="p-4 text-center font-bold text-gray-600">
                                             Actions
                                         </th>
                                     </tr>
@@ -267,16 +267,16 @@ export default function Category() {
                                             key={row.id}
                                             className="group transition-colors hover:bg-slate-50/50"
                                         >
-                                            <td className="py-5 text-sm text-gray-700">
+                                            <td className="p-5 text-sm text-gray-700">
                                                 {String(index + 1).padStart(
                                                     2,
                                                     '0',
                                                 )}
                                             </td>
-                                            <td className="py-5 text-center text-sm font-medium text-blue-500 hover:cursor-pointer hover:underline">
+                                            <td className="p-5 text-center text-sm font-medium text-blue-500 hover:cursor-pointer hover:underline">
                                                 {row.title}
                                             </td>
-                                            <td className="py-5">
+                                            <td className="p-5">
                                                 <div className="flex items-center justify-center gap-5">
                                                     <button
                                                         type="button"

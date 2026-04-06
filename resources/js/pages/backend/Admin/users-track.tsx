@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
-import { useState } from 'react';
+import { Head, router } from '@inertiajs/react';
+import { useEffect, useRef, useState } from 'react';
 
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 import {
@@ -215,6 +215,10 @@ function SessionDetailsSheet({
 export default function UsersTrack({ analytics }: Props) {
     const [detailsOpen, setDetailsOpen] = useState(false);
     const [selectedSession, setSelectedSession] = useState<SessionRow | null>(null);
+    const [search, setSearch] = useState('');
+    const [device, setDevice] = useState('all');
+    const [period, setPeriod] = useState('7days');
+    const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // Map raw analytics → typed SessionRow[]
     const sessions: SessionRow[] = (analytics.sessions ?? []).map(mapToSessionRow);
@@ -223,6 +227,24 @@ export default function UsersTrack({ analytics }: Props) {
         setSelectedSession(row);
         setDetailsOpen(true);
     }
+
+    const reload = (next: { search?: string; device?: string; period?: string }) => {
+        router.get(
+            route('admin.users-track'),
+            {
+                search: (next.search ?? search) ? (next.search ?? search) : undefined,
+                device: (next.device ?? device) ? (next.device ?? device) : undefined,
+                period: (next.period ?? period) ? (next.period ?? period) : undefined,
+            },
+            { preserveState: true, replace: true },
+        );
+    };
+
+    useEffect(() => {
+        // initial load ensures backend respects default period
+        reload({ period });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>
@@ -248,19 +270,42 @@ export default function UsersTrack({ analytics }: Props) {
                             <input
                                 type="text"
                                 placeholder="Search by Visitor ID or Country..."
+                                value={search}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setSearch(value);
+                                    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+                                    debounceTimer.current = setTimeout(() => reload({ search: value }), 350);
+                                }}
                                 className="block w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pr-3 pl-10 text-sm transition-all placeholder:text-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                             />
                             </div>
                             <div className="flex items-center gap-3">
-                            <select className="flex-1 cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300 sm:flex-none">
-                                <option>All Devices</option>
-                                <option>Desktop</option>
-                                <option>Mobile</option>
+                            <select
+                                value={device}
+                                onChange={(e) => {
+                                    setDevice(e.target.value);
+                                    reload({ device: e.target.value });
+                                }}
+                                className="flex-1 cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300 sm:flex-none"
+                            >
+                                <option value="all">All Devices</option>
+                                <option value="Desktop">Desktop</option>
+                                <option value="Mobile">Mobile</option>
+                                <option value="Tablet">Tablet</option>
                             </select>
-                            <select className="flex-1 cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300 sm:flex-none">
-                                <option>Last 24 Hours</option>
-                                <option>Last 7 Days</option>
-                                <option>Last Month</option>
+                            <select
+                                value={period}
+                                onChange={(e) => {
+                                    setPeriod(e.target.value);
+                                    reload({ period: e.target.value });
+                                }}
+                                className="flex-1 cursor-pointer rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-600 outline-none transition-colors hover:border-gray-300 sm:flex-none"
+                            >
+                                <option value="24hours">Last 24 Hours</option>
+                                <option value="7days">Last 7 Days</option>
+                                <option value="30days">Last 30 Days</option>
+                                <option value="90days">Last 90 Days</option>
                             </select>
                             </div>
                         </div>

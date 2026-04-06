@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\Admin\AdminDashboardController;
 use App\Http\Controllers\Backend\Admin\AdminLoginController;
 use App\Http\Controllers\Backend\Admin\SettingsController;
 use App\Http\Controllers\Backend\Admin\TrackingController;
+use App\Http\Controllers\Backend\Admin\GoogleAnalyticsReportController;
 use App\Http\Controllers\Backend\FaqManagement\FaqController;
 use App\Http\Controllers\Backend\ProductManagement\ProductController;
 use App\Http\Controllers\Backend\StayConnectedManagement\StayConnectedController;
@@ -23,7 +24,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
         Route::get('/users-track', [AdminDashboardController::class, 'UsersTrack'])->name('users-track');
         Route::get('/analytics', [AdminDashboardController::class, 'Analytics'])->name('analytics');
-        Route::get('/settings', [AdminDashboardController::class, 'Settings'])->name('settings');
+        Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::get('/edit-product', [AdminDashboardController::class, 'EditProduct'])->name('edit-product');
         Route::get('/editor-demo', function () {
             return inertia('backend/Admin/editor-demo');
@@ -85,16 +86,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/update', [SettingsController::class, 'update'])->name('update');
             Route::post('/update-connection', [SettingsController::class, 'updateConnection'])->name('update-connection');
         });
-        Route::get('/admin/analytics', [TrackingController::class, 'getAnalytics']);
+
+        // Analytics data endpoints (admin only)
+        Route::prefix('analytics')->name('analytics.')->group(function () {
+            Route::get('/data', [TrackingController::class, 'getAnalytics'])->name('data');
+            Route::post('/refresh', [TrackingController::class, 'refreshAnalytics'])->name('refresh');
+            Route::get('/google-report', GoogleAnalyticsReportController::class)->name('google-report');
+        });
+
+        // Tracking data API (admin only)
+        Route::get('/tracking', [TrackingController::class, 'getTrackingData'])->name('tracking.index');
     });
-
-    // routes/web.php
-    Route::post('/track/product-click', [TrackingController::class, 'trackProductClick']);
-    Route::get('/admin/tracking', [TrackingController::class, 'getTrackingData']);
-    Route::get('/admin/analytics', [TrackingController::class, 'getAnalytics']);
-    Route::post('/track/duration', [TrackingController::class, 'trackDuration']);
-
-    // Inertia pages
-    // Route::get('/admin/user-tracking', fn() => Inertia::render('Admin/UserTracking'));
-    // Route::get('/admin/dashboard', fn() => Inertia::render('Admin/Dashboard'));
 });

@@ -1,24 +1,9 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useMemo, useState, useEffect } from 'react';
 
-import { ProductCardMedia } from '@/components/frontend/product-image';
+import { ProductCard, Product } from '@/components/frontend/product-card';
 import Pagination from '@/components/pagination';
 import FrontendLayout from '@/layouts/frontend-layout';
-
-interface Product {
-    id: number;
-    title: string;
-    slug: string;
-    subtitle: string;
-    description: string;
-    image: string | null;
-    category: {
-        id: number;
-        title: string;
-    } | null;
-    price: number;
-    created_at: string;
-}
 
 interface Category {
     id: number;
@@ -62,7 +47,7 @@ export default function Shop({ products, categories }: Props) {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const categorySlug = urlParams.get('category');
-        
+
         if (categorySlug) {
             const category = categories.find(cat => cat.slug === categorySlug);
             if (category) {
@@ -82,8 +67,8 @@ export default function Shop({ products, categories }: Props) {
             selectedCategory === 'All Products'
                 ? [...products.data]
                 : products.data.filter(
-                      (product: Product) => product.category?.title === selectedCategory,
-                  );
+                    (product: Product) => product.category?.title === selectedCategory,
+                );
 
         // Sort products
         if (selectedSort === 'Price: Low to High') {
@@ -93,8 +78,8 @@ export default function Shop({ products, categories }: Props) {
         } else if (selectedSort === 'Newest') {
             filteredProducts.sort(
                 (a: Product, b: Product) =>
-                    new Date(b.created_at).getTime() -
-                    new Date(a.created_at).getTime(),
+                    new Date(b.created_at || '').getTime() -
+                    new Date(a.created_at || '').getTime(),
             );
         }
 
@@ -114,12 +99,10 @@ export default function Shop({ products, categories }: Props) {
             <Head title="Shop Page" />
 
             <div className="container mx-auto bg-white text-gray-900">
-                <section className="container mx-auto px-4 py-8">
-                    <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                <section className="container mx-auto px-4 py-6 sm:px-6 md:py-8">
+                    <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
                         <div className="flex-1">
-                            <span className="mb-3 block text-xs font-medium text-gray-900">
-                                Category
-                            </span>
+                            <span className="mb-2 block text-xs font-medium text-gray-900">Category</span>
                             <div className="flex flex-wrap gap-2">
                                 {categoryOptions.map((category: string) => (
                                     <button
@@ -128,11 +111,10 @@ export default function Shop({ products, categories }: Props) {
                                         onClick={() =>
                                             setSelectedCategory(category)
                                         }
-                                        className={`text-md rounded-lg px-5 py-2.5 font-medium transition-colors cursor-pointer ${
-                                            selectedCategory === category
+                                        className={`text-sm rounded-lg px-3 py-2.5 font-medium transition-colors cursor-pointer sm:px-4 sm:py-3 ${selectedCategory === category
                                                 ? 'bg-bg-background-dark text-white'
                                                 : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-                                        }`}
+                                            }`}
                                     >
                                         {category}
                                     </button>
@@ -163,58 +145,14 @@ export default function Shop({ products, categories }: Props) {
                     </div>
                 </section>
 
-                <section className="container mx-auto p-4 lg:px-20">
-                    <div className="grid grid-cols-1 gap-8 py-6 sm:grid-cols-2 lg:grid-cols-3">
+                <section className="container mx-auto px-4 py-6 sm:px-6 md:px-8 lg:px-20">
+                    <div className="grid grid-cols-1 gap-4 py-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
                         {visibleProducts.map((product) => (
-                            <div
-                                key={product.id}
-                                className="group box-border min-w-0 rounded-2xl border bg-white shadow-md"
-                            >
-                                <Link
-                                    className="cursor-pointer"
-                                    href={`/products/${product.slug}`}
-                                >
-                                    <ProductCardMedia
-                                        src={
-                                            product.image
-                                                ? `/storage/${product.image}`
-                                                : ''
-                                        }
-                                        alt={product.title}
-                                    />
-                                </Link>
-                                <div className="p-4">
-                                    <span className="text-[12px] tracking-widest text-gray-400 uppercase">
-                                        {product.category?.title || 'General'}
-                                    </span>
-                                    <Link
-                                        className="cursor-pointer"
-                                        href={`/products/${product.slug}`}
-                                    >
-                                        <h3 className="font-inter text-lg font-bold">
-                                            {product.title}
-                                        </h3>
-                                    </Link>
-                                    <Link
-                                        className="cursor-pointer"
-                                        href={`/products/${product.slug}`}
-                                    >
-                                        <p className="text-md mt-2 mb-4 border-b border-gray-200 pb-2 text-gray-500 truncate">
-                                            {product.subtitle || 'N/A'}
-                                        </p>
-                                    </Link>
-                                    <Link
-                                        href={route('stayconnected.index', product.slug)}
-                                        className="flex items-center justify-center rounded-xl bg-blue-50 py-3! text-sm font-semibold text-blue-600 transition hover:bg-blue-100 cursor-pointer"
-                                    >
-                                        Amazon
-                                    </Link>
-                                </div>
-                            </div>
+                            <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
 
-                    <Pagination 
+                    <Pagination
                         links={products.links}
                         from={products.from}
                         to={products.to}
@@ -223,6 +161,7 @@ export default function Shop({ products, categories }: Props) {
                         onPerPageChange={handlePerPageChange}
                     />
                 </section>
+                <p className="text-sm text-gray-500 font-inter text-center mt-8 mb-4">Showing {products.data.length} of {products.total} products</p>
             </div>
         </FrontendLayout>
     );

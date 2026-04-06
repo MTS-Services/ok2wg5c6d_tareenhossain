@@ -24,3 +24,4 @@ if (!function_exists('getAllCategories')) {
         return Category::latest()->get(['id', 'title', 'slug']);
     }
 }
+

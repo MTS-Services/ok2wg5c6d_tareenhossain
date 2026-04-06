@@ -46,4 +46,17 @@ class Product extends Model
     {
         return $this->hasMany(StayConnected::class, 'product_id', 'id');
     }
+
+    public function getImageAttribute($value)
+    {
+        if (!$value) {
+            return null;
+        }
+
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            return $value;
+        }
+
+        return asset('storage/' . $value);
+    }
 }

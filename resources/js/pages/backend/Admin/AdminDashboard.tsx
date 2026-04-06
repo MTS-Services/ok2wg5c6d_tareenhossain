@@ -1,8 +1,41 @@
 import { Head } from '@inertiajs/react';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 import { AdminSidebar } from '@/layouts/partials/admin/sidebar';
 
-export default function AdminDashboard() {
+type DashboardProps = {
+    dashboard?: {
+        total_visitors: number;
+        total_products: number;
+        product_clicks: number;
+        daily_stats?: Array<{
+            date: string;
+            visitors: number;
+            clicks: number;
+        }>;
+        top_products?: Array<{
+            product_clicked: string;
+            clicks: number;
+        }>;
+    };
+};
+
+export default function AdminDashboard({ dashboard }: DashboardProps) {
+    const totalVisitors = dashboard?.total_visitors ?? 0;
+    const totalProducts = dashboard?.total_products ?? 0;
+    const productClicks = dashboard?.product_clicks ?? 0;
+
+    const chartData =
+        dashboard?.daily_stats?.map((d) => ({
+            date: new Date(d.date).toLocaleDateString('en-US', {
+                weekday: 'short',
+            }),
+            visitors: d.visitors ?? 0,
+        })) ?? [];
+
+    const topProducts = dashboard?.top_products ?? [];
+    const maxClicks = Math.max(...topProducts.map((p) => p.clicks || 0), 1);
+
     return (
         <>
             <Head title="Dashboard" />
@@ -31,7 +64,7 @@ export default function AdminDashboard() {
                         <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Total Visitors
                         </p>
-                        <h3 className="text-3xl font-bold mt-1">8,234</h3>
+                        <h3 className="text-3xl font-bold mt-1">{totalVisitors.toLocaleString()}</h3>
                         </div>
                         <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm relative">
                         <div className="bg-gray-100 w-10 h-10 rounded-lg flex items-center justify-center mb-4">
@@ -51,7 +84,7 @@ export default function AdminDashboard() {
                         <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Total Products
                         </p>
-                        <h3 className="text-3xl font-bold mt-1">1,429</h3>
+                        <h3 className="text-3xl font-bold mt-1">{totalProducts.toLocaleString()}</h3>
                         </div>
                         <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm relative">
                         <div className="bg-gray-100 w-10 h-10 rounded-lg flex items-center justify-center mb-4">
@@ -71,77 +104,35 @@ export default function AdminDashboard() {
                         <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Product Clicks
                         </p>
-                        <h3 className="text-3xl font-bold mt-1">3250</h3>
+                        <h3 className="text-3xl font-bold mt-1">{productClicks.toLocaleString()}</h3>
                         </div>
                     </div>
                     <div className="p-4 sm:p-8 bg-white rounded-2xl shadow-sm border border-gray-100 mx-auto mb-8">
                     <div className="relative h-[240px] sm:h-[320px] md:h-[400px] w-full">
-                        <div className="absolute inset-0 flex flex-col justify-between text-[10px] sm:text-[11px] text-gray-400 font-medium">
-                        <div className="flex items-center gap-2 sm:gap-4">
-                            <span className="w-6 sm:w-8 text-right shrink-0">1000</span>
-                            <div className="flex-1 border-t border-dashed border-gray-100" />
-                        </div>
-                        <div className="flex items-center gap-2 sm:gap-4">
-                            <span className="w-6 sm:w-8 text-right shrink-0">750</span>
-                            <div className="flex-1 border-t border-dashed border-gray-100" />
-                        </div>
-                        <div className="flex items-center gap-2 sm:gap-4">
-                            <span className="w-6 sm:w-8 text-right shrink-0">500</span>
-                            <div className="flex-1 border-t border-dashed border-gray-100" />
-                        </div>
-                        <div className="flex items-center gap-2 sm:gap-4">
-                            <span className="w-6 sm:w-8 text-right shrink-0">250</span>
-                            <div className="flex-1 border-t border-dashed border-gray-100" />
-                        </div>
-                        <div className="flex items-center gap-2 sm:gap-4">
-                            <span className="w-6 sm:w-8 text-right shrink-0">0</span>
-                            <div className="flex-1 border-t border-dashed border-gray-100" />
-                        </div>
-                        </div>
-
-                        <div className="absolute inset-0 left-8 sm:left-12 right-0 overflow-hidden">
-                        <svg
-                            className="w-full h-full"
-                            viewBox="0 0 1000 400"
-                            preserveAspectRatio="none"
-                        >
-                            <defs>
-                            <linearGradient id="chartGradient" x1={0} y1={0} x2={0} y2={1}>
-                                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.12" />
-                                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.01" />
-                            </linearGradient>
-                            </defs>
-                            <path
-                            d="M0,300
-                            C150,290 200,240 333,80
-                            C450,40 550,110 666,160
-                            C750,190 850,50 1000,100
-                            V400 H0 Z"
-                            fill="url(#chartGradient)"
-                            />
-                            <path
-                            d="M0,300
-                            C150,290 200,240 333,80
-                            C450,40 550,110 666,160
-                            C750,190 850,50 1000,100"
-                            fill="none"
-                            stroke="#3b82f6"
-                            strokeWidth="2.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            />
-                        </svg>
-                        </div>
-
-                        <div className="absolute p-2 -bottom-6 sm:-bottom-8 left-8 sm:left-12 right-0 flex justify-between text-[10px] sm:text-[11px] text-gray-400 font-semibold uppercase tracking-wider">
-                        <span>Mon</span>
-                        <span>Tue</span>
-                        <span>Wed</span>
-                        <span>Thu</span>
-                        <span>Fri</span>
-                        <span>Sat</span>
-                        <span>Sun</span>
-                        </div>
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={chartData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                                <XAxis dataKey="date" tick={{ fontSize: 11 }} />
+                                <YAxis tick={{ fontSize: 11 }} />
+                                <Tooltip
+                                    contentStyle={{
+                                        backgroundColor: '#1f2937',
+                                        border: 'none',
+                                        borderRadius: '8px',
+                                        color: '#f3f4f6',
+                                    }}
+                                    labelStyle={{ color: '#f3f4f6' }}
+                                />
+                                <Line
+                                    type="monotone"
+                                    dataKey="visitors"
+                                    stroke="#3b82f6"
+                                    strokeWidth={3}
+                                    dot={{ fill: '#3b82f6', r: 3 }}
+                                    activeDot={{ r: 5 }}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
                     </div>
                     </div>
 
@@ -153,34 +144,25 @@ export default function AdminDashboard() {
 
                         {/* Mobile card layout */}
                         <div className="md:hidden divide-y divide-gray-50">
-                            {[
-                            { name: "Echo Dot (5th Gen)", category: "Electronics", clicks: "1,240", bar: "60%" },
-                            { name: "Kindle Paperwhite", category: "Electronics", clicks: "850", bar: "40%" },
-                            { name: "Kindle Paperwhite", category: "Electronics", clicks: "850", bar: "40%" },
-                            ].map((item, i) => (
+                            {topProducts.slice(0, 5).map((item, i) => (
                             <div key={i} className="p-4 hover:bg-gray-50/50 transition-colors">
                                 <div className="flex items-center justify-between gap-3">
                                 <div className="flex items-center gap-3 min-w-0">
-                                    <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden shrink-0">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
-                                        className="w-full h-full object-cover"
-                                    />
-                                    </div>
                                     <div className="min-w-0">
-                                    <p className="font-semibold text-sm truncate">{item.name}</p>
-                                    <p className="text-xs text-blue-500 font-medium">{item.category}</p>
+                                    <p className="font-semibold text-sm truncate">{item.product_clicked || 'Unknown Product'}</p>
                                     </div>
                                 </div>
-                                <a href="#" className="text-xs font-semibold text-blue-500 hover:underline shrink-0">
-                                    Active ↗
-                                </a>
                                 </div>
                                 <div className="mt-3 flex items-center gap-3 pl-13">
                                 <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                    <div className="bg-blue-600 h-full" style={{ width: item.bar }} />
+                                    <div
+                                        className="bg-blue-600 h-full"
+                                        style={{
+                                            width: `${Math.round(((item.clicks || 0) / maxClicks) * 100)}%`,
+                                        }}
+                                    />
                                 </div>
-                                <span className="text-sm font-semibold text-gray-700 shrink-0">{item.clicks}</span>
+                                <span className="text-sm font-semibold text-gray-700 shrink-0">{(item.clicks || 0).toLocaleString()}</span>
                                 </div>
                             </div>
                             ))}
@@ -192,81 +174,30 @@ export default function AdminDashboard() {
                             <thead className="bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                                 <tr>
                                 <th className="px-6 py-4">Product</th>
-                                <th className="px-6 py-4">Category</th>
                                 <th className="px-6 py-4">Total Clicks</th>
-                                <th className="px-6 py-4 text-right">Status</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
-                                <tr className="hover:bg-gray-50/50 transition-colors">
-                                <td className="px-6 py-4 flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden shrink-0">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
-                                        className="w-full h-full object-cover"
-                                    />
-                                    </div>
-                                    <span className="font-semibold text-sm">Echo Dot (5th Gen)</span>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-3">
-                                    <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                        <div className="bg-blue-600 h-full w-[60%]" />
-                                    </div>
-                                    <span className="text-sm font-semibold">1,240</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
-                                </td>
-                                </tr>
-                                <tr className="hover:bg-gray-50/50 transition-colors">
-                                <td className="px-6 py-4 flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-slate-200 rounded-lg overflow-hidden shrink-0">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
-                                        className="w-full h-full object-cover"
-                                    />
-                                    </div>
-                                    <span className="font-semibold text-sm">Kindle Paperwhite</span>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-3">
-                                    <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                        <div className="bg-blue-600 h-full w-[40%]" />
-                                    </div>
-                                    <span className="text-sm font-semibold">850</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
-                                </td>
-                                </tr>
-                                <tr className="hover:bg-gray-50/50 transition-colors">
-                                <td className="px-6 py-4 flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-slate-200 rounded-lg overflow-hidden shrink-0">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=100"
-                                        className="w-full h-full object-cover"
-                                    />
-                                    </div>
-                                    <span className="font-semibold text-sm">Kindle Paperwhite</span>
-                                </td>
-                                <td className="px-6 py-4 text-sm text-blue-500 font-medium">Electronics</td>
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-3">
-                                    <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                        <div className="bg-blue-600 h-full w-[40%]" />
-                                    </div>
-                                    <span className="text-sm font-semibold">850</span>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <a href="#" className="text-xs font-semibold text-blue-500 hover:underline">Active ↗</a>
-                                </td>
-                                </tr>
+                                {topProducts.slice(0, 8).map((p, idx) => (
+                                    <tr key={`${p.product_clicked}-${idx}`} className="hover:bg-gray-50/50 transition-colors">
+                                        <td className="px-6 py-4">
+                                            <span className="font-semibold text-sm">{p.product_clicked || 'Unknown Product'}</span>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                                    <div
+                                                        className="bg-blue-600 h-full"
+                                                        style={{
+                                                            width: `${Math.round(((p.clicks || 0) / maxClicks) * 100)}%`,
+                                                        }}
+                                                    />
+                                                </div>
+                                                <span className="text-sm font-semibold">{(p.clicks || 0).toLocaleString()}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                             </table>
                         </div>
