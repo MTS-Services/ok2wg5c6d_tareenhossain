@@ -66,7 +66,7 @@ export default function EditProduct() {
 
     useEffect(() => {
         if (product.image) {
-            setPreviewUrl(`/storage/${product.image}`);
+            setPreviewUrl(`${product.image}`);
         }
     }, [product.image]);
 

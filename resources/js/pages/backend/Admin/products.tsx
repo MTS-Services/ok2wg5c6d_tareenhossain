@@ -263,7 +263,7 @@ export default function Products({ products, categories, filters }: Props) {
                                         <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-gray-100 bg-gray-100">
                                             {product.image ? (
                                                 <img
-                                                    src={`/storage/${product.image}`}
+                                                    src={`${product.image}`}
                                                     className="h-full w-full object-cover grayscale transition-all group-hover:grayscale-0"
                                                     alt={product.title}
                                                 />
@@ -304,10 +304,10 @@ export default function Products({ products, categories, filters }: Props) {
                             <table className="w-full text-left">
                                 <thead className="border-b border-gray-50 text-[10px] font-bold tracking-widest text-gray-400 uppercase">
                                     <tr>
-                                        <th className="py-4">Product</th>
-                                        <th className="py-4">Category</th>
-                                        <th className="py-4">Total Clicks</th>
-                                        <th className="px-6 py-4 text-center">
+                                        <th className="p-4">Product</th>
+                                        <th className="p-4">Category</th>
+                                        <th className="p-4">Total Clicks</th>
+                                        <th className="p-4 text-center">
                                             Actions
                                         </th>
                                     </tr>
@@ -318,11 +318,11 @@ export default function Products({ products, categories, filters }: Props) {
                                             key={product.id}
                                             className="group transition-colors hover:bg-slate-50/50"
                                         >
-                                            <td className="flex items-center gap-4 py-5">
+                                            <td className="flex items-center gap-4 p-5">
                                                 <div className="h-10 w-10 overflow-hidden rounded-lg border border-gray-100 bg-gray-100">
                                                     {product.image ? (
                                                         <img
-                                                            src={`/storage/${product.image}`}
+                                                            src={`${product.image}`}
                                                             className="h-full w-full object-cover grayscale transition-all group-hover:grayscale-0"
                                                             alt={product.title}
                                                         />
@@ -338,10 +338,10 @@ export default function Products({ products, categories, filters }: Props) {
                                                     </span>
                                                 </div>
                                             </td>
-                                            <td className="py-5 text-sm font-medium text-blue-500">
+                                            <td className="p-5 text-sm font-medium text-blue-500">
                                                 {product.category?.title ?? '—'}
                                             </td>
-                                            <td className="py-5">
+                                            <td className="p-5">
                                                 <div className="flex items-center gap-4">
                                                     <div className="h-2 w-24 overflow-hidden rounded-full bg-gray-100">
                                                         <div
@@ -360,7 +360,7 @@ export default function Products({ products, categories, filters }: Props) {
                                                     </span>
                                                 </div>
                                             </td>
-                                            <td className="py-5">
+                                            <td className="p-5">
                                                 <div className="flex items-center justify-center gap-4">
                                                     <Link
                                                         href={route(

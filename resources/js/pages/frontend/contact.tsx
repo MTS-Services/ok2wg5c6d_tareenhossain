@@ -4,7 +4,7 @@ import FrontendLayout from '@/layouts/frontend-layout';
 
 export default function Contact() {
     const { flash } = usePage().props as any;
-    
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -27,15 +27,15 @@ export default function Contact() {
 
             <div className="bg-white text-gray-900 container mx-auto">
 
-                <section className=" mb-4 container mx-auto">
-                    <div className=" relative overflow-hidden rounded-3xl bg-bg-background-dark px-4 py-40 text-center text-white m-4">
+                <section className="mb-4 container mx-auto px-4">
+                    <div className="relative my-4 overflow-hidden rounded-3xl bg-bg-background-dark px-4 py-16 text-center text-white sm:py-20 md:py-28 lg:py-40">
                         <div className="pointer-events-none absolute inset-0 opacity-100">
-                            <img src="/assets/images/Home/Frame(1).png" className='w-full h-full ' alt="" />
+                            <img src="/assets/images/Home/Frame(1).png" className='w-full h-full object-cover' alt="" />
                         </div>
 
                         <div className="relative z-10">
-                            <h2 className="mb-6 lg:text-5xl text-3xl font-bold font-inter">Get in Touch</h2>
-                            <p className="mx-auto mb-10 max-w-lg text-sm text-gray-400">
+                            <h2 className="mb-4 font-inter text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">Get in Touch</h2>
+                            <p className="mx-auto mb-6 text-sm text-gray-400 max-w-md sm:mb-8 lg:mb-10">
                                 Have a specific inquiry or just want to say hello? Our team is ready to assist you with your professional needs.
                             </p>
                             {/* <button className="rounded-lg bg-blue-600 px-10 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">CONTACT US</button> */}
@@ -44,19 +44,19 @@ export default function Contact() {
                 </section>
 
 
-                <section className="container mx-auto px-4 py-16">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <section className="container mx-auto px-4 py-12 sm:py-16">
+                    <div className="grid grid-cols-1 gap-8 items-start lg:grid-cols-2 lg:gap-12">
 
                         {/* Left Side: Contact Form */}
-                        <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-10 shadow-sm">
+                        <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm sm:p-6 md:p-8 lg:p-10">
                             {flash.success && (
                                 <div className="mb-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg">
                                     {flash.success}
                                 </div>
                             )}
-                            
+
                             <form onSubmit={submit} className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                     <div className="space-y-2">
                                         <label className="text-sm font-semibold text-gray-700">Name</label>
                                         <input
@@ -89,7 +89,7 @@ export default function Contact() {
                                             type="tel"
                                             value={data.phone}
                                             onChange={(e) => setData('phone', e.target.value)}
-                                            placeholder="+1 (555) 123-4567 (optional)"
+                                            placeholder="+1 (555) 123-4567"
                                             className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all"
                                         />
                                         {errors.phone && (
@@ -98,7 +98,7 @@ export default function Contact() {
                                     </div>
                                 </div>
 
-                               
+
                                 <div className="space-y-2">
                                     <label className="text-sm font-semibold text-gray-700">Message</label>
                                     <textarea
@@ -112,7 +112,7 @@ export default function Contact() {
                                         <p className="text-sm text-red-600">{errors.message}</p>
                                     )}
                                 </div>
-                                <button 
+                                <button
                                     type="submit"
                                     disabled={processing}
                                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-blue-600/20 font-inter disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
@@ -137,7 +137,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">General Inquiries</p>
-                                        <p className="font-bold text-gray-900 font-inter">info@supportleeuriy.com</p>
+                                        <p className="font-bold text-gray-900 font-inter">admin@lee-uriy.com</p>
                                     </div>
                                 </div>
 
@@ -148,7 +148,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sales Department</p>
-                                        <p className="font-bold text-gray-900 font-inter">info@supportleeuriy.com</p>
+                                        <p className="font-bold text-gray-900 font-inter">inquiry@lee-uriy.com</p>
                                     </div>
                                 </div>
 
@@ -159,7 +159,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Customer Support</p>
-                                        <p className="font-bold text-gray-900 font-inter">intakesupport@lee-uriy.com</p>
+                                        <p className="font-bold text-gray-900 font-inter"> intakesupport@lee-uriy.com</p>
                                     </div>
                                 </div>
                             </div>
@@ -176,10 +176,8 @@ export default function Contact() {
                             </div>
                         </div>
                     </div>
-
-                    <p className="mt-12 text-center text-lg text-gray-400">Showing 12 products</p>
-                </section>
-            </div>
-        </FrontendLayout>
+                </section >
+            </div >
+        </FrontendLayout >
     );
 }

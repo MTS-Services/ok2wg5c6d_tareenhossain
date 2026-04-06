@@ -22,106 +22,63 @@ interface Product {
 export default function ProductDetails({ product }: { product: Product }) {
     const [activeTab, setActiveTab] = useState('DESCRIPTION');
 
-    const tabs = ['DESCRIPTION', 'REVIEW'];
-    const features = [
-        'Free 1 Year Warranty',
-        'Free Shipping & Fastest Delivery',
-        '100% Money-back guarantee',
-        '24/7 Customer support',
-        'Secure payment method',
-    ];
-    const shippingDetails = [
-        { label: 'Courier', value: '2-4 days, free shipping' },
-        { label: 'Local Shipping', value: 'up to one week, $19.00' },
-        { label: 'UPS Ground Shipping', value: '4-6 days, $29.00' },
-        { label: 'Unishop Global Export', value: '3-4 days, $39.00' },
-    ];
-    const reviews = [
-        {
-            id: 1,
-            name: 'Darrell Steward',
-            time: 'Just now',
-            avatar: 'https://i.pravatar.cc/40?img=11',
-            text: 'This was my very first 3D printer and honestly, the setup was way easier than I expected. The automatic bed leveling saved me a lot of time, and my first print came out perfectly. Highly recommended for anyone starting out!',
-        },
-        {
-            id: 2,
-            name: 'Brooklyn Simmons',
-            time: '2 mins ago',
-            avatar: 'https://i.pravatar.cc/40?img=32',
-            text: "For this price, the print quality is incredible. The details are clean, the layers are smooth, and it works consistently. I've used it for cosplay parts and miniatures - no complaints at all!",
-        },
-        {
-            id: 3,
-            name: 'Kathryn Murphy',
-            time: '21 mins ago',
-            avatar: 'https://i.pravatar.cc/40?img=45',
-            text: 'I was able to assemble the printer in under 25 minutes. The instructions were clear and all tools were included. It has been running almost daily for two months now without a single issue.',
-        },
-        {
-            id: 4,
-            name: 'Guy Hawkins',
-            time: '1 hour ago',
-            avatar: 'https://i.pravatar.cc/40?img=57',
-            text: "I use the Kobra Go for small mechanical prototypes in my workshop. The accuracy and speed are surprisingly good for a budget machine. It's a real workhorse once you get the settings dialed in.",
-        },
-    ];
-
+    const tabs = ['DESCRIPTION'];
 
 
     return (
         <FrontendLayout>
             <Head title="Product Details" />
-            <section className="container mx-auto px-4 py-8 max-w-7xl">
-            {/* Top Section: Product Info */}
-            <div className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-12">
-                <div className="min-w-0">
-                    <ProductDetailMedia
-                        src={
-                            product.image
-                                ? `/storage/${product.image}`
-                                : ''
-                        }
-                        alt={product.title}
-                    />
-                </div>
-
-                <div className="flex flex-col justify-start pt-4">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2 font-inter">{product.title}</h1>
-                    <p className="text-gray-500 text-sm mb-4">{product.subtitle}</p>
-                    <div className="flex items-center gap-2 mb-8">
-                        <span className="text-xs text-gray-400 uppercase font-medium">Category:</span>
-                        <span className="text-xs font-bold text-gray-900">{product.category?.title}</span>
+            <section className="container mx-auto px-4 py-6 sm:px-6 md:px-0 lg:py-8">
+                {/* Top Section: Product Info */}
+                <div className="mb-8 grid grid-cols-1 gap-6 md:mb-12 md:grid-cols-2 md:gap-8 lg:gap-12">
+                    <div className="min-w-0">
+                        <ProductDetailMedia
+                            src={
+                                product.image
+                                    ? `${product.image}`
+                                    : ''
+                            }
+                            alt={product.title}
+                        />
                     </div>
 
-                    <Link
-                       href={route('stayconnected.index', product.slug)}  
-                        className="flex items-center justify-center rounded-xl bg-blue-50 py-3! font-semibold text-blue-600 transition hover:bg-blue-100">
-                        Amazon
-                    </Link>
-                </div>
-            </div>
+                    <div className="flex flex-col justify-start pt-2 md:pt-4">
+                        <h1 className="text-xl font-bold text-gray-900 mb-2 font-inter sm:text-2xl md:text-3xl">{product.title}</h1>
+                        <p className="text-gray-500 text-sm mb-3 sm:mb-4">{product.subtitle}</p>
+                        <div className="flex items-center gap-2 mb-6">
+                            <span className="text-xs text-gray-400 uppercase font-medium">Category:</span>
+                            <span className="text-xs font-bold text-gray-900">{product.category?.title}</span>
+                        </div>
 
-            {/* Bottom Section: Dynamic Tabs */}
-            <div className="max-w-6xl mx-auto px-6 py-8 border border-b border-gray-200">
-                <div className="flex justify-center gap-10  border-b  border-gray-200 overflow-x-auto no-scrollbar">
-                    {tabs.map((tab) => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={cn(
-                                'pb-3 text-sm font-semibold tracking-widest uppercase border-b-2 transition-colors whitespace-nowrap',
-                                activeTab === tab
-                                    ? 'border-orange-500 text-gray-900'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700',
-                            )}
+                        <Link
+                            href={route('stayconnected.index', product.slug)}
+                            className="flex items-center justify-center rounded-xl bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-100 sm:px-6"
                         >
-                            {tab}
-                        </button>
-                    ))}
+                            Amazon
+                        </Link>
+                    </div>
                 </div>
 
-                {/* {activeTab === 'DESCRIPTION' && (
+                {/* Bottom Section: Dynamic Tabs */}
+                <div className="container mx-auto px-4 py-6 px-2 border border-b border-gray-200">
+                    <div className="flex justify-center gap-6 border-b border-gray-200 overflow-x-auto no-scrollbar sm:gap-8">
+                        {tabs.map((tab) => (
+                            <button
+                                key={tab}
+                                onClick={() => setActiveTab(tab)}
+                                className={cn(
+                                    'pb-3 text-xs font-semibold tracking-widest uppercase border-b-2 transition-colors whitespace-nowrap sm:text-sm',
+                                    activeTab === tab
+                                        ? 'border-orange-500 text-gray-900'
+                                        : 'border-transparent text-gray-500 hover:text-gray-700',
+                                )}
+                            >
+                                {tab}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* {activeTab === 'DESCRIPTION' && (
                     <div className="max-w-7xl mx-auto  font-sans  rounded-sm overflow-hidden">
                     <div className="flex">
                     </div>
@@ -215,80 +172,16 @@ export default function ProductDetails({ product }: { product: Product }) {
 
                 )} */}
 
-                <div
+                    <div
                         className="prose prose-sm mb-4 max-w-none font-aktiv-grotesk text-base font-normal text-text-body"
                         dangerouslySetInnerHTML={{
                             __html: product.description ?? '',
                         }}
                     />
 
-                {activeTab === 'REVIEW' && (
-                    <div className="bg-white text-gray-800 max-w-6xl mx-auto px-6 py-8">
-                        <h2 className="font-semibold text-base mb-6 text-gray-900">Customer Feedback</h2>
-                        <div className="space-y-6">
-                            <div className="flex flex-col md:flex-row gap-8 mb-2">
-                                <div className="bg-amber-50 rounded-xl flex flex-col items-center justify-center px-12 py-8 min-w-[200px]">
-                                    <span className="text-6xl font-bold text-gray-900 leading-none">4.7</span>
-                                    <div className="flex gap-1 mt-3 text-orange-400 text-xl">
-                                        ★★★★<span className="text-orange-300">★</span>
-                                    </div>
-                                    <p className="text-sm text-gray-600 mt-2 text-center">
-                                        Customer Rating <span className="text-gray-500">(934,516)</span>
-                                    </p>
-                                </div>
-                                <div className="flex-1 flex flex-col justify-center gap-3">
-                                    {[
-                                        { stars: '★★★★★', percent: '63%', count: '(94,532)' },
-                                        { stars: '★★★★', starsOff: '★', percent: '24%', count: '(6,717)' },
-                                        { stars: '★★★', starsOff: '★★', percent: '9%', count: '(714)' },
-                                        { stars: '★★', starsOff: '★★★', percent: '1%', count: '(152)' },
-                                        { stars: '★', starsOff: '★★★★', percent: '7%', count: '(643)' },
-                                    ].map((item) => (
-                                        <div key={`${item.stars}-${item.percent}`} className="flex items-center gap-3">
-                                            <div className="flex text-orange-400 text-sm gap-0.5">
-                                                {item.stars}
-                                                {item.starsOff ? (
-                                                    <span className="text-gray-300">{item.starsOff}</span>
-                                                ) : null}
-                                            </div>
-                                            <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                                                <div className="h-full bg-orange-400 rounded-full" style={{ width: item.percent }} />
-                                            </div>
-                                            <span className="text-sm text-gray-700 w-8 text-right">{item.percent}</span>
-                                            <span className="text-sm text-gray-400">{item.count}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="space-y-0 max-w-3xl">
-                                {reviews.map((review, index) => (
-                                    <div
-                                        key={review.id}
-                                        className={cn('py-6', index < reviews.length - 1 && 'border-b border-gray-100')}
-                                    >
-                                        <div className="flex items-center gap-3 mb-2">
-                                            <img src={review.avatar} alt={review.name} className="w-10 h-10 rounded-full object-cover" />
-                                            <div>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="font-semibold text-sm text-gray-900">{review.name}</span>
-                                                    <span className="text-gray-400 text-xs">·</span>
-                                                    <span className="text-gray-400 text-xs">{review.time}</span>
-                                                </div>
-                                                <div className="text-orange-400 text-sm mt-0.5">★★★★★</div>
-                                            </div>
-                                        </div>
-                                        <p className="text-sm text-gray-600 leading-relaxed">{review.text}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
-            <p className="text-sm text-gray-500 font-inter text-center mt-10">Showing 12 products</p>
-        </section>
-            </FrontendLayout>
+                </div>
+            </section>
+        </FrontendLayout>
 
     );
 }
