@@ -22,8 +22,8 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'website_name' => 'required|string|max:255',
-            'contact_email' => 'required|email|max:255',
+            'website_name' => 'nullable|string|max:255',
+            'contact_email' => 'nullable|email|max:255',
             'website_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'ga_tracking_id' => 'nullable|string|max:50',
             'timezone' => 'nullable|string|max:100',
@@ -46,9 +46,15 @@ class SettingsController extends Controller
             $setting->website_logo = $logoPath;
         }
 
-        $setting->website_name = $request->website_name;
-        $setting->contact_email = $request->contact_email;
-        $setting->ga_tracking_id = $request->ga_tracking_id;
+        if ($request->filled('website_name')) {
+            $setting->website_name = $request->website_name;
+        }
+        if ($request->filled('contact_email')) {
+            $setting->contact_email = $request->contact_email;
+        }
+        if ($request->has('ga_tracking_id')) {
+            $setting->ga_tracking_id = $request->ga_tracking_id;
+        }
 
         $setting->timezone = $request->input('timezone', $setting->timezone ?? 'UTC');
         $setting->date_format = $request->input('date_format', $setting->date_format ?? 'Y-m-d');

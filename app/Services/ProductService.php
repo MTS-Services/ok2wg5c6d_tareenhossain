@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
@@ -31,7 +32,14 @@ class ProductService
 
     public function getFilteredProducts(Request $request, $perPage = 10)
     {
-        $query = $this->model->with('category');
+        $query = $this->model
+            ->with('category')
+            ->select(['id', 'title', 'slug', 'subtitle', 'image', 'category_id', 'created_at'])
+            ->selectSub(function ($sub) {
+                $sub->from('visitor_trackings')
+                    ->selectRaw('COUNT(*)')
+                    ->whereColumn('visitor_trackings.product_clicked', 'products.title');
+            }, 'total_clicks');
 
         // Search by title
         if ($request->filled('search')) {
@@ -48,7 +56,7 @@ class ProductService
             $query->where('status', $request->status === '1');
         }
 
-        return $query->orderBy('created_at', 'desc')->paginate($perPage, ['id', 'title', 'slug', 'subtitle', 'image', 'category_id']);
+        return $query->orderBy('created_at', 'desc')->paginate($perPage);
     }
 
     public function getCategories()

@@ -509,3 +509,37 @@
 .animate-fade-in-delay-2 {
   animation: fadeIn 0.8s ease-out 0.4s both;
 }
+
+/* Rich text rendering (Tiptap / HTML descriptions) */
+.richtext-content {
+  line-height: 1.65;
+}
+
+.richtext-content p {
+  margin: 0 0 0.9rem;
+}
+
+.richtext-content br {
+  line-height: 1.65;
+}
+
+.richtext-content h1,
+.richtext-content h2,
+.richtext-content h3,
+.richtext-content h4 {
+  margin: 1.2rem 0 0.6rem;
+  font-weight: 700;
+}
+
+.richtext-content ul,
+.richtext-content ol {
+  margin: 0.8rem 0 1rem 1.25rem;
+}
+
+.richtext-content li {
+  margin: 0.25rem 0;
+}
+
+.richtext-content strong {
+  font-weight: 700;
+}
