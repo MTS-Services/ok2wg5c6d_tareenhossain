@@ -3,8 +3,8 @@ import {
     BarChart3,
     Boxes,
     ChevronDown,
-    LayoutGrid,
     Handshake,
+    LayoutGrid,
     Menu,
     MessageCircleQuestion,
     Settings,
@@ -80,8 +80,7 @@ const sidebarItems: SidebarItem[] = [
         title: 'FAQs',
         href: route('admin.faqs.index'),
         icon: MessageCircleQuestion,
-        isCurrent: (currentRoute) =>
-            currentRoute.startsWith('/admin/faqs'),
+        isCurrent: (currentRoute) => currentRoute.startsWith('/admin/faqs'),
     },
 
     {
@@ -140,14 +139,15 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(
                         !mobile && isCollapsedView && 'justify-center px-0',
                     )}
                 >
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 shadow-lg shadow-blue-200">
-                        <LayoutGrid className="h-6 w-6 text-white" />
+                    <div className="flex items-center justify-center mt-4">
+                        <Link href={route('admin.dashboard')}>
+                            <img
+                                src="/assets/images/logo/LEE-Uriy logo-02.svg"
+                                alt="Logo"
+                                className="h-16 w-full"
+                            />
+                        </Link>
                     </div>
-                    {(!isCollapsedView || mobile) && (
-                        <span className="text-2xl font-bold tracking-tight text-gray-800">
-                            NexusFlow
-                        </span>
-                    )}
                 </div>
 
                 <nav className="flex-1 space-y-2">
@@ -309,7 +309,7 @@ export const AdminSidebar = React.memo<AdminSidebarProps>(
                     <button
                         type="button"
                         className={cn(
-                            'group flex w-full items-center px-4 py-3 text-gray-600 transition-colors hover:text-red-500',
+                            'group flex w-full items-center px-4 py-3 text-gray-600 transition-colors hover:text-red-500 cursor-pointer',
                             !mobile && isCollapsedView
                                 ? 'justify-center px-2'
                                 : 'gap-4',

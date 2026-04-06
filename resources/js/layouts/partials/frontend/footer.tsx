@@ -58,11 +58,11 @@ export function FrontendFooter() {
                                 className="h-16 w-full"
                             />
                         </Link>
-                        <Link href={home.url()}>
+                        {/* <Link href={home.url()}>
                             <span className="font-inter text-sm font-bold tracking-widest text-gray-900 uppercase">
                                 {settings?.website_name || 'web name'}
                             </span>
-                        </Link>
+                        </Link> */}
                     </div>
                     <p className="text-sm leading-relaxed text-gray-500">
                         Redefining the digital shopping experience through
