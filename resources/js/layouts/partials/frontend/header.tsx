@@ -65,9 +65,9 @@ export function FrontendHeader() {
                                     alt="Logo"
                                     className="h-16 w-full"
                                 />
-                                <span className="text-sm font-bold tracking-widest text-gray-900 uppercase">
+                                {/* <span className="text-sm font-bold tracking-widest text-gray-900 uppercase">
                                     {settings?.website_name || 'Nexus'}
-                                </span>
+                                </span> */}
                             </div>
                         </Link>
 
