@@ -18,7 +18,7 @@ class TrackVisitor
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->is('api/*') || $request->is('admin/*')) {
+        if ($request->is('api/*') || $request->is('admin/*') || $request->is('track/*')) {
             return $next($request);
         }
 

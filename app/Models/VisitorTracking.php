@@ -19,6 +19,11 @@ class VisitorTracking extends Model
         'visit_time',
     ];
 
+    protected $casts = [
+        'duration' => 'integer',
+        'visit_time' => 'datetime',
+    ];
+
     public function timelines()
     {
         return $this->hasMany(SessionTimeline::class, 'visitor_id', 'visitor_id');
