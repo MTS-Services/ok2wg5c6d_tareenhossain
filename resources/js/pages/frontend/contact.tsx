@@ -1,9 +1,11 @@
 import { Head, useForm, usePage } from '@inertiajs/react';
+import { useEffect, useRef } from 'react';
 
 import FrontendLayout from '@/layouts/frontend-layout';
 
 export default function Contact() {
     const { flash } = usePage().props as any;
+    const prefilledProduct = useRef(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
@@ -11,6 +13,22 @@ export default function Contact() {
         message: '',
         phone: '',
     });
+
+    useEffect(() => {
+        if (prefilledProduct.current || typeof window === 'undefined') {
+            return;
+        }
+        const product = new URLSearchParams(window.location.search).get('product');
+        if (!product) {
+            return;
+        }
+        prefilledProduct.current = true;
+        const line = `I'm interested in: ${product}\n\n`;
+        setData((prev) => ({
+            ...prev,
+            message: prev.message.trim() === '' ? line : prev.message,
+        }));
+    }, [setData]);
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
