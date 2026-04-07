@@ -11,30 +11,41 @@ use Inertia\Response;
 
 class StayConnectedController extends Controller
 {
-        public function index($slug = null): Response
+    public function landing(): Response
     {
-        $product = null;
-        if ($slug) {
-            $product = Product::where('slug', $slug)->first();
-        }
-        
+        return Inertia::render('frontend/stay-connected', [
+            'product' => null,
+        ]);
+    }
+
+    public function index(string $slug): Response
+    {
+        $product = Product::where('slug', $slug)->first();
+
         return Inertia::render('frontend/stay-connected', [
             'product' => $product,
         ]);
     }
-    
+
     public function store(Request $request)
     {
+        $rawProductId = $request->input('product_id');
+        $request->merge([
+            'product_id' => ($rawProductId !== null && $rawProductId !== '')
+                ? (int) $rawProductId
+                : null,
+        ]);
+
         $validated = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'number' => 'required|regex:/^[0-9+\-\s()]+$/|max:20',
-            'agree' => 'nullable|boolean',
+            'product_id' => ['nullable', 'integer', 'exists:products,id'],
+            'number' => ['required', 'regex:/^[0-9+\-\s()]+$/', 'max:20'],
+            'agree' => ['nullable', 'boolean'],
         ], [
             'number.regex' => 'Phone number can only contain numbers, spaces, and basic phone symbols (+, -, (, ))',
         ]);
 
         StayConnected::create([
-            'product_id' => $validated['product_id'],
+            'product_id' => $validated['product_id'] ?? null,
             'number' => $validated['number'],
             'agree' => $validated['agree'] ?? false,
         ]);
