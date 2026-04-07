@@ -7,6 +7,7 @@ import {
     shop,
     termsService as termsServiceRoute,
 } from '@/routes';
+import { landing as stayConnectedLanding } from '@/routes/stayconnected';
 import { type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { Facebook, Instagram, Linkedin } from 'lucide-react';
@@ -135,7 +136,13 @@ export function FrontendFooter() {
                     <p className="text-center text-xs text-gray-400 sm:text-left">
                         © 2026 Nexus Storefront Inc. All rights reserved.
                     </p>
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-end">
+                        <a
+                            href={stayConnectedLanding.url()}
+                            className="text-xs text-gray-500 hover:text-gray-900"
+                        >
+                            Text alerts privacy
+                        </a>
                         <a
                             href={privacyPolicyRoute.url()}
                             className="text-xs text-gray-500 hover:text-gray-900"
