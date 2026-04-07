@@ -15,7 +15,7 @@ interface Product {
 
 interface StayConnected {
     id: number;
-    product_id: number;
+    product_id: number | null;
     number: string;
     agree: boolean;
     created_at: string;
