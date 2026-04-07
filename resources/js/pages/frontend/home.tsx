@@ -63,15 +63,8 @@ export default function Home({ products }: Props) {
                                     Shop Collection
                                 </button>
                                 <Link
-                                    href="#up-coming-products"
+                                    href={route('contact')}
                                     className="w-full rounded-lg border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 active:scale-95 sm:w-auto sm:px-8"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        document.getElementById('up-coming-products')?.scrollIntoView({
-                                            behavior: 'smooth',
-                                            block: 'start'
-                                        });
-                                    }}
                                 >
                                     Stay Connected
                                 </Link>
@@ -79,11 +72,14 @@ export default function Home({ products }: Props) {
                         </div>
 
                         {/* Image Column */}
-                        <div className="flex justify-center md:justify-end order-1 md:order-2">
+                        <div
+                            className="flex justify-center md:justify-end order-1 md:order-2"
+                            style={{ perspective: '520px' }}
+                        >
                             <img
                                 src="/assets/images/Home/Container (2).png"
                                 alt="Headphones"
-                                className="w-full max-w-[200px] object-contain drop-shadow-2xl transition-transform duration-700 hover:scale-105 sm:max-w-[280px] md:max-w-[350px] lg:max-w-[400px] xl:max-w-full"
+                                className="animate-headphone-sway w-full max-w-[200px] object-contain drop-shadow-2xl sm:max-w-[280px] md:max-w-[350px] lg:max-w-[400px] xl:max-w-full"
                             />
                         </div>
                     </div>
