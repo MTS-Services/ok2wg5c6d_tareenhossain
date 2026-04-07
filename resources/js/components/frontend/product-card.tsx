@@ -68,11 +68,11 @@ export function ProductCard({ product }: ProductCardProps) {
                     </p>
                 </Link>
                 <Link
-                    href={route('stayconnected.index', product.slug)}
+                    href={`${route('contact')}?product=${encodeURIComponent(product.title)}`}
                     className="flex items-center justify-center rounded-xl bg-blue-50 py-3! text-sm font-semibold text-blue-600 transition hover:bg-blue-100 cursor-pointer"
                     onClick={handleAmazonClick}
                 >
-                    Amazon
+                    Inquire
                 </Link>
             </div>
         </div>
