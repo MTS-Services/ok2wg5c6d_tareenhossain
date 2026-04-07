@@ -1,6 +1,6 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Phone, ShieldCheck, Lock } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import FrontendLayout from '@/layouts/frontend-layout';
 import { cn } from '@/lib/utils';
@@ -23,20 +23,19 @@ interface Props {
 }
 
 export default function StayConnected({ product }: Props) {
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [agreed, setAgreed] = useState(false);
-
-    const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
-        product_id: product?.id || '',
+    const { data, setData, post, processing, errors } = useForm<{
+        product_id: number | null;
+        number: string;
+        agree: boolean;
+    }>({
+        product_id: product?.id ?? null,
         number: '',
         agree: false,
     });
 
     useEffect(() => {
-        if (product) {
-            setData('product_id', product.id);
-        }
-    }, [product]);
+        setData('product_id', product?.id ?? null);
+    }, [product, setData]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -45,7 +44,7 @@ export default function StayConnected({ product }: Props) {
                 toast.success('Successfully subscribed to stay connected!');
                 // Reset form
                 setData({
-                    product_id: product?.id || '',
+                    product_id: product?.id ?? null,
                     number: '',
                     agree: false,
                 });
@@ -75,7 +74,6 @@ export default function StayConnected({ product }: Props) {
                         Get instant text alerts about exclusive offers, order updates, and important notifications.
                     </p>
 
-                    {/* Subscription Form */}
                     <form onSubmit={handleSubmit} className="space-y-6 text-left max-w-md mx-auto">
                         <div className="space-y-2">
                             <label className="text-xs font-semibold text-gray-700 ml-1">Phone Number</label>
@@ -96,7 +94,6 @@ export default function StayConnected({ product }: Props) {
                             </div>
                         </div>
 
-                        {/* Consent Checkbox */}
                         <label className="flex gap-3 cursor-pointer group">
                             <input
                                 type="checkbox"
