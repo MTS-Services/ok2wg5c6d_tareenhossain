@@ -80,6 +80,17 @@
   }
 }
 
+/* Hero product visual — gentle side-to-side / 3D turn (GIF alternative) */
+@keyframes headphoneSway {
+  0%, 100% {
+    transform: perspective(520px) rotateY(-14deg) translateX(-6px);
+  }
+
+  50% {
+    transform: perspective(520px) rotateY(14deg) translateX(6px);
+  }
+}
+
 @keyframes shimmer {
   0% {
     background-position: -1000px 0;
@@ -123,6 +134,12 @@
 
   .animate-float {
     animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-headphone-sway {
+    animation: headphoneSway 4s ease-in-out infinite;
+    transform-style: preserve-3d;
+    will-change: transform;
   }
 
   .animate-glow {
