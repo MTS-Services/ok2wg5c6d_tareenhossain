@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\StayConnectedController;
 use Illuminate\Support\Facades\Route;
@@ -18,10 +17,9 @@ Route::middleware('guest')->group(function () {
     Route::get('/privacy-policy', [FrontendController::class, 'privacyPolicy'])->name('privacy-policy');
     Route::get('/terms-service', [FrontendController::class, 'termsService'])->name('terms-service');
 
-
     Route::group(['prefix' => 'stay-connected', 'as' => 'stayconnected.'], function () {
-        Route::get('/{slug}', [StayConnectedController::class, 'index'])->name('index');
         Route::post('/store', [StayConnectedController::class, 'store'])->name('store');
-
+        Route::get('/', [StayConnectedController::class, 'landing'])->name('landing');
+        Route::get('/{slug}', [StayConnectedController::class, 'index'])->name('index');
     });
 });
